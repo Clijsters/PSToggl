@@ -6,8 +6,8 @@ function Write-Var {
 	)
 
     Try {
-        Write-Verbose ((Get-Variable $VarName).Name.PadRight(12) + (Get-Variable $VarName).Value)
+        Write-Debug ((Get-Variable $VarName).Name.PadRight(12) + (Get-Variable $VarName).Value)
     } Catch {
-        Write-Verbose ($VarName.PadRight(12) + "Could not be resolved")
+        Write-Debug ($VarName.PadRight(12) + "Could not be resolved")
     }
 }
