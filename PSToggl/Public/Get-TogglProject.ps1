@@ -2,7 +2,7 @@ function Get-TogglProject {
 	<#
     .Synopsis
 		Receives Toggl Projects based on their name
-    .DESCRIPTION
+    .DESCRIPTION 
     .EXAMPLE
     .INPUTS
     .OUTPUTS
