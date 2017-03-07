@@ -1,5 +1,5 @@
-function Get-RunningTogglTimer(){
-    $Running = Get-TogglTimer | Where-Object duration -LT 0
+function Write-RunningTogglTimer(){
+    $Running = Get-TogglTimer -Current
     if ($Running.id -GT 0) {
         Write-Host "TOGGL: " -NoNewline -ForegroundColor Yellow -BackgroundColor Black
         if ($Running.description) {
