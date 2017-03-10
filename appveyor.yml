@@ -11,8 +11,7 @@
       secure: PEApyZDcz+aPFMACztd9kMC279hQAHvm9GLZq4CaL2+0v9bnd2xIidHmxV86/EmO
   install:
   - ps: . .\AppVeyor\Install.ps1
-  build:
-    verbosity: minimal
+  build: off
   test_script:
   - ps: . .\AppVeyor\Test.ps1
   deploy_script:
@@ -34,8 +33,7 @@
   image: WMF 5
   install:
   - ps: . .\AppVeyor\Install.ps1
-  build:
-    verbosity: minimal
+  build: off
   test_script:
   - ps: . .\AppVeyor\Test.ps1
   notifications:
