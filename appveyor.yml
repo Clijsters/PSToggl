@@ -30,7 +30,7 @@
     - develop
   version: 0.1.{build}
   configuration: Debug
-  skip_non_tags: true
+  skip_non_tags: false
   image: WMF 5
   install:
   - ps: . .\AppVeyor\Install.ps1
