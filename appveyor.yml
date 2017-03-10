@@ -2,7 +2,7 @@
   branches:
     only:
     - master
-  version: 1.0.{build}
+  version: 0.1.{build}
   configuration: Release
   skip_non_tags: true
   image: WMF 5
@@ -28,7 +28,7 @@
   branches:
     only:
     - develop
-  version: 1.0.{build}
+  version: 0.1.{build}
   configuration: Debug
   skip_non_tags: true
   image: WMF 5
