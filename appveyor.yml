@@ -8,13 +8,13 @@ environment:
   NuGetApiKey:
     secure: PEApyZDcz+aPFMACztd9kMC279hQAHvm9GLZq4CaL2+0v9bnd2xIidHmxV86/EmO
 install:
-- ps: . .\AppVeyour\Install.ps1
+- ps: . .\AppVeyor\Install.ps1
 build:
   verbosity: minimal
 test_script:
-- ps: . .\AppVeyour\Test.ps1
+- ps: . .\AppVeyor\Test.ps1
 deploy_script:
-- ps: . .\AppVeyour\Deploy.ps1
+- ps: . .\AppVeyor\Deploy.ps1
 notifications:
 - provider: Email
   to:
