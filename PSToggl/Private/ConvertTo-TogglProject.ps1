@@ -36,10 +36,10 @@ function ConvertTo-TogglProject {
 
             foreach ($field in $fields) {
                 $inputField = $input.PSObject.Members[$field.name].Value
-                if ($inputField -ne $null) {
+                if ($null -ne $inputField) {
                     $object[$field.name] = $inputField
                 } else {
-                    if ($field.default -ne $null) {
+                    if ($null -ne $field.default) {
                         $object[$field.name] = $field.default
                     } elseif ($field.required) {
                         throw "Property `"$($field.name)`" is required"

@@ -23,7 +23,9 @@ Describe "General code style compliance" {
             foreach ($rule in $rules) {
                 It "passes the PSScriptAnalyzer Rule $rule" {
                     if (-not ($module.BaseName -match 'AppVeyor') -and -not ($rule.Rulename -eq 'PSAvoidUsingWriteHost') ) {
-                        $tmpres = (Invoke-ScriptAnalyzer -Path $script.FullName -IncludeRule $rule.RuleName ).Count | Should Be 0
+                        $result = Invoke-ScriptAnalyzer -Path $script.FullName -IncludeRule $rule.RuleName
+						$result.Message | ? {$_} | % { Write-Host $_ }
+						$result.Count | Should Be 0
                     }
                 }
             }

@@ -5,7 +5,7 @@ $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path).Replace(".Tests.", ".")
 
 #InModuleScope PSToggl {
 Describe "ConvertTo-TogglProject" {
-    $sampleInput = @{name="asdf";wid=123;cid=123;at=123;color=2;}
+    $sampleInput = @{name="asdf";wid=123;cid=123;at=[datetime]::Now;color=2;}
     $out = $sampleInput | ConvertTo-TogglProject
     It "Converts a HashTable to a PSCustomObject" {
         $out.GetType().Name | Should Be "PSCustomObject"
