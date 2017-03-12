@@ -1,13 +1,10 @@
 function ConvertTo-TogglProject {
-
     [CmdletBinding()]
     param(
-        [Parameter(
-			Mandatory = $true,
-            Position = 0,
-            ValueFromPipeline = $true
-		)]
-        [PSObject[]] $InputObject
+		# A (set of) HashTable or PSCustomObject to convert
+        [Parameter( Mandatory = $true, Position = 0, ValueFromPipeline = $true )]
+        [PSObject[]]
+		$InputObject
     )
 
     begin {
@@ -16,12 +13,12 @@ function ConvertTo-TogglProject {
             @{ name = "wid";		required = $true;	default = $null;	type = [int]; },
             @{ name = "cid";		required = $false;	default = $null;	type = [int]; },
             @{ name = "active";		required = $true;	default = $true;	type = [bool]; },
-            @{ name = "isPrivate";	required = $true;	default = $true;	type = [bool]; },
+            @{ name = "is_private";	required = $true;	default = $true;	type = [bool]; },
             @{ name = "template";	required = $false;	default = $null;	type = [bool]; },
-            @{ name = "templateId";	required = $false;	default = $null;	type = [int]; }, # Check data type
+            @{ name = "template_id";	required = $false;	default = $null;	type = [int]; }, # Check data type
             @{ name = "billable";	required = $false;	default = $true;	type = [string]; },
-            @{ name = "autoEstimates";	required = $false;	default = $false;	type = [bool]; }, # pro
-            @{ name = "estimatedHours";	required = $false;	default = $null;	type = [int]; }, # Pro
+            @{ name = "auto_estimates";	required = $false;	default = $false;	type = [bool]; }, # pro
+            @{ name = "estimated_hours";	required = $false;	default = $null;	type = [int]; }, # Pro
             @{ name = "at";		required = $true;	default = $null;	type = [datetime]; },
             @{ name = "color";	required = $true;	default = $null;	type = [int]; },
             @{ name = "rate";	required = $false;	default = $null;	type = [float]; } # Pro
@@ -57,5 +54,5 @@ function ConvertTo-TogglProject {
             }
             Write-Output $result
         }
-    }d
+    }
 }
