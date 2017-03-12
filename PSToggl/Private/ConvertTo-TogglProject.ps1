@@ -9,7 +9,8 @@ function ConvertTo-TogglProject {
 
     begin {
         $fields = @(
-            @{ name = "name";		required = $true;	default = $null;	type = [string]; },
+            @{ name = "id";			required = $false;	default = $null;	type = [int]; },
+			@{ name = "name";		required = $true;	default = $null;	type = [string]; },
             @{ name = "wid";		required = $true;	default = $null;	type = [int]; },
             @{ name = "cid";		required = $false;	default = $null;	type = [int]; },
             @{ name = "active";		required = $true;	default = $true;	type = [bool]; },

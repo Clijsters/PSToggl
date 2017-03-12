@@ -9,11 +9,12 @@ function ConvertTo-TogglWorkspace {
 
 	begin {
 		$fields = @(
-			@{ name = "name";		required = $true;	default = $null;	type = [string]; },
-            @{ name = "premium";	required = $true;	default = $null;	type = [bool]; },
-            @{ name = "admin";		required = $true;	default = $null;	type = [bool]; },
+			@{ name = "id";		required = $false;	default = $null;	type = [int]; },
+			@{ name = "name";	required = $true;	default = $null;	type = [string]; },
+            @{ name = "premium";required = $true;	default = $null;	type = [bool]; },
+            @{ name = "admin";	required = $true;	default = $null;	type = [bool]; },
             @{ name = "default_hourly_rate";	required = $false;	default = $null;	type = [float]; },
-            @{ name = "default_currency";	required = $true;	default = $null;	type = [string]; },
+            @{ name = "default_currency";		required = $true;	default = $null;	type = [string]; },
             @{ name = "only_admins_may_create_projects";	required = $true;	default = $null;	type = [bool]; },
             @{ name = "only_admins_see_billable_rates";		required = $true;	default = $null;	type = [bool]; },
             @{ name = "rounding";			required = $true;	default = $null;	type = [int]; },

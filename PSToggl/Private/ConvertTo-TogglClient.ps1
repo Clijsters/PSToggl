@@ -9,7 +9,8 @@ function ConvertTo-TogglClient {
 
     begin {
         $fields = @(
-            @{ name = "name";	required = $true;	default = $null;	type = [string]; },
+            @{ name = "id";		required = $false;	default = $null;	type = [int]; },
+			@{ name = "name";	required = $true;	default = $null;	type = [string]; },
             @{ name = "wid";	required = $true;	default = $null;	type = [int]; },
             @{ name = "notes";	required = $false;	default = $null;	type = [string]; },
             @{ name = "at";		required = $true;	default = $null;	type = [datetime]; }
