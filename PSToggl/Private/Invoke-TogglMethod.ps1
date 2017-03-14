@@ -36,7 +36,7 @@ function Invoke-TogglMethod {
         $answer = Invoke-RestMethod -Uri $restUri -Headers $headers -ContentType "application/json" -Method $Method -Body (ConvertTo-Json $InputObject -Depth 99)
     } else {
         if (-not $Method) { $Method = "GET" }
-        $answer = Invoke-RestMethod -Uri $restUri -Headers $headers -ContentType "application/json" -Method = $Method
+        $answer = Invoke-RestMethod -Uri $restUri -Headers $headers -ContentType "application/json" -Method $Method
     }
 
     Write-Var answer
