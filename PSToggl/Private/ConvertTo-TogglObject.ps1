@@ -9,11 +9,15 @@ function ConvertTo-TogglObject {
         # The Object's name
         [Parameter(Mandatory = $true)]
         [ValidateSet(
-            "Project",
+            "Client",
             "Group",
-            "Workspace",
+            "Project",
             "ProjectUser",
-            "Client"
+            "Tag",
+            "Task",
+            "Timer",
+            "User",
+            "Workspace"
         )]
         [String]
         $ObjectName,
