@@ -8,6 +8,11 @@ Describe "ConvertTo-TogglTask" {
     $sampleInput = @{
         name = "Test Task";
         wid = 123;
+        pid = 123;
+        uid = 123;
+        active = $true;
+        estimated_seconds = 0;
+        at = [datetime]::Now;
     }
     $out = $sampleInput | ConvertTo-TogglTask
     It "Converts a HashTable to a PSCustomObject" {

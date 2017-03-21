@@ -11,7 +11,7 @@ function ConvertTo-TogglTag {
         $fields = @(
             @{ name = "id";     required = $false;   default = $null;    type = [int]; },
             @{ name = "wid";    required = $true;    default = $null;    type = [int]; },
-            @{ name = "name";   required = $true;    default = $null;    type = [string]; },
+            @{ name = "name";   required = $true;    default = $null;    type = [string]; }
         )
     }
 

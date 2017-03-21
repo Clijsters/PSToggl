@@ -25,7 +25,7 @@ Describe "ConvertTo-TogglUser" {
         record_timeline = $true;
         render_timeline = $true;
         timeline_enabled = $true;
-        timeline_experiment = $true;
+        # timeline_experiment = $true;
     }
     $out = $sampleInput | ConvertTo-TogglUser
     It "Converts a HashTable to a PSCustomObject" {

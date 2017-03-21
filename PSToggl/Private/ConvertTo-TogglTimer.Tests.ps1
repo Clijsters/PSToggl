@@ -25,7 +25,7 @@ Describe "ConvertTo-TogglTimer" {
     }
 
     It "Defaults 'created_with' to 'PSToggl'" {
-        $out.PSObject.Members["created_with"] | Should Be "PSToggl"
+        $out.PSObject.Members["created_with"].Value | Should Be "PSToggl"
     }
 
     foreach ($k in $sampleInput.Keys) {

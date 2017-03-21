@@ -13,6 +13,7 @@ function ConvertTo-TogglUser {
             @{ name = "api_token";      required = $true;    default = $null;    type = [string]; },
             @{ name = "default_wid";    required = $true;    default = $null;    type = [int]; },
             @{ name = "email";          required = $false;   default = $null;    type = [string]; },
+            @{ name = "fullname";          required = $true;   default = $null;    type = [string]; },
             @{ name = "jquery_timeofday_format";required = $false;   default = $null;    type = [string]; },
             @{ name = "jquery_date_format";     required = $false;   default = $null;    type = [string]; },
             @{ name = "timeofday_format";       required = $false;   default = $null;    type = [string]; },
@@ -30,7 +31,12 @@ function ConvertTo-TogglUser {
             @{ name = "send_weekly_reports";  required = $false;   default = $null;    type = [bool]; },
             @{ name = "send_timer_notifications";  required = $false;   default = $null;    type = [bool]; },
             @{ name = "openid_enabled";     required = $false;   default = $null;    type = [bool]; },
-            @{ name = "timezone";           required = $false;   default = $null;    type = [string]; }
+            @{ name = "timezone";           required = $false;   default = $null;    type = [string]; },
+
+            @{ name = "render_timeline";           required = $false;   default = $null;    type = [bool]; },
+            @{ name = "retention";           required = $false;   default = $null;    type = [int]; },
+            @{ name = "record_timeline";           required = $false;   default = $null;    type = [bool]; },
+            @{ name = "timeline_enabled";           required = $false;   default = $null;    type = [bool]; }
         )
     }
 

@@ -13,12 +13,12 @@ function ConvertTo-TogglTimer {
         $fields = @(
             @{ name = "id";             required = $false;   default = $null;    type = [int]; },
             @{ name = "description";    required = $false;    default = $null;    type = [string]; },
-            @{ name = "wid";        required = $true;    default = $null;    type = [int]; },
+            @{ name = "wid";        required = $true;    default = $null;    type = [int]; }, # special case, req if pid and tid null
             @{ name = "pid";        required = $false;   default = $null;    type = [int]; },
             @{ name = "tid";        required = $false;    default = $null;    type = [int]; },
-            @{ name = "billable";   required = $true;    default = $null;    type = [bool]; },
+            @{ name = "billable";   required = $false;    default = $null;    type = [bool]; },
             @{ name = "start";      required = $true;    default = $null;    type = [datetime]; },
-            @{ name = "stop";       required = $true;    default = $null;    type = [datetime]; },
+            @{ name = "stop";       required = $false;    default = $null;    type = [datetime]; },
             @{ name = "duration";   required = $true;    default = $null;    type = [int]; }, # If currently running, its negative.
             @{ name = "created_with";   required = $true;    default = "PSToggl";    type = [string]; },
             @{ name = "tags";           required = $false;    default = $null;    type = [string[]]; },
