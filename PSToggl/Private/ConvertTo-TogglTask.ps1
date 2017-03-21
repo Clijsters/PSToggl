@@ -33,10 +33,10 @@ function ConvertTo-TogglTask {
             foreach ($field in $fields) {
                 $inputField = $input.PSObject.Members[$field.name].Value
                 if ($null -ne $inputField) {
-                    $object[$field.name] = $inputField
+                    $object[$field.name] = $inputField -as $field.type
                 } else {
                     if ($null -ne $field.default) {
-                        $object[$field.name] = $field.default
+                        $object[$field.name] = $field.default -as $field.type
                     } elseif ($field.required) {
                         throw "Property `"$($field.name)`" is required"
                     }
