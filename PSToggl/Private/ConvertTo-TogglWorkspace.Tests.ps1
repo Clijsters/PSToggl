@@ -3,20 +3,20 @@ $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path).Replace(".Tests.", ".")
 . "$here\$sut"
 
-#InModuleScope PSToggl {
+InModuleScope PSToggl {
 Describe "ConvertTo-TogglWorkspace" {
     $sampleInput = @{
-		name = "Sample Workspace";
-		premium = $false;
-		admin = $true;
-		default_currency = "EUR";
-		only_admins_may_create_projects = $false;
-		only_admins_see_billable_rates = $true;
-		rounding = 1; #Possible: -1, 0, 1
-		rounding_minutes = -1;
-		at = [datetime]::Now;
-		logo_url = "https://placekitten.com/100/100"
-	}
+        name = "Sample Workspace";
+        premium = $false;
+        admin = $true;
+        default_currency = "EUR";
+        only_admins_may_create_projects = $false;
+        only_admins_see_billable_rates = $true;
+        rounding = 1; #Possible: -1, 0, 1
+        rounding_minutes = -1;
+        at = [datetime]::Now;
+        logo_url = "https://placekitten.com/100/100"
+    }
     $out = $sampleInput | ConvertTo-TogglWorkspace
     It "Converts a HashTable to a PSCustomObject" {
         $out.GetType().Name | Should Be "PSCustomObject"
@@ -34,4 +34,4 @@ Describe "ConvertTo-TogglWorkspace" {
     }
 
 }
-#}
+}

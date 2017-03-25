@@ -3,7 +3,7 @@ $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path).Replace(".Tests.", ".")
 . "$here\$sut"
 
-#InModuleScope PSToggl {
+InModuleScope PSToggl {
 Describe "ConvertTo-TogglTask" {
     $sampleInput = @{
         name = "Test Task";
@@ -31,4 +31,4 @@ Describe "ConvertTo-TogglTask" {
     }
 
 }
-#}
+}
