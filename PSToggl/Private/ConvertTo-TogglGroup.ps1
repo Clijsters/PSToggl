@@ -1,5 +1,6 @@
 function ConvertTo-TogglGroup {
     [CmdletBinding()]
+    [OutputType("PSToggl.Group")]
     param(
         # A (set of) HashTable or PSCustomObject to convert
         [Parameter( Mandatory = $true, Position = 0, ValueFromPipeline = $true )]
@@ -9,11 +10,13 @@ function ConvertTo-TogglGroup {
 
     begin {
         $fields = @(
-            @{ name = "id";	    required = $false;	default = $null;	type = [int]; },
-            @{ name = "name";   required = $true;	default = $null;	type = [string]; },
-            @{ name = "wid";    required = $true;	default = $null;	type = [int]; },
-            @{ name = "at";	    required = $true;	default = $null;	type = [datetime]; }
+            @{ name = "id";     required = $false;    default = $null;    type = [int]; },
+            @{ name = "name";   required = $true;    default = $null;    type = [string]; },
+            @{ name = "wid";    required = $true;    default = $null;    type = [int]; },
+            @{ name = "at";     required = $true;    default = $null;    type = [datetime]; }
         )
+
+
     }
 
     process {

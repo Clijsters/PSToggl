@@ -22,10 +22,10 @@ Describe "General code style compliance" {
         Context "Script '$($script.FullName)'" {
             foreach ($rule in $rules) {
                 It "passes the PSScriptAnalyzer Rule $rule" {
-                    if (-not ($module.BaseName -match 'AppVeyor') -and -not ($rule.Rulename -eq 'PSAvoidUsingWriteHost') ) {
+                    if (-not ($module.BaseName -match "AppVeyor") -and -not ($rule.Rulename -eq "PSAvoidUsingWriteHost") ) {
                         $result = Invoke-ScriptAnalyzer -Path $script.FullName -IncludeRule $rule.RuleName
-						$result.Message | ? {$_} | % { Write-Host $_ }
-						$result.Count | Should Be 0
+                        $result.Message | ? {$_} | % { Write-Host $_ }
+                        $result.Count | Should Be 0
                     }
                 }
             }
@@ -62,7 +62,7 @@ Describe "$moduleName on PowerShell $PSVersion" {
 
         It "Includes the module version" {
             foreach ($line in (Get-Content $appveyorFile)) {
-                if ($line -match '^\D*(?<Version>(\d+\.){1,3}\d+).\{build\}') {
+                if ($line -match "^\D*(?<Version>(\d+\.){1,3}\d+).\{build\}") {
                     $appveyorVersion = $matches.Version
                     break
                 }

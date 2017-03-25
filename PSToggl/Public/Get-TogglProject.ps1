@@ -4,8 +4,9 @@ function Get-TogglProject {
         Receives Toggl Projects
     .DESCRIPTION
         This cmdlet queries the Toggl API against projects. If no parameter is given, it returns all accessible projects.
-        You can search projects by its name (with wildcards) or by its id (without).
-        To filter for other properties (e.g. billable, at), pipe the result to Where-Object.
+        You can search projects by its name (with wildcards) or by its id.
+        To filter for other properties (e.g. "billable", "at"), pipe the result to Where-Object.
+
         You can pipe any PSToggl object which belongs to a project to this cmdlet, like:
         * Workspace: returns projects whose wid mathes the id of the piped object
         * Client: returns projects whose cid matches the id of the piped object
@@ -14,6 +15,7 @@ function Get-TogglProject {
         Get-TogglProject -ProjectName "*awesome*"
         Get-TogglProject | Where-Object billable
         Get-TogglClient -name "Customer" | Get-TogglProject
+        Get-TogglClient -name "Pete" | Get-TogglProject | Where-Object active -EQ $True
     .INPUTS
         System.Management.Automation.PSObject
             PSToggl.Client

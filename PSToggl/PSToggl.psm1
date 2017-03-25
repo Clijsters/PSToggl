@@ -11,6 +11,6 @@ Foreach($import in @($Public + $Private)) {
     }
 }
 
-$formatFile = Join-Path -Path $PSScriptRoot -ChildPath 'PSJira.format.ps1xml'
+$formatFile = Join-Path -Path $PSScriptRoot -ChildPath 'PSToggl.format.ps1xml'
 Write-Verbose "Updating format data with file '$formatFile'"
 Update-FormatData -AppendPath $formatFile -ErrorAction Continue
