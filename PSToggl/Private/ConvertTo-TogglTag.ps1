@@ -8,11 +8,7 @@ function ConvertTo-TogglTag {
     )
 
     begin {
-        $fields = @(
-            @{ name = "id";     required = $false;   default = $null;    type = [int]; },
-            @{ name = "wid";    required = $true;    default = $null;    type = [int]; },
-            @{ name = "name";   required = $true;    default = $null;    type = [string]; }
-        )
+        $fields = $TogglConfiguration.ObjectTypes.Tag.Fields
     }
 
     process {

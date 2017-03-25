@@ -2,6 +2,7 @@
 $Public  = @( Get-ChildItem -Path $PSScriptRoot\Public\*.ps1 -ErrorAction SilentlyContinue )
 $Private = @( Get-ChildItem -Path $PSScriptRoot\Private\*.ps1 -ErrorAction SilentlyContinue )
 
+Import-LocalizedData -BindingVariable TogglConfiguration -BaseDirectory $PSScriptRoot\Private -FileName InternalConfiguration.psd1
 Foreach($import in @($Public + $Private)) {
     Try {
         . $import.fullname

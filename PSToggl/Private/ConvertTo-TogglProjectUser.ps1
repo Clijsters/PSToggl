@@ -8,15 +8,7 @@ function ConvertTo-TogglProjectUser {
     )
 
     begin {
-        $fields = @(
-            @{ name = "id";     required = $false;   default = $null;    type = [int]; },
-            @{ name = "pid";   required = $true;    default = $null;    type = [int]; },
-            @{ name = "uid";   required = $true;    default = $null;    type = [int]; },
-            @{ name = "wid";    required = $false;    default = $null;    type = [int]; },
-            @{ name = "manager";  required = $true;   default = $false;    type = [bool]; },
-            @{ name = "rate";   required = $false;    default = $null;    type = [float]; }, # Pro
-            @{ name = "at";     required = $false;    default = $null;    type = [datetime]; }
-        )
+        $fields = $TogglConfiguration.ObjectTypes.ProjectUser.Fields
     }
 
     process {
