@@ -1,22 +1,24 @@
 # Credit to header goes to replicaJunction
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
-$sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path).Replace(".Tests.", ".")
-. "$here\$sut"
+$sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path)
+. ("$here\$sut").Replace("\Tests\", "\").Replace(".Tests.", ".")
 
 #InModuleScope PSToggl {
-Describe "ConvertTo-TogglGroup" {
+Describe "ConvertTo-TogglProjectUser" {
     $sampleInput = @{
-        name = "Test Group";
-        wid = 123;
+        pid = 123;
+        uid = 456;
+        wid = 789;
+        manager = $false;
         at = [datetime]::Now;
     }
-    $out = $sampleInput | ConvertTo-TogglGroup
+    $out = $sampleInput | ConvertTo-TogglProjectUser
     It "Converts a HashTable to a PSCustomObject" {
         $out.GetType().Name | Should Be "PSCustomObject"
     }
 
-    It "Sets TypeName to PSToggl.Group" {
-        $out.PSObject.TypeNames[0] | Should Be "PSToggl.Group"
+    It "Sets TypeName to PSToggl.ProjectUser" {
+        $out.PSObject.TypeNames[0] | Should Be "PSToggl.ProjectUser"
     }
 
     foreach ($k in $sampleInput.Keys) {
