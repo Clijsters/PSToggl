@@ -1,5 +1,6 @@
 function ConvertTo-TogglWorkspace {
     [CmdletBinding()]
+    [OutputType("PSToggl.Workspace")]
     param(
         # A (set of) HashTable or PSCustomObject to convert
         [Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true)]

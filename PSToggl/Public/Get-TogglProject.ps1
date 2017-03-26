@@ -26,6 +26,7 @@ function Get-TogglProject {
             PsToggl.Project
     #>
     [CmdletBinding()]
+    [OutputType("PSToggl.Project")]
     param(
         [Parameter(Mandatory=$false)]
         [string] $ProjectName = $null,

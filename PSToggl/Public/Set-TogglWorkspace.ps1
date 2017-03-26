@@ -1,17 +1,18 @@
 function Set-TogglWorkspace {
-	[CmdletBinding()]
-	param (
+    [CmdletBinding()]
+    [OutputType("PSToggl.Workspace")]
+    param (
 
-	)
+    )
 
-	begin {
-		$moduleFolder = Split-Path -Path $PSScriptRoot -Parent
-		$ConfigFile = Join-Path -Path $moduleFolder -ChildPath 'config.json'
-	}
+    begin {
+        $moduleFolder = Split-Path -Path $PSScriptRoot -Parent
+        $ConfigFile = Join-Path -Path $moduleFolder -ChildPath 'config.json'
+    }
 
-	process {
-	}
+    process {
+    }
 
-	end {
-	}
+    end {
+    }
 }

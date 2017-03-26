@@ -1,5 +1,6 @@
 function ConvertTo-TogglTimer {
     [CmdletBinding()]
+    [OutputType("PSToggl.Timer")]
     param(
         # A (set of) HashTable or PSCustomObject to convert
         [Parameter( Mandatory = $true, Position = 0, ValueFromPipeline = $true )]
