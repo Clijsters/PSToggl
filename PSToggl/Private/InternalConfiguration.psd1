@@ -152,7 +152,7 @@
                 @{ name = "sidebar_piechart"; required = $false; default = $null; type = [bool]; },
                 @{ name = "at"; required = $true; default = $null; type = [datetime]; },
                 ####
-                @{ name = "new_blog_post"; required = $false; default = $null; type = [psobject]; },
+                # @{ name = "new_blog_post"; required = $false; default = $null; type = [psobject]; },
                 ####
                 @{ name = "send_product_emails"; required = $false; default = $null; type = [bool]; },
                 @{ name = "send_weekly_reports"; required = $false; default = $null; type = [bool]; },

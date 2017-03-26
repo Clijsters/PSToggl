@@ -80,13 +80,13 @@ Describe "$moduleName on PowerShell $PSVersion" {
         # Public tests
         Get-ChildItem -Path "$moduleRoot\Public" -Filter "*.ps1" -Recurse | Where-Object -FilterScript {$_.Name -notlike "*.Tests.ps1"} | ForEach-Object {
             It "Includes a test for $($_.Name)" {
-                $_.FullName -replace ".ps1",".Tests.ps1" -replace "\\Public", "\Tests\Public" | Should Exist
+                $_.FullName -replace ".ps1",".Tests.ps1" -replace "PSToggl\\Public", "Tests\PSToggl\Public" | Should Exist
             }
         }
         # Private tests
         Get-ChildItem -Path "$moduleRoot\Private" -Filter "*.ps1" -Recurse | Where-Object -FilterScript {$_.Name -notlike "*.Tests.ps1"} | ForEach-Object {
             It "Includes a test for $($_.Name)" {
-                $_.FullName -replace ".ps1",".Tests.ps1" -replace "\\Private", "\Tests\Private" | Should Exist
+                $_.FullName -replace ".ps1",".Tests.ps1" -replace "PSToggl\\Private", "Tests\PSToggl\Private" | Should Exist
             }
         }
     }
