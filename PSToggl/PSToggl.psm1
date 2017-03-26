@@ -3,6 +3,15 @@ $Public  = @( Get-ChildItem -Path $PSScriptRoot\Public\*.ps1 -ErrorAction Silent
 $Private = @( Get-ChildItem -Path $PSScriptRoot\Private\*.ps1 -ErrorAction SilentlyContinue )
 
 Import-LocalizedData -BindingVariable TogglConfiguration -BaseDirectory $PSScriptRoot\Private -FileName InternalConfiguration.psd1
+
+# Add a special validator for timer. wid is only required if pid nor tid are set
+$TogglConfiguration.ObjectTypes.Timer.Validators = @(
+        @{
+            name = "wid validator";
+            callback = {$args[0].wid -or ($args[0].pid -or $args[0].tid)};
+            message = "wid is required if pid or tid are not provided";
+        }
+    )
 Foreach($import in @($Public + $Private)) {
     Try {
         . $import.fullname

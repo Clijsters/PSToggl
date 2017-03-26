@@ -55,5 +55,11 @@ function ConvertTo-TogglObject {
 
     $result = New-Object -TypeName psobject -Property $object
     $result.PSObject.TypeNames.Insert(0, "PSToggl.$ObjectName")
+    foreach ($validator in $objectConfig.Validators) {
+        if (-not $validator.callback.invoke($result)) {
+            Write-Debug ($validator.name + " returned false. Throwing ArgumentException with message: " + $validator.message)
+            Throw [System.ArgumentException]::new("Error validating fields: " + $validator.message)
+        }               
+    }
     Write-Output $result
 }

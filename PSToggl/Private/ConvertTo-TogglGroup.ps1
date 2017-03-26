@@ -38,6 +38,12 @@ function ConvertTo-TogglGroup {
             $result | Add-Member -MemberType ScriptMethod -Name 'ToString' -Force -Value {
                 Write-Output $this.name
             }
+            foreach ($validator in $objectConfig.Validators) {
+                if (-not $validator.callback.invoke($result)) {
+                    Write-Debug ($validator.name + " returned false. Throwing ArgumentException with message: " + $validator.message)
+                    Throw [System.ArgumentException]::new("Error validating fields: " + $validator.message)
+                }               
+            }
             Write-Output $result
         }
     }

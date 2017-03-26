@@ -15,6 +15,16 @@
                     message = "";
                 }
             );
+            additionalMethods = @(
+                @{
+                    name = "toString";
+                    function = {return ("(" + this.id + ") " + this.name)}
+                },
+                @{
+                    name = "delete";
+                    function = {Remove-TogglObject this -Force}
+                }
+            );
             #>
         };
 
