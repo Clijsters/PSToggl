@@ -22,10 +22,10 @@ Describe "General code style compliance" {
         Context "Script '$($script.FullName)'" {
             foreach ($rule in $rules) {
                 It "passes the PSScriptAnalyzer Rule $rule" {
-                    if (-not ($module.BaseName -match 'AppVeyor') -and -not ($rule.Rulename -eq 'PSAvoidUsingWriteHost') ) {
+                    if (-not ($module.BaseName -match "AppVeyor") -and -not ($rule.Rulename -eq "PSAvoidUsingWriteHost") ) {
                         $result = Invoke-ScriptAnalyzer -Path $script.FullName -IncludeRule $rule.RuleName
-						$result.Message | ? {$_} | % { Write-Host $_ }
-						$result.Count | Should Be 0
+                        $result.Message | ? {$_} | % { Write-Host $_ }
+                        $result.Count | Should Be 0
                     }
                 }
             }
@@ -62,7 +62,7 @@ Describe "$moduleName on PowerShell $PSVersion" {
 
         It "Includes the module version" {
             foreach ($line in (Get-Content $appveyorFile)) {
-                if ($line -match '^\D*(?<Version>(\d+\.){1,3}\d+).\{build\}') {
+                if ($line -match "^\D*(?<Version>(\d+\.){1,3}\d+).\{build\}") {
                     $appveyorVersion = $matches.Version
                     break
                 }
@@ -77,9 +77,16 @@ Describe "$moduleName on PowerShell $PSVersion" {
     }
 
     Context "Testing Environment" {
-        Get-ChildItem -Path "$moduleRoot\Public" -Filter "*.ps1" -Recurse | Where-Object -FilterScript {$_.Name -notlike '*.Tests.ps1'} | ForEach-Object {
+        # Public tests
+        Get-ChildItem -Path "$moduleRoot\Public" -Filter "*.ps1" -Recurse | Where-Object -FilterScript {$_.Name -notlike "*.Tests.ps1"} | ForEach-Object {
             It "Includes a test for $($_.Name)" {
-                $_.FullName -replace '.ps1','.Tests.ps1' | Should Exist
+                $_.FullName -replace ".ps1",".Tests.ps1" -replace "\\Public", "\Tests\Public" | Should Exist
+            }
+        }
+        # Private tests
+        Get-ChildItem -Path "$moduleRoot\Private" -Filter "*.ps1" -Recurse | Where-Object -FilterScript {$_.Name -notlike "*.Tests.ps1"} | ForEach-Object {
+            It "Includes a test for $($_.Name)" {
+                $_.FullName -replace ".ps1",".Tests.ps1" -replace "\\Private", "\Tests\Private" | Should Exist
             }
         }
     }

@@ -1,26 +1,31 @@
 # Credit to header goes to replicaJunction
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
-$sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path).Replace(".Tests.", ".")
-. "$here\$sut"
+$sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path)
+. ("$here\$sut").Replace("\Tests\", "\").Replace(".Tests.", ".")
 
 InModuleScope PSToggl {
-Describe "ConvertTo-TogglTask" {
+Describe "ConvertTo-TogglTimer" {
     $sampleInput = @{
-        name = "Test Task";
+        description = "Test entry";
         wid = 123;
         pid = 123;
-        uid = 123;
-        active = $true;
-        estimated_seconds = 0;
+        tid = 123;
+        start = [datetime]::Now;
+        stop = [datetime]::Now;
+        duration = 0;
         at = [datetime]::Now;
     }
-    $out = $sampleInput | ConvertTo-TogglTask
+    $out = $sampleInput | ConvertTo-TogglTimer
     It "Converts a HashTable to a PSCustomObject" {
         $out.GetType().Name | Should Be "PSCustomObject"
     }
 
-    It "Sets TypeName to PSToggl.Task" {
-        $out.PSObject.TypeNames[0] | Should Be "PSToggl.Task"
+    It "Sets TypeName to PSToggl.Timer" {
+        $out.PSObject.TypeNames[0] | Should Be "PSToggl.Timer"
+    }
+
+    It "Defaults 'created_with' to 'PSToggl'" {
+        $out.PSObject.Members["created_with"].Value | Should Be "PSToggl"
     }
 
     foreach ($k in $sampleInput.Keys) {
