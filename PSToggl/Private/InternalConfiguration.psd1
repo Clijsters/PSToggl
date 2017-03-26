@@ -29,6 +29,7 @@
         };
 
         Client = @{
+            TypeName = "PSToggl.Client";
             DocUrl = "";
             Fields = @(
                 @{ name = "id"; required = $false; default = $null; type = [int]; },
@@ -40,6 +41,7 @@
         };
 
         Group = @{
+            TypeName = "PSToggl.Group";
             DocUrl = "";
             Fields = @(
                 @{ name = "id"; required = $false; default = $null; type = [int]; },
@@ -50,6 +52,7 @@
         };
         
         Project = @{
+            TypeName = "PSToggl.Project";
             DocUrl = "";
             Fields = @(
                 @{ name = "id"; required = $false; default = $null; type = [int]; },
@@ -70,6 +73,7 @@
         };
 
         ProjectUser = @{
+            TypeName = "PSToggl.ProjectUser";
             DocUrl = "";
             Fields = @(
                 @{ name = "id";     required = $false;   default = $null;    type = [int]; },
@@ -83,6 +87,7 @@
         };
 
         Tag = @{
+            TypeName = "PSToggl.Tag";
             DocUrl = "";
             Fields = @(
                 @{ name = "id";     required = $false;   default = $null;    type = [int]; },
@@ -92,6 +97,7 @@
         };
 
         Task = @{
+            TypeName = "PSToggl.Task";
             DocUrl = "";
             Fields = @(
                 @{ name = "id";     required = $false;   default = $null;    type = [int]; },
@@ -107,6 +113,7 @@
         };
 
         Timer = @{
+            TypeName = "PSToggl.Timer";
             DocUrl = "";
             Fields = @(
                 @{ name = "id";             required = $false;   default = $null;    type = [int]; },
@@ -126,6 +133,7 @@
         };
 
         User = @{
+            TypeName = "PSToggl.User";
             DocUrl = "";
             Fields = @(
                 @{ name = "id";             required = $false;   default = $null;    type = [int]; },
@@ -160,6 +168,7 @@
         };
 
         Workspace = @{
+            TypeName = "PSToggl.Workspace";
             DocUrl = "";
             Fields = @(
                 @{ name = "id";         required = $false;    default = $null;    type = [int]; },
