@@ -9,11 +9,7 @@ function ConvertTo-TogglTag {
     )
 
     begin {
-        $fields = @(
-            @{ name = "id";     required = $false;   default = $null;    type = [int]; },
-            @{ name = "wid";    required = $true;    default = $null;    type = [int]; },
-            @{ name = "name";   required = $true;    default = $null;    type = [string]; }
-        )
+        $objectConfig = $TogglConfiguration.ObjectTypes.Tag
     }
 
     process {
@@ -25,7 +21,7 @@ function ConvertTo-TogglTag {
                 $input = $item
             }
 
-            foreach ($field in $fields) {
+            foreach ($field in $objectConfig.Fields) {
                 $inputField = $input.PSObject.Members[$field.name].Value
                 if ($null -ne $inputField) {
                     $object[$field.name] = $inputField -as $field.type
@@ -45,6 +41,12 @@ function ConvertTo-TogglTag {
             }
             $result | Add-Member -MemberType ScriptMethod -Name "Delete" -Force -Value {
                 # Invoke-TogglMethod ...
+            }
+            foreach ($validator in $objectConfig.Validators) {
+                if (-not $validator.callback.invoke($result)) {
+                    Write-Debug ($validator.name + " returned false. Throwing ArgumentException with message: " + $validator.message)
+                    Throw [System.ArgumentException]::new("Error validating fields: " + $validator.message)
+                }               
             }
             Write-Output $result
         }

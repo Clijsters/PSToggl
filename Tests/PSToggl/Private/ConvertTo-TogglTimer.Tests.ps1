@@ -3,7 +3,7 @@ $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path)
 . ("$here\$sut").Replace("\Tests\", "\").Replace(".Tests.", ".")
 
-#InModuleScope PSToggl {
+InModuleScope PSToggl {
 Describe "ConvertTo-TogglTimer" {
     $sampleInput = @{
         description = "Test entry";
@@ -36,4 +36,4 @@ Describe "ConvertTo-TogglTimer" {
     }
 
 }
-#}
+}

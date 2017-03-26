@@ -25,10 +25,14 @@ function ConvertTo-TogglObject {
         # The field configuration
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty]
-        [hashtable[]]
-        $fields
+        [System.Management.Automation.PSCustomObject]
+        $ObjectConfig
     )
 
+
+##
+## TODO TESTS
+##
     $object = @{}
     if ($item.GetType().Name -eq "HashTable") {
         $input = New-Object -TypeName psobject -Property $item
@@ -36,7 +40,7 @@ function ConvertTo-TogglObject {
         $input = $item
     }
 
-    foreach ($field in $fields) {
+    foreach ($field in $objectConfig.Fields) {
         $inputField = $input.PSObject.Members[$field.name].Value
         if ($null -ne $inputField) {
             $object[$field.name] = $inputField -as $field.type
@@ -51,5 +55,11 @@ function ConvertTo-TogglObject {
 
     $result = New-Object -TypeName psobject -Property $object
     $result.PSObject.TypeNames.Insert(0, "PSToggl.$ObjectName")
+    foreach ($validator in $objectConfig.Validators) {
+        if (-not $validator.callback.invoke($result)) {
+            Write-Debug ($validator.name + " returned false. Throwing ArgumentException with message: " + $validator.message)
+            Throw [System.ArgumentException]::new("Error validating fields: " + $validator.message)
+        }               
+    }
     Write-Output $result
 }

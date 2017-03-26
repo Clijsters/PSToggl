@@ -3,14 +3,14 @@ $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path)
 . ("$here\$sut").Replace("\Tests\", "\").Replace(".Tests.", ".")
 
-#InModuleScope PSToggl {
+InModuleScope PSToggl {
 Describe "ConvertTo-TogglClient" {
     $sampleInput = @{
-		name = "Test Client";
-		wid = 123;
-		at = [datetime]::Now;
-		notes = "Some note";
-	}
+        name = "Test Client";
+        wid = 123;
+        at = [datetime]::Now;
+        notes = "Some note";
+    }
     $out = $sampleInput | ConvertTo-TogglClient
     It "Converts a HashTable to a PSCustomObject" {
         $out.GetType().Name | Should Be "PSCustomObject"
@@ -28,4 +28,4 @@ Describe "ConvertTo-TogglClient" {
     }
 
 }
-#}
+}

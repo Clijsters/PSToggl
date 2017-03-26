@@ -9,14 +9,7 @@ function ConvertTo-TogglGroup {
     )
 
     begin {
-        $fields = @(
-            @{ name = "id";     required = $false;    default = $null;    type = [int]; },
-            @{ name = "name";   required = $true;    default = $null;    type = [string]; },
-            @{ name = "wid";    required = $true;    default = $null;    type = [int]; },
-            @{ name = "at";     required = $true;    default = $null;    type = [datetime]; }
-        )
-
-
+        $objectConfig = $TogglConfiguration.ObjectTypes.Group
     }
 
     process {
@@ -28,7 +21,7 @@ function ConvertTo-TogglGroup {
                 $input = $item
             }
 
-            foreach ($field in $fields) {
+            foreach ($field in $objectConfig.Fields) {
                 $inputField = $input.PSObject.Members[$field.name].Value
                 if ($null -ne $inputField) {
                     $object[$field.name] = $inputField -as $field.type
@@ -45,6 +38,12 @@ function ConvertTo-TogglGroup {
             $result.PSObject.TypeNames.Insert(0, "PSToggl.Group")
             $result | Add-Member -MemberType ScriptMethod -Name 'ToString' -Force -Value {
                 Write-Output $this.name
+            }
+            foreach ($validator in $objectConfig.Validators) {
+                if (-not $validator.callback.invoke($result)) {
+                    Write-Debug ($validator.name + " returned false. Throwing ArgumentException with message: " + $validator.message)
+                    Throw [System.ArgumentException]::new("Error validating fields: " + $validator.message)
+                }               
             }
             Write-Output $result
         }

@@ -9,22 +9,7 @@ function ConvertTo-TogglProject {
     )
 
     begin {
-        $fields = @(
-            @{ name = "id";         required = $false;   default = $null;    type = [int]; },
-            @{ name = "name";       required = $true;    default = $null;    type = [string]; },
-            @{ name = "wid";        required = $true;    default = $null;    type = [int]; },
-            @{ name = "cid";        required = $false;   default = $null;    type = [int]; },
-            @{ name = "active";     required = $true;    default = $true;    type = [bool]; },
-            @{ name = "is_private"; required = $true;    default = $true;    type = [bool]; },
-            @{ name = "template";   required = $false;   default = $null;    type = [bool]; },
-            @{ name = "template_id";required = $false;   default = $null;    type = [int]; }, # Check data type
-            @{ name = "billable";   required = $false;   default = $true;    type = [string]; },
-            @{ name = "auto_estimates";     required = $false;    default = $false;    type = [bool]; }, # pro
-            @{ name = "estimated_hours";    required = $false;    default = $null;    type = [int]; }, # Pro
-            @{ name = "at";     required = $true;    default = $null;    type = [datetime]; },
-            @{ name = "color";  required = $true;    default = $null;    type = [int]; },
-            @{ name = "rate";   required = $false;   default = $null;    type = [float]; } # Pro
-        )
+        $objectConfig = $TogglConfiguration.ObjectTypes.Project
     }
 
     process {
@@ -36,7 +21,7 @@ function ConvertTo-TogglProject {
                 $input = $item
             }
 
-            foreach ($field in $fields) {
+            foreach ($field in $objectConfig.Fields) {
                 $inputField = $input.PSObject.Members[$field.name].Value
                 if ($null -ne $inputField) {
                     $object[$field.name] = $inputField -as $field.type
@@ -53,6 +38,12 @@ function ConvertTo-TogglProject {
             $result.PSObject.TypeNames.Insert(0, "PSToggl.Project")
             $result | Add-Member -MemberType ScriptMethod -Name 'ToString' -Force -Value {
                 Write-Output $this.name
+            }
+            foreach ($validator in $objectConfig.Validators) {
+                if (-not $validator.callback.invoke($result)) {
+                    Write-Debug ($validator.name + " returned false. Throwing ArgumentException with message: " + $validator.message)
+                    Throw [System.ArgumentException]::new("Error validating fields: " + $validator.message)
+                }               
             }
             Write-Output $result
         }

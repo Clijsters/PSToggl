@@ -3,7 +3,7 @@ $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path)
 . ("$here\$sut").Replace("\Tests\", "\").Replace(".Tests.", ".")
 
-#InModuleScope PSToggl {
+InModuleScope PSToggl {
 Describe "ConvertTo-TogglProjectUser" {
     $sampleInput = @{
         pid = 123;
@@ -29,4 +29,4 @@ Describe "ConvertTo-TogglProjectUser" {
     }
 
 }
-#}
+}

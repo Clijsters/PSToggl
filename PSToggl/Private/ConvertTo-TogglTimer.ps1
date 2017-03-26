@@ -9,23 +9,7 @@ function ConvertTo-TogglTimer {
     )
 
     begin {
-        # TODO: Need an extra validator (lambda to be supplied with fields) because special cases like this
-        # need them. wid is only required if pid and tid are not supplied.
-        $fields = @(
-            @{ name = "id";             required = $false;   default = $null;    type = [int]; },
-            @{ name = "description";    required = $false;    default = $null;    type = [string]; },
-            @{ name = "wid";        required = $true;    default = $null;    type = [int]; }, # special case, req if pid and tid null
-            @{ name = "pid";        required = $false;   default = $null;    type = [int]; },
-            @{ name = "tid";        required = $false;    default = $null;    type = [int]; },
-            @{ name = "billable";   required = $false;    default = $null;    type = [bool]; },
-            @{ name = "start";      required = $true;    default = $null;    type = [datetime]; },
-            @{ name = "stop";       required = $false;    default = $null;    type = [datetime]; },
-            @{ name = "duration";   required = $true;    default = $null;    type = [int]; }, # If currently running, its negative.
-            @{ name = "created_with";   required = $true;    default = "PSToggl";    type = [string]; },
-            @{ name = "tags";           required = $false;    default = $null;    type = [string[]]; },
-            @{ name = "duronly";        required = $false;    default = $false;    type = [bool]; },
-            @{ name = "at";             required = $true;    default = $null;    type = [datetime]; }
-        )
+        $objectConfig = $TogglConfiguration.ObjectTypes.Timer
     }
 
     process {
@@ -37,7 +21,7 @@ function ConvertTo-TogglTimer {
                 $input = $item
             }
 
-            foreach ($field in $fields) {
+            foreach ($field in $objectConfig.Fields) {
                 $inputField = $input.PSObject.Members[$field.name].Value
                 if ($null -ne $inputField) {
                     $object[$field.name] = $inputField -as $field.type
@@ -57,6 +41,12 @@ function ConvertTo-TogglTimer {
             }
             $result | Add-Member -MemberType ScriptMethod -Name "Delete" -Force -Value {
                 # Invoke-TogglMethod ...
+            }
+            foreach ($validator in $objectConfig.Validators) {
+                if (-not $validator.callback.invoke($result)) {
+                    Write-Debug ($validator.name + " returned false. Throwing ArgumentException with message: " + $validator.message)
+                    Throw [System.ArgumentException]::new("Error validating fields: " + $validator.message)
+                }               
             }
             Write-Output $result
         }
