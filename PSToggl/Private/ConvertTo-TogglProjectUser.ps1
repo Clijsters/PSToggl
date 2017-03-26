@@ -8,7 +8,7 @@ function ConvertTo-TogglProjectUser {
     )
 
     begin {
-        $fields = $TogglConfiguration.ObjectTypes.ProjectUser.Fields
+        $objectConfig = $TogglConfiguration.ObjectTypes.ProjectUser
     }
 
     process {
@@ -20,7 +20,7 @@ function ConvertTo-TogglProjectUser {
                 $input = $item
             }
 
-            foreach ($field in $fields) {
+            foreach ($field in $objectConfig.Fields) {
                 $inputField = $input.PSObject.Members[$field.name].Value
                 if ($null -ne $inputField) {
                     $object[$field.name] = $inputField -as $field.type

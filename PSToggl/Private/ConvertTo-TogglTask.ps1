@@ -8,17 +8,7 @@ function ConvertTo-TogglTask {
     )
 
     begin {
-        $fields = @(
-            @{ name = "id";     required = $false;   default = $null;    type = [int]; },
-            @{ name = "name";   required = $true;    default = $null;    type = [string]; },
-            @{ name = "pid";    required = $true;    default = $null;    type = [int]; },
-            @{ name = "wid";    required = $true;    default = $null;    type = [int]; },
-            @{ name = "uid";    required = $true;    default = $null;    type = [int]; },
-            @{ name = "estimated_seconds";    required = $true;    default = $null;    type = [int]; },
-            @{ name = "active";    required = $true;    default = $true;    type = [bool]; },
-            @{ name = "tracked_seconds";  required = $false;   default = $null;    type = [int]; },
-            @{ name = "at";     required = $true;    default = $null;    type = [datetime]; }
-        )
+        $objectConfig = $TogglConfiguration.ObjectTypes.Task
     }
 
     process {
@@ -30,7 +20,7 @@ function ConvertTo-TogglTask {
                 $input = $item
             }
 
-            foreach ($field in $fields) {
+            foreach ($field in $objectConfig.Fields) {
                 $inputField = $input.PSObject.Members[$field.name].Value
                 if ($null -ne $inputField) {
                     $object[$field.name] = $inputField -as $field.type

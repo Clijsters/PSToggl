@@ -8,36 +8,7 @@ function ConvertTo-TogglUser {
     )
 
     begin {
-        $fields = @(
-            @{ name = "id";             required = $false;   default = $null;    type = [int]; },
-            @{ name = "api_token";      required = $true;    default = $null;    type = [string]; },
-            @{ name = "default_wid";    required = $true;    default = $null;    type = [int]; },
-            @{ name = "email";          required = $false;   default = $null;    type = [string]; },
-            @{ name = "fullname";          required = $true;   default = $null;    type = [string]; },
-            @{ name = "jquery_timeofday_format";required = $false;   default = $null;    type = [string]; },
-            @{ name = "jquery_date_format";     required = $false;   default = $null;    type = [string]; },
-            @{ name = "timeofday_format";       required = $false;   default = $null;    type = [string]; },
-            @{ name = "date_format";            required = $false;   default = $null;    type = [string]; },
-            @{ name = "store_start_and_stop_time";  required = $false;   default = $null;    type = [bool]; },
-            @{ name = "beginning_of_week";          required = $false;   default = $null;    type = [int]; }, # 0-6, Sun=0
-            @{ name = "language";           required = $false;   default = $null;    type = [string]; },
-            @{ name = "image_url";          required = $false;   default = $null;    type = [string]; },
-            @{ name = "sidebar_piechart";   required = $false;   default = $null;    type = [bool]; },
-            @{ name = "at";                 required = $true;    default = $null;    type = [datetime]; },
-            ####
-            @{ name = "new_blog_post";      required = $false;   default = $null;    type = [psobject]; },
-            ####
-            @{ name = "send_product_emails";  required = $false;   default = $null;    type = [bool]; },
-            @{ name = "send_weekly_reports";  required = $false;   default = $null;    type = [bool]; },
-            @{ name = "send_timer_notifications";  required = $false;   default = $null;    type = [bool]; },
-            @{ name = "openid_enabled";     required = $false;   default = $null;    type = [bool]; },
-            @{ name = "timezone";           required = $false;   default = $null;    type = [string]; },
-
-            @{ name = "render_timeline";           required = $false;   default = $null;    type = [bool]; },
-            @{ name = "retention";           required = $false;   default = $null;    type = [int]; },
-            @{ name = "record_timeline";           required = $false;   default = $null;    type = [bool]; },
-            @{ name = "timeline_enabled";           required = $false;   default = $null;    type = [bool]; }
-        )
+        $objectConfig = $TogglConfiguration.ObjectTypes.User
     }
 
     process {
@@ -49,7 +20,7 @@ function ConvertTo-TogglUser {
                 $input = $item
             }
 
-            foreach ($field in $fields) {
+            foreach ($field in $objectConfig.Fields) {
                 $inputField = $input.PSObject.Members[$field.name].Value
                 if ($null -ne $inputField) {
                     $object[$field.name] = $inputField -as $field.type

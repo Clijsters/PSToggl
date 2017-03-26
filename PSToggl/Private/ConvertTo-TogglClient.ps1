@@ -8,7 +8,7 @@ function ConvertTo-TogglClient {
     )
 
     begin {
-        $fields = $TogglConfiguration.ObjectTypes.Project.Fields
+        $objectConfig = $TogglConfiguration.ObjectTypes.Task
     }
 
     process {
@@ -20,7 +20,7 @@ function ConvertTo-TogglClient {
                 $input = $item
             }
 
-            foreach ($field in $fields) {
+            foreach ($field in $objectConfig.Fields) {
                 $inputField = $input.PSObject.Members[$field.name].Value
                 if ($null -ne $inputField) {
                     $object[$field.name] = $inputField -as $field.type

@@ -8,7 +8,7 @@ function ConvertTo-TogglTag {
     )
 
     begin {
-        $fields = $TogglConfiguration.ObjectTypes.Tag.Fields
+        $objectConfig = $TogglConfiguration.ObjectTypes.Tag
     }
 
     process {
@@ -20,7 +20,7 @@ function ConvertTo-TogglTag {
                 $input = $item
             }
 
-            foreach ($field in $fields) {
+            foreach ($field in $objectConfig.Fields) {
                 $inputField = $input.PSObject.Members[$field.name].Value
                 if ($null -ne $inputField) {
                     $object[$field.name] = $inputField -as $field.type

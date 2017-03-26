@@ -8,20 +8,7 @@ function ConvertTo-TogglWorkspace {
     )
 
     begin {
-        $fields = @(
-            @{ name = "id";         required = $false;    default = $null;    type = [int]; },
-            @{ name = "name";       required = $true;    default = $null;    type = [string]; },
-            @{ name = "premium";    required = $true;    default = $null;    type = [bool]; },
-            @{ name = "admin";      required = $true;    default = $null;    type = [bool]; },
-            @{ name = "default_hourly_rate"; required = $false;    default = $null;    type = [float]; },
-            @{ name = "default_currency";    required = $true;    default = $null;    type = [string]; },
-            @{ name = "only_admins_may_create_projects"; required = $true;    default = $null;    type = [bool]; },
-            @{ name = "only_admins_see_billable_rates";  required = $true;    default = $null;    type = [bool]; },
-            @{ name = "rounding";         required = $true;    default = $null;    type = [int]; },
-            @{ name = "rounding_minutes"; required = $true;    default = $null;    type = [int]; },
-            @{ name = "at";               required = $true;    default = $null;    type = [datetime]; },
-            @{ name = "logo_url";         required = $true;    default = $null;    type = [string]; }
-        )
+        $objectConfig = $TogglConfiguration.ObjectTypes.Workspace
     }
 
     process {
@@ -33,7 +20,7 @@ function ConvertTo-TogglWorkspace {
                 $input = $item
             }
 
-            foreach ($field in $fields) {
+            foreach ($field in $objectConfig.Fields) {
                 $inputField = $input.PSObject.Members[$field.name].Value
                 if ($null -ne $inputField) {
                     # TODO: Make it type safe
