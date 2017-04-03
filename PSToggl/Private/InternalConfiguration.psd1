@@ -50,7 +50,7 @@
                 @{ name = "at"; required = $true; default = $null; type = [datetime]; }
             );
         };
-        
+
         Project = @{
             TypeName = "PSToggl.Project";
             DocUrl = "";
@@ -159,7 +159,7 @@
                 @{ name = "send_timer_notifications"; required = $false; default = $null; type = [bool]; },
                 @{ name = "openid_enabled"; required = $false; default = $null; type = [bool]; },
                 @{ name = "timezone"; required = $false; default = $null; type = [string]; },
-                # TODO These are undocumented and added after testing. 
+                # TODO These are undocumented and added after testing.
                 @{ name = "render_timeline"; required = $false; default = $null; type = [bool]; },
                 @{ name = "retention"; required = $false; default = $null; type = [int]; },
                 @{ name = "record_timeline"; required = $false; default = $null; type = [bool]; },
