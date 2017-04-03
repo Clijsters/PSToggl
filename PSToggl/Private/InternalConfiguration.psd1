@@ -112,8 +112,8 @@
             );
         };
 
-        Timer = @{
-            TypeName = "PSToggl.Timer";
+        Entry = @{
+            TypeName = "PSToggl.Entry";
             DocUrl = "";
             Fields = @(
                 @{ name = "id"; required = $false; default = $null; type = [int]; },

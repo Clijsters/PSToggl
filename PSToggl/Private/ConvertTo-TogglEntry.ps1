@@ -1,6 +1,6 @@
-function ConvertTo-TogglTimer {
+function ConvertTo-TogglEntry {
     [CmdletBinding()]
-    [OutputType("PSToggl.Timer")]
+    [OutputType("PSToggl.Entry")]
     param(
         # A (set of) HashTable or PSCustomObject to convert
         [Parameter( Mandatory = $true, Position = 0, ValueFromPipeline = $true )]
@@ -9,7 +9,7 @@ function ConvertTo-TogglTimer {
     )
 
     begin {
-        $objectConfig = $TogglConfiguration.ObjectTypes.Timer
+        $objectConfig = $TogglConfiguration.ObjectTypes.Entry
     }
 
     process {
@@ -35,7 +35,7 @@ function ConvertTo-TogglTimer {
             }
 
             $result = New-Object -TypeName psobject -Property $object
-            $result.PSObject.TypeNames.Insert(0, "PSToggl.Timer")
+            $result.PSObject.TypeNames.Insert(0, "PSToggl.Entry")
             $result | Add-Member -MemberType ScriptMethod -Name "ToString" -Force -Value {
                 Write-Output $this.name
             }
@@ -46,7 +46,7 @@ function ConvertTo-TogglTimer {
                 if (-not $validator.callback.invoke($result)) {
                     Write-Debug ($validator.name + " returned false. Throwing ArgumentException with message: " + $validator.message)
                     Throw [System.ArgumentException]::new("Error validating fields: " + $validator.message)
-                }               
+                }
             }
             Write-Output $result
         }

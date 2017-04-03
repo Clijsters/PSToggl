@@ -15,7 +15,7 @@ function ConvertTo-TogglObject {
             "ProjectUser",
             "Tag",
             "Task",
-            "Timer",
+            "Entry",
             "User",
             "Workspace"
         )]

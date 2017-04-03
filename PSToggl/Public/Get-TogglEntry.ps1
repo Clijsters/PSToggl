@@ -1,13 +1,13 @@
-function Get-TogglTimer(){
+function Get-TogglEntry(){
     [CmdletBinding()]
-    [OutputType("PSToggl.Timer")]
+    [OutputType("PSToggl.Entry")]
     param(
-        # Get only current running timer
+        # Get currently running Entry
         [Parameter(Mandatory = $false)]
         [Switch] $Current
     )
     $suffix = if ($Current) {"/current"} else {""}
     $answer = Invoke-TogglMethod -UrlSuffix ("time_entries"+ $suffix)
     Write-Var answer
-    return $answer
+    return $answer | ConvertTo-TogglEntry
 }

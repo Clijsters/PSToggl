@@ -4,8 +4,8 @@ $Private = @( Get-ChildItem -Path $PSScriptRoot\Private\*.ps1 -ErrorAction Silen
 
 Import-LocalizedData -BindingVariable TogglConfiguration -BaseDirectory $PSScriptRoot\Private -FileName InternalConfiguration.psd1
 
-# Add a special validator for timer. wid is only required if pid nor tid are set
-$TogglConfiguration.ObjectTypes.Timer.Validators = @(
+# Add a special validator for Entry. wid is only required if pid nor tid are set
+$TogglConfiguration.ObjectTypes.Entry.Validators = @(
         @{
             name = "wid validator";
             callback = {$args[0].wid -or ($args[0].pid -or $args[0].tid)};

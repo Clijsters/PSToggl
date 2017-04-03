@@ -1,14 +1,14 @@
 function Start-TogglEntry(){
     <#
     .Synopsis
-        Starts a new Toggl timer
+        Starts a new Time Entry
     .DESCRIPTION
-        This function starts a new Toggl Timer.
+        This function starts a new Toggl time entry.
 
         This includes:
-         - Stopping the current timer
-         - Creating a new timer with the given information.
-         - Optionally adds a duration to it.
+         - Stopping the current Entry
+         - Creating a new Entry with the given information.
+         - Optionally add a duration to it.
     .EXAMPLE
     Start-TogglEntry "Meeting"
 

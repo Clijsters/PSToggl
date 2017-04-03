@@ -1,10 +1,10 @@
-function Write-RunningTogglTimer(){
+function Write-RunningTogglEntry(){
     param(
         # Special case - format for prompt
         [Switch]
         $ForPrompt
     )
-    $Running = Get-TogglTimer -Current
+    $Running = Get-TogglEntry -Current
     if ($Running.id -GT 0) {
         if (!$ForPrompt) {
             Write-Host "TOGGL: " -NoNewline -ForegroundColor Yellow -BackgroundColor Black

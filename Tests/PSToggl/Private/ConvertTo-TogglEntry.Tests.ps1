@@ -4,7 +4,7 @@ $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path)
 . ("$here\$sut").Replace("\Tests\", "\").Replace(".Tests.", ".")
 
 InModuleScope PSToggl {
-Describe "ConvertTo-TogglTimer" {
+Describe "ConvertTo-TogglEntry" {
     $sampleInput = @{
         description = "Test entry";
         wid = 123;
@@ -15,13 +15,13 @@ Describe "ConvertTo-TogglTimer" {
         duration = 0;
         at = [datetime]::Now;
     }
-    $out = $sampleInput | ConvertTo-TogglTimer
+    $out = $sampleInput | ConvertTo-TogglEntry
     It "Converts a HashTable to a PSCustomObject" {
         $out.GetType().Name | Should Be "PSCustomObject"
     }
 
-    It "Sets TypeName to PSToggl.Timer" {
-        $out.PSObject.TypeNames[0] | Should Be "PSToggl.Timer"
+    It "Sets TypeName to PSToggl.Entry" {
+        $out.PSObject.TypeNames[0] | Should Be "PSToggl.Entry"
     }
 
     It "Defaults 'created_with' to 'PSToggl'" {
