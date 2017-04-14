@@ -24,13 +24,17 @@ function Invoke-TogglMethod {
         Authorization = $authFull
     }
     $restUri = $togglUrl + $UrlSuffix
-    #TODO: foreach iteration through varname array
-    Write-Var UrlSuffix
-    Write-Var InputObject
-    Write-Var auth
-    Write-Var authFull
-    Write-Var headers
-    Write-Var restUri
+
+    @(
+        "APIKey",
+        "UrlSuffix",
+        "InputObject",
+        "auth",
+        "authFull",
+        "headers",
+        "restUri"
+    ) | ForEach-Object {Write-Var -VarName $_}
+
     if ($InputObject) {
         if (-not $Method) { $Method = "POST" }
         $answer = Invoke-RestMethod -Uri $restUri -Headers $headers -ContentType "application/json" -Method $Method -Body (ConvertTo-Json $InputObject -Depth 99)
