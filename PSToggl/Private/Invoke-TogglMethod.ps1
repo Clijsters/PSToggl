@@ -23,6 +23,7 @@ function Invoke-TogglMethod {
     $headers = @{
         Authorization = $authFull
     }
+
     $restUri = $togglUrl + $UrlSuffix
 
     @(
@@ -38,11 +39,12 @@ function Invoke-TogglMethod {
     if ($InputObject) {
         if (-not $Method) { $Method = "POST" }
         $answer = Invoke-RestMethod -Uri $restUri -Headers $headers -ContentType "application/json" -Method $Method -Body (ConvertTo-Json $InputObject -Depth 99)
-    } else {
+    }
+    else {
         if (-not $Method) { $Method = "GET" }
         $answer = Invoke-RestMethod -Uri $restUri -Headers $headers -ContentType "application/json" -Method $Method
     }
 
     Write-Var answer
-    return $answer.data
+    return $answer
 }
