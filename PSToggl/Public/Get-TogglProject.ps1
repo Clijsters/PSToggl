@@ -1,7 +1,8 @@
 function Get-TogglProject {
     <#
-    .Synopsis
-        Receives Toggl Projects
+    .SYNOPSIS
+        Gets Toggl Projects
+
     .DESCRIPTION
         This cmdlet queries the Toggl API against projects. If no parameter is given, it returns all accessible projects.
         You can search projects by its name (with wildcards) or by its id.
@@ -11,19 +12,40 @@ function Get-TogglProject {
         * Workspace: returns projects whose wid mathes the id of the piped object
         * Client: returns projects whose cid matches the id of the piped object
         * User (This is a special case, a user contains its projects as array. If not, will query for it and return)
-    .EXAMPLE
-        Get-TogglProject -ProjectName "*awesome*"
-        Get-TogglProject | Where-Object billable
-        Get-TogglClient -name "Customer" | Get-TogglProject
-        Get-TogglClient -name "Pete" | Get-TogglProject | Where-Object active -EQ $True
+
+    .PARAMETER Name
+
+    .PARAMETER Workspace
+
     .INPUTS
-        System.Management.Automation.PSObject
-            PSToggl.Client
-            PSToggl.Workspace
-            PStoggl.User
+        PSToggl.Client
+        PSToggl.Workspace
+        PStoggl.User
+
     .OUTPUTS
-        System.Management.Automation.PSObject
-            PsToggl.Project
+        PsToggl.Project
+
+    .EXAMPLE
+        Get-TogglProject -Name "*awesome*"
+        Returns all Projects containing "awesome" in it's name.
+
+    .EXAMPLE
+        Get-TogglProject | Where-Object billable
+        Uses Where-Object to filter the output to only return projects which are billable.
+
+    .EXAMPLE
+        Get-TogglClient -name "Customer" | Get-TogglProject
+        Returns all projects for Customer "Customer". Uses Get-TogglProjects Pipe input.
+
+    .EXAMPLE
+        Get-TogglClient -name "Pete" | Get-TogglProject | Where-Object active -EQ $True
+        Returns all active projects for Client "Pete"
+
+    .NOTES
+        Version:        1.0
+        Author:         Clijsters
+        Creation Date:  03.04.2017
+        Purpose/Change: Initial script development
     #>
     [CmdletBinding()]
     [OutputType("PSToggl.Project")]
