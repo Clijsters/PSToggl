@@ -43,10 +43,27 @@ function Get-TogglEntry() {
     param(
         # Get currently running Entry
         [Parameter(Mandatory = $false)]
-        [Switch] $Current
+        [Switch] $Current,
+
+        # Entry name
+        [Parameter(Mandatory = $false)]
+        [string] $Name,
+
+        # Start Date (convert to ISO 8601)
+        [Parameter(Mandatory = $false)]
+        [datetime]
+        $StartDate,
+
+        # End Date
+        [Parameter(Mandatory = $false)]
+        [DateTime]
+        $EndDate
     )
     $suffix = if ($Current) {"/current"} else {""}
-    $answer = Invoke-TogglMethod -UrlSuffix ("time_entries"+ $suffix)
-    Write-Var answer
-    return $answer | ConvertTo-TogglEntry
+    # TODO: Invoke-TogglMethod takes parameters Hashtable as argument. For GETs and POSTs.
+    #$parameters = if ($StartDate) { CONVERTTO ISO 8601 } else {""}
+    #$parameters = if ($EndDate) { CONVERTTO ISO 8601 } else {""}
+    $entries = Invoke-TogglMethod -UrlSuffix ("time_entries" + $suffix) -Method "GET"
+    Write-Var entries
+    return $entries | ConvertTo-TogglEntry
 }
