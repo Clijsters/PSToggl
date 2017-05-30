@@ -8,8 +8,8 @@ function Set-TogglWorkspace {
     )
 
     begin {
-        $moduleFolder = Split-Path -Path $PSScriptRoot -Parent
-        $ConfigFile = Join-Path -Path $moduleFolder -ChildPath 'config.json'
+        #$moduleFolder = Split-Path -Path $PSScriptRoot -Parent
+        #$ConfigFile = Join-Path -Path $moduleFolder -ChildPath 'config.json'
     }
 
     process {
