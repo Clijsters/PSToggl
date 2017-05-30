@@ -9,7 +9,7 @@ function ConvertTo-TogglClient {
     )
 
     begin {
-        $objectConfig = $TogglConfiguration.ObjectTypes.Task
+        $objectConfig = $TogglConfiguration.ObjectTypes.Client
     }
 
     process {
@@ -46,7 +46,7 @@ function ConvertTo-TogglClient {
                 if (-not $validator.callback.invoke($result)) {
                     Write-Debug ($validator.name + " returned false. Throwing ArgumentException with message: " + $validator.message)
                     Throw [System.ArgumentException]::new("Error validating fields: " + $validator.message)
-                }               
+                }
             }
             Write-Output $result
         }
