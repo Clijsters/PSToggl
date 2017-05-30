@@ -1,7 +1,7 @@
 function New-TogglEntry {
-	<#
+    <#
     .Synopsis
-		Creates a new Toggl Entry
+        Creates a new Toggl Entry
     .DESCRIPTION
     .EXAMPLE
     .INPUTS
@@ -14,7 +14,7 @@ function New-TogglEntry {
         [Parameter(Mandatory = $false)]
         [string] $Description = $null,
 
-		# The name of the Project to assign this entry to.
+        # The name of the Project to assign this entry to.
         [Parameter(Mandatory = $false)]
         [string] $ProjectName = $null,
 
@@ -31,12 +31,12 @@ function New-TogglEntry {
         [datetime] $Start = [datetime]::now()
     )
 
-	begin {
-	}
+    begin {
+    }
 
-	process {
-	}
+    process {
+    }
 
-	end {
-	}
+    end {
+    }
 }

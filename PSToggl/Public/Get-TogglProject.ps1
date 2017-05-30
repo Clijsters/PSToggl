@@ -50,16 +50,34 @@ function Get-TogglProject {
     [CmdletBinding()]
     [OutputType("PSToggl.Project")]
     param(
-        [Parameter(Mandatory=$false)]
-        [string] $ProjectName = $null,
+        [Parameter(Mandatory = $false, ParameterSetName = "byName")]
+        [string] $Name = $null,
 
-        [Parameter(Mandatory=$false)]
-        [string] $Workspace = $primaryWorkspace
+        [Parameter(Mandatory = $false, ParameterSetName = "byName")]
+        [Parameter(ParameterSetName = "byObject")]
+        [string] $Workspace = $primaryWorkspace,
+
+        # InputObject
+        [Parameter(Mandatory = $false, ValueFromPipeline = $true, ParameterSetName = "byObject")]
+        [psobject] $InputObject
     )
+
     $projects = Invoke-TogglMethod -UrlSuffix "workspaces/$($Workspace)/projects"
 
-        if ($ProjectName) {
-            $projects = $projects | Where-Object name -Like $ProjectName
+    if ($InputObject) {
+        #foreach Obj in InputObject
+        switch ($InputObject.psobject.GetTypeName[0]) {
+            #?????????????????????????????
+            "PSToggl.Client" {  }
+            "PSToggl.Workspace" {  }
+            "PSToggl.User" {  }
+            Default {}
         }
-        return $projects
+    }
+    else {
+        if ($Name) {
+            $projects = $projects | Where-Object name -Like $Name
+        }
+        return $projects | ConvertTo-TogglProject
+    }
 }
