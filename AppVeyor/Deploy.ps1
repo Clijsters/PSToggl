@@ -14,4 +14,4 @@ Write-Host "Adding $ModulePath to 'psmodulepath' PATH variable"
 $env:psmodulepath += ';' + $ModulePath
 
 Write-Host 'Publishing module to Powershell Gallery'
-#Publish-Module -Name $env:ModuleName -NuGetApiKey $env:NuGetApiKey
+Publish-Module -Name $env:ModuleName -NuGetApiKey $env:NuGetApiKey
