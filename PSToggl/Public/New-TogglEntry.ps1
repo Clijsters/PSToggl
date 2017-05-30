@@ -7,7 +7,8 @@ function New-TogglEntry {
     .INPUTS
     .OUTPUTS
     #>
-	[CmdletBinding()]
+    [CmdletBinding()]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
     param(
         # The Description and title of the entry
         [Parameter(Mandatory = $false)]

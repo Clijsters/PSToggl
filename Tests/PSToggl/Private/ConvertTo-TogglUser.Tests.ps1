@@ -19,8 +19,8 @@ Describe "ConvertTo-TogglUser" {
         beginning_of_week = 0;
         language = "en_US";
         image_url = "https://www.toggl.com/system/avatars/9000/small/open-uri20121116-2767-b1qr8l.png";
-        sidebar_piechart = false;
-        at = "2013-03-06T12:18:42+00:00";
+        sidebar_piechart = $false;
+        at = [datetime]::Now;
         retention = 9;
         record_timeline = $true;
         render_timeline = $true;
@@ -39,7 +39,7 @@ Describe "ConvertTo-TogglUser" {
     foreach ($k in $sampleInput.Keys) {
         # TODO: Will convert property names in future
         It "Sets $($k.PadRight(8)) to $($sampleInput.Item($k))" {
-            $out.PSObject.Members[$k].Value | Should Be $sampleInput.Item($k)
+            $out.PSObject.Members[$k].Value.toString() | Should Be $sampleInput.Item($k).toString()
         }
     }
 

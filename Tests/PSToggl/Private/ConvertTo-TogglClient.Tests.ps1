@@ -23,7 +23,7 @@ Describe "ConvertTo-TogglClient" {
     foreach ($k in $sampleInput.Keys) {
         # TODO: Will convert property names in future
         It "Sets $($k.PadRight(8)) to $($sampleInput.Item($k))" {
-            $out.PSObject.Members[$k].Value | Should Be $sampleInput.Item($k)
+            $out.PSObject.Members[$k].Value.toString() | Should Be $sampleInput.Item($k).tostring()
         }
     }
 

@@ -60,13 +60,13 @@ Describe "$moduleName on PowerShell $PSVersion" {
             $appveyorFile | Should Exist
         }
 
-        It "Includes the module version" {
             foreach ($line in (Get-Content $appveyorFile)) {
                 if ($line -match "^\D*(?<Version>(\d+\.){1,3}\d+).\{build\}") {
                     $appveyorVersion = $matches.Version
                     break
                 }
             }
+        It "Includes the module version" {
             $appveyorVersion               | Should Not BeNullOrEmpty
             $appveyorVersion -as [Version] | Should Not BeNullOrEmpty
         }

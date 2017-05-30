@@ -24,6 +24,7 @@ function Start-TogglEntry(){
         [object] The Entry created
      #>
     [CmdletBinding()]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
     param(
         # The Description and title of your new entry
         [Parameter(Mandatory = $false)]

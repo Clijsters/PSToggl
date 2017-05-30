@@ -1,4 +1,6 @@
 function Set-TogglWorkspace {
+    #FIXME: ShouldProcess would fit here
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
     [CmdletBinding()]
     [OutputType("PSToggl.Workspace")]
     param (
