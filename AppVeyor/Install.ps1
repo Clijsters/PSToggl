@@ -12,3 +12,7 @@ Write-Host ' - PSScriptAnalyzer'
 Install-Module PSScriptAnalyzer -Repository PSGallery -force
 
 Write-Host "Done."
+
+Write-Host "Installing PSToggl..." -ForegroundColor Yellow
+
+Import-Module "..\PSToggl\PSToggl.psd1"
