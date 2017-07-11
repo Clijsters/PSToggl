@@ -26,6 +26,8 @@ function Invoke-TogglMethod {
 
     $restUri = $togglUrl + $UrlSuffix
 
+    # TODO: Write-Var seems to break on this way - I think because the scope changes. Clarify and fix.
+    <# Just dot include write-var?
     @(
         "APIKey",
         "UrlSuffix",
@@ -34,7 +36,8 @@ function Invoke-TogglMethod {
         "authFull",
         "headers",
         "restUri"
-    ) | ForEach-Object {Write-Var -VarName $_}
+    ) | ForEach-Object { if (Get-Variable $_ -ErrorAction SilentlyContinue) {Write-Debug ((Get-Variable $_).Name.PadRight(12) + (Get-Variable $_).Value)}}
+    #>
 
     if ($InputObject) {
         if (-not $Method) { $Method = "POST" }

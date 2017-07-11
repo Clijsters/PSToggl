@@ -3,22 +3,29 @@ $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path)
 . ("$here\$sut").Replace("\Tests\", "\").Replace(".Tests.", ".")
 
-#InModuleScope PSToggl {
+InModuleScope PSToggl {
 Describe "Invoke-TogglMethod" {
-    Mock Invoke-WebRequest {
-
+    Mock Invoke-RestMethod {
+        return @{
+            code = 404;
+            data = @{
+                test = $true;
+                foo = "bar";
+            }
+        }
+        Write-Debug $Uri
     }
 
-    It "Performs a GET Request for empty InputObject" {
-
+    It "Defaults to GET Request for empty InputObject" {
+        Invoke-TogglMethod -UrlSuffix "/test" | Assert-MockCalled -CommandName "Invoke-RestMethod" -ParameterFilter {$Method -eq "GET"}
     }
 
-    It "Performs a POST Request if an InputObject is given" {
-
+    It "Defaults to POST Request if an InputObject is given" {
+        Invoke-TogglMethod -UrlSuffix "/test" -InputObject @{ key = "val" } | Assert-MockCalled -CommandName "Invoke-RestMethod" -ParameterFilter {$Method -eq "POST"}
     }
 
     It "Returns the data attribute of the API Response if it succeeded" {
-
+        Invoke-TogglMethod -UrlSuffix "/test" | Should Be @{test= $true; foo = "bar";}
     }
 }
-#}
+}
