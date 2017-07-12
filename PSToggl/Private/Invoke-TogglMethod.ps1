@@ -48,6 +48,8 @@ function Invoke-TogglMethod {
         $answer = Invoke-RestMethod -Uri $restUri -Headers $headers -ContentType "application/json" -Method $Method
     }
 
+    #TODO: Error handling
+
     Write-Var answer
-    return $answer
+    return $answer.data
 }
