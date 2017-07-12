@@ -49,7 +49,9 @@ function Invoke-TogglMethod {
     }
 
     #TODO: Error handling
-
+<#
+Write Var doesnt work as cmdlet...
     Write-Var answer
-    return $answer.data
+#>
+    return $answer
 }

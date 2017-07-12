@@ -26,8 +26,8 @@ InModuleScope PSToggl {
             Assert-MockCalled -CommandName "Invoke-RestMethod" -ParameterFilter {$Method -eq "POST"}
         }
 
-        It "Returns the data attribute of the API Response if it succeeded" {
-            Invoke-TogglMethod -UrlSuffix "/test" | Should Be $restAnswer.data
+        It "Returns the whole API Response object if it succeeded" {
+            Invoke-TogglMethod -UrlSuffix "/test" | Should Be $restAnswer
         }
     }
 }
