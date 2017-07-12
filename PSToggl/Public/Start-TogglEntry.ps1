@@ -58,7 +58,7 @@ function Start-TogglEntry(){
 
     if ($ProjectName) {
         Write-Var ProjectName
-        $projId = (Get-TogglProject -ProjectName $ProjectName)[0].id
+        $projId = (Get-TogglProject -Name $ProjectName)[0].id
         Write-Var projId
         if ($projId -gt 0)  {
             $entry.time_entry.pid = $projId

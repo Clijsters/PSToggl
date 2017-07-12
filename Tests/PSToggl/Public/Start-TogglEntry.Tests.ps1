@@ -13,8 +13,8 @@ InModuleScope PSToggl {
 
         It "Uses Get-TogglProject if a Project Name is given" {
             Mock Get-TogglProject {}
-            Start-TogglEntry "Test" -Project "Test project"
-            Assert-MockCalles -CommandName "Get-ToglProject" -ParameterFilter {$Name -eq "Test"}
+            Start-TogglEntry -Description "Test" -ProjectName "Test Project"
+            Assert-MockCalled -CommandName "Get-TogglProject" -ParameterFilter {$Name -eq "Test Project"}
         }
 
         It "Creates new Tags if necessary" {
