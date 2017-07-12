@@ -17,14 +17,14 @@ function Invoke-TogglMethod {
         $Method
     )
 
-    [string]$auth = $APIKey + ":" + "api_token"
+    [string]$auth = $TogglConfiguration.User.ApiKey + ":" + "api_token"
     [string]$authFull = "Basic " + [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($auth))
 
     $headers = @{
         Authorization = $authFull
     }
 
-    $restUri = $togglUrl + $UrlSuffix
+    $restUri = $TogglConfiguration.Api.baseUrl + $UrlSuffix
 
     # TODO: Write-Var seems to break on this way - I think because the scope changes. Clarify and fix.
     <# Just dot include write-var?
