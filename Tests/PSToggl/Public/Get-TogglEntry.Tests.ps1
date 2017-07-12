@@ -5,14 +5,26 @@ $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path)
 
 InModuleScope PSToggl {
     Describe "Get-TogglEntry" {
-        It "Calls Invoke-TogglMethod" {
-            Mock -CommandName "Invoke-TogglMethod" {}
-            #Get-TogglEntry | Assert-MockCalled -CommandName "Invoke-TogglMethod" -ParameterFilter {}
+        $exampleObject = @{foo = "bar"}
+        Mock Invoke-TogglMethod {
+            return $exampleObject
+        }
+        Mock ConvertTo-TogglEntry {
+            return "dummy"
         }
 
-        It "Calls Convertto-TogglEntry" {
-            Mock -CommandName "ConvertTo-TogglEntry" {}
-            #Get-TogglEntry | Assert-MockCalles -CommandName "ConvertTo-TogglEntry" -ParameterFilter {}
+        It "Calls Invoke-TogglMethod" {
+            Get-TogglEntry
+            Assert-MockCalled -CommandName "Invoke-TogglMethod"
+        }
+
+        It "Calls Convertto-TogglEntry and supplies the object returned by Invoke-TogglMethod" {
+            Get-TogglEntry
+            Assert-MockCalled -CommandName "ConvertTo-TogglEntry" -ParameterFilter {$InputObject -eq $exampleObject}
+        }
+
+        It "Returns the entries converted with ConvertTo-TogglEntry" {
+            Get-TogglEntry | Should Be "dummy"
         }
     }
 }
