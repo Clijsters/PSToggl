@@ -10,7 +10,6 @@ function ConvertTo-TogglProject {
 
     begin {
         $objectConfig = $TogglConfiguration.ObjectTypes.Project
-        $objectName = "Project"
     }
 
     process {

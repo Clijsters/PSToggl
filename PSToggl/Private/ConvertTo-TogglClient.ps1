@@ -10,7 +10,6 @@ function ConvertTo-TogglClient {
 
     begin {
         $objectConfig = $TogglConfiguration.ObjectTypes.Client
-        $objectName = "Client"
     }
 
     process {

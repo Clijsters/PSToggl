@@ -10,7 +10,6 @@ function ConvertTo-TogglWorkspace {
 
     begin {
         $objectConfig = $TogglConfiguration.ObjectTypes.Workspace
-        $objectName = "Workspace"
     }
 
     process {

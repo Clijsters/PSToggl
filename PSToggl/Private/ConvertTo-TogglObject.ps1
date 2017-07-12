@@ -6,22 +6,6 @@ function ConvertTo-TogglObject {
         [System.Management.Automation.PSCustomObject]
         $InputObject, <#Alias?#>
 
-        # The Object's name
-        [Parameter(Mandatory = $true)]
-        [ValidateSet(
-            "Client",
-            "Group",
-            "Project",
-            "ProjectUser",
-            "Tag",
-            "Task",
-            "Entry",
-            "User",
-            "Workspace"
-        )]
-        [String]
-        $ObjectName,
-
         # The field configuration
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty]
@@ -59,7 +43,7 @@ function ConvertTo-TogglObject {
             }
 
             $result = New-Object -TypeName psobject -Property $object
-            $result.PSObject.TypeNames.Insert(0, "PSToggl.$ObjectName")
+            $result.PSObject.TypeNames.Insert(0, $ObjectConfig.TypeName)
             foreach ($validator in $objectConfig.Validators) {
                 if (-not $validator.callback.invoke($result)) {
                     Write-Debug ($validator.name + " returned false. Throwing ArgumentException with message: " + $validator.message)

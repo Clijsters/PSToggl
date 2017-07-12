@@ -10,7 +10,6 @@ function ConvertTo-TogglEntry {
 
     begin {
         $objectConfig = $TogglConfiguration.ObjectTypes.Entry
-        $objectName = "Entry"
     }
 
     process {

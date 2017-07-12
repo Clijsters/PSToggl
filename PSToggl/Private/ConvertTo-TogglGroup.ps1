@@ -10,7 +10,6 @@ function ConvertTo-TogglGroup {
 
     begin {
         $objectConfig = $TogglConfiguration.ObjectTypes.Group
-        $objectName = "Group"
     }
 
     process {

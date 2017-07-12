@@ -10,7 +10,6 @@ function ConvertTo-TogglTask {
 
     begin {
         $objectConfig = $TogglConfiguration.ObjectTypes.Task
-        $objectName = "Task"
     }
 
     process {
