@@ -20,7 +20,7 @@ function New-TogglProject {
     param (
         # Identifies the projects workspace
         [Parameter(Mandatory = $false)]
-        [int] $workspaceId = $primaryWorkspace,
+        [int] $workspaceId = $TogglConfiguration.User.Workspace,
 
         # The name of your new project
         [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
@@ -32,7 +32,7 @@ function New-TogglProject {
 
         # Color to identify your new project
         [Parameter(Mandatory = $false)]
-        [Toggl.Color] $Color #Enum? Class? int? String?...
+        [int] $Color #Enum? Class? int? String?...
     )
 
     begin {
