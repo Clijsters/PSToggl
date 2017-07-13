@@ -3,13 +3,12 @@ function ConvertTo-TogglObject {
     param(
         # A PSCustomObject to convert
         [Parameter( Mandatory = $true, Position = 0, ValueFromPipeline = $true )]
-        [System.Management.Automation.PSCustomObject]
+        [PSObject[]]
         $InputObject, <#Alias?#>
 
         # The field configuration
         [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty]
-        [System.Management.Automation.PSCustomObject]
+        [System.Collections.Hashtable]
         $ObjectConfig
     )
 
