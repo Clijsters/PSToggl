@@ -1,4 +1,8 @@
 @{
+    Api = @{
+        baseUrl = "https://www.toggl.com/api/v8/";
+
+    };
     ObjectTypes = @{
 
         BareExample = @{

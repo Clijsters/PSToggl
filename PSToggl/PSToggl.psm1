@@ -12,6 +12,10 @@ $TogglConfiguration.ObjectTypes.Entry.Validators = @(
         message = "wid is required if pid or tid are not provided";
     }
 )
+
+#TODO unsecure. Introduce a global configuration system (coming soon, currently in a private project)
+$TogglConfiguration.User = Get-Content ~/.PSToggl | ConvertFrom-Json
+
 Foreach ($import in @($Public + $Private)) {
     Try {
         . $import.fullname
