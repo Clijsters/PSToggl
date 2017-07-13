@@ -14,7 +14,7 @@ function Get-TogglTag() {
         * Entry: Returns all tags the entry is tagged with.
 
     .PARAMETER Name
-        The name of a tag
+        The name of the tag
 
     .PARAMETER Workspace
         A Workspace id to fetch tags from
