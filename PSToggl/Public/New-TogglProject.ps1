@@ -16,7 +16,7 @@ function New-TogglProject {
         [Toggl.Projcet] returns the created project if PassThru is switched.
     #>
     [CmdletBinding()]
-  [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
     param (
         # Identifies the projects workspace
         [Parameter(Mandatory = $false)]
