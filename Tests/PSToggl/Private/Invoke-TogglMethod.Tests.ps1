@@ -9,9 +9,10 @@ InModuleScope PSToggl {
             code = 404;
             data = @{
                 test = $true;
-                foo = "bar";
+                foo  = "bar";
             }
         }
+
         Mock Invoke-RestMethod {
             return $restAnswer
         }
@@ -29,5 +30,6 @@ InModuleScope PSToggl {
         It "Returns the whole API Response object if it succeeded" {
             Invoke-TogglMethod -UrlSuffix "/test" | Should Be $restAnswer
         }
+
     }
 }

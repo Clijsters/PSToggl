@@ -6,15 +6,16 @@ $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path)
 InModuleScope PSToggl {
     Describe "Start-TogglEntry" {
         Mock Invoke-TogglMethod {}
+
         Mock Get-TogglProject {
             return @(
                 @{
                     name = "test";
-                    id = 123
+                    id   = 123
                 },
                 @{
                     name = "test2";
-                    id = 456
+                    id   = 456
                 }
             )
         }
@@ -40,5 +41,6 @@ InModuleScope PSToggl {
             }
             Start-TogglEntry "cool meeting" -Tags @("meeting", "time-wasting")
         }
+
     }
 }

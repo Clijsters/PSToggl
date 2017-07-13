@@ -6,9 +6,11 @@ $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path)
 InModuleScope PSToggl {
     Describe "Get-TogglEntry" {
         $exampleObject = @{foo = "bar"}
+
         Mock Invoke-TogglMethod {
             return $exampleObject
         }
+
         Mock ConvertTo-TogglEntry {
             return "dummy"
         }
@@ -26,5 +28,6 @@ InModuleScope PSToggl {
         It "Returns the entries converted with ConvertTo-TogglEntry" {
             Get-TogglEntry | Should Be "dummy"
         }
+
     }
 }

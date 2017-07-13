@@ -8,9 +8,11 @@ InModuleScope PSToggl {
         It "Creates a Client Object with all necessary attributes" {
 
         }
+
         It "Creates a Task Object with all necessary attributes" {
 
         }
+
         It "Creates an Entry Object with all necessary attributes" {
 
         }
