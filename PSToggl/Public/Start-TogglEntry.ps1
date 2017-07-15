@@ -20,8 +20,9 @@ function Start-TogglEntry(){
         Get-TogglProject *Intern* | Start-TogglEntry "Meeting"
     .INPUTS
         This function does not accept pipeline Input yet
+
     .OUTPUTS
-        [object] The Entry created
+        PSToggl.Entry
      #>
     [CmdletBinding()]
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]

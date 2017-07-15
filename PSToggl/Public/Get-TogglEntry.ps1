@@ -4,7 +4,7 @@ function Get-TogglEntry() {
         Gets Toggl Time Entries
 
     .DESCRIPTION
-        This cmdlet queries the Toggl API for Time Entries (time_entries). It returns all Entries, of no parameter is given.
+        This cmdlet queries the Toggl API for Time Entries (time_entries). It returns all Entries, if no parameter is given.
         You can search Entries by its name, id, project, tags..
 
         You can pipe any PSToggl object which belongs to a time entry to this cmdlet, like:

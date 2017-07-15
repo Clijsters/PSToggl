@@ -14,7 +14,7 @@ function Get-TogglTag() {
         * Entry: Returns all tags the entry is tagged with.
 
     .PARAMETER Name
-        The name of a tag
+        The name of the tag
 
     .PARAMETER Workspace
         A Workspace id to fetch tags from
@@ -26,13 +26,13 @@ function Get-TogglTag() {
         PSToggl.Entry
 
     .OUTPUTS
-        PSToggl.Tag
+        PSToggl.Tag[]
 
     .EXAMPLE
         Get-TogglTag -Name "meeting"
 
     .EXAMPLE
-        Get-TogglProjcet -Name "Antons Website" | Get-TogglTag
+        Get-TogglProjcet -Name "Website" | Get-TogglTag
 
     .NOTES
         Version:        1.0
@@ -52,6 +52,6 @@ function Get-TogglTag() {
         [string] $Workspace
     )
     $tags = Invoke-TogglMethod -UrlSuffix ("workspaces/" + $TogglConfiguration.User.Workspace + "/tags") -Method "GET"
-    Write-Var tags
+    #Write-Var tags
     return $tags | ConvertTo-TogglTag
 }
