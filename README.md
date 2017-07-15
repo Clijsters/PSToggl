@@ -9,14 +9,15 @@ It uses Toggl's [API v8](https://github.com/toggl/toggl_api_docs/blob/master/tog
 
 ## Under heavy development
 
-**This module is under heavy development and not ready for production use (yet)**
+**This module is in an early beta stadium and not ready for production use**
 
-However, I want to give you an overview of what will come and how you can contribute.
+It is intended to become a fully featured Toggl Client purely written in PowerShell downwards compatible to PowerShell v3 (and soon also v2)
 
 ____
 
-
 ## Features
+
+PSToggl perfectly integrates in your existing PowerShell environment, independent of the operating system you want to work with. It makes heavy use of PowerShells pipeline abilities and ~~is able~~ will be able to integrate with other modules like ~~PSJira~~JiraPS, PSExcel, PSHipchat and so on. It helps you to increase your productivity by providing extended reporting features, migration&sync features (Toggl -> JIRA) and a robust interactive PowerShell client.
 
 ## Contents
 
@@ -53,44 +54,48 @@ Import-Module PSToggl/PSToggl/PSToggl/PSToggl.psd1 # Yeah, 4 times
 
 ### Configuration
 
-**//TODO A configuration cmdlet is not implemented yet.**
+**//TODO A configuration cmdlet is not implemented yet. Will be improved soon**
 
-To set your Personal Access Token, create a `[gitDir]/PSToggl/config.json` with the following structure:
 
+To set your Personal Access Token and your default workspace (yeah I know), create a `~/.PSToggl` JSON File with the following content:
 ````json
 {
-    "toggl": {
-        "URL": "https://www.toggl.com/api/v8/",
-        "APIKey": "ffffffffffffffffffffffffffffffff",
-        "Workspace": 1234567,
-        "SummaryOnLoad": false
-    }
+    "APIKey": "ffffffffffffffffffffffffffffffff",
+    "Workspace": 1234567
 }
 ````
+Unencrypted?!?! Yeah, this is why it's called a beta thing...
 
 ## How to use
 
+The best way to become familiar with PSToggl is to use Get-Help
 ````PowerShell
-PS> Get-TogglEntry
+PS> Get-Help about_PSJira
+PS> Get-Help Start-TogglEntry
+PS> # And so on
 ````
 
 ````PowerShell
-PS> Get-TogglEntry
+PS> Start-TogglEntry "Getting started with PSToggl"
 ````
 
 ````PowerShell
-PS> Get-TogglEntry
+PS> Get-TogglEntry -Current | Add-TogglTag "educational"
+````
+
+````PowerShell
+PS> Get-TogglProject "homepage" | Get-TogglEntry | Where-Object {-not $_.billed} | Add-TogglTag "overdue"
 ````
 
 ````PowerShell
 PS> Measure-Command {mvn -U compile} | New-TogglEntry "Wasting time with coffee..."
 ````
 
-### Beta Features & special use cases
-
 ````PowerShell
 PS> Measure-Command {git commit} | New-TogglEntry "Writing well formatted, meaningful git commit messages" -Tags @("efficiency", "Drumherum")
 ````
+
+### Beta Features & special use cases
 
 If you have tasks, repeating with the same configuration (Tags, project, title), you probably don't want to type the whole timer properties every time.  
 For this case, we use _templates_. Where the Toggl Desktop client suggests timer configurations based on your previous runned timers, PSToggl introduces templates.
@@ -99,7 +104,7 @@ Theses templates - once configured - give you the ability to quickly start a tim
 
 There are two types of templates. Full templates and configuration templates. The latter is without a title.
 
-Tab completion based on previous entered information will also be supported to mimic the behavior of Toggl Desktop.
+**Tab completion** based on previous entered information will also be supported to mimic the behavior of Toggl Desktop. (And because it makes it much much faster to use cmdlets)
 
 ````PowerShell
 PS> Start-TogglEntry -Template vcs
