@@ -1,0 +1,96 @@
+TOPIC
+    about_PSToggl
+
+SHORT DESCRIPTION
+    Dieses Modul integriert Toggl in Ihre PowerShell, um Ihre Effizienz (beim Tracking selbst) enorm zu steigern.
+
+LONG DESCRIPTION
+    Füer die wenigen Menschen dieswer Elt (es werden immer mehr), die eine gewise Zuneigung zu PowerShell entwickelt haben,
+    ist das Arbeiten innerhalb der Shell oft um einiges produktiver, als das ständige Wechseln zwischen vrschiedenen GUI Tools. Um dieses Problem auch beim time tracking zu umgehen,
+    wurde PSToggl entworfen. Es ermöglicht Ihnen, nahtlos Zeiten zu protokollieren, während Sie Ihren Dailz Doings nachgehen.
+
+    #TODO: translate / weiter übersetzen
+
+    Tracking your time!
+    Yeah, time tracking is a fundamental part of doing really productive work.
+    Before you can optimize something, you have to measure its performance. Only if measuring of your performance is as easy as possible, it can be precise and efficient.
+
+    = = = =
+
+    Before we start some FAQs:
+
+    How can I contribute?
+    Go to the GitHub page of this project (https://github.com/Clijsters/PSToggl), create an issue or a pull request and feel happy.
+    Please don't forget to test your code with pester!
+
+    Can I reuse code of this module?
+    Yes! It's completely Open Source. I would like to be mentioned as author if you reuse code of that project.
+
+    Is this module "official"?
+    No. Nothing here is "official", like made by Toggl or something. I just wrote it, because I love PowerShell and I love Toggl. (oh and APIs)
+
+    = = = =
+
+    Let's assume you want to know how much time you put into writing well structured and informative commit messages.
+    Would you like to...
+
+    - leave your favorite shell,
+    - start a tracker,
+    - call it "commit messages",
+    - go back to your prompt,
+    - stage, commit, merge your stuff,
+    - leave your shell again,
+    - stop your timer (start a new one),
+    - go back to your prompt, release (or chat with someone),
+
+    ... et cetera?
+
+    Or would you prefer to just...
+
+    PS> Start-TogglEntry -Template vcs
+    PS> git add *.scss
+    PS> git commit
+    [...]
+    PS> git push fork dev
+    PS> Start-TogglEntry "communication"
+    PS> Stop-TogglEntry -PassThrough | Add-JiraIssueWorklog -Issue "homepage-123"
+    PS> Add-JiraIssueComment -Comment "Fixed and pushed to fork" -Issue "homepage-123"
+
+    Depending on which type of user you are, it can often be very beneficial to not have to leave your command prompt,
+    especially for developers or DevOps who don't like to click their way through IDEs, git clients, gui mal clients and so on...
+
+    The 2nd use case for this module is tracking automation.
+    One example: Your company is using JIRA to log work, but you prefer to use Toggl. Copy and Pasting your Log entries from Toggl to Jira or vice versa can be very frustrating and time-consuming.
+
+    Transfering work logs from Toggl to JIRA is as easy as:
+    PS> foreach ($issue in (Get-JiraIssue -Query "assignee = currentUser()")) {
+    >>    Get-TogglEntry | ? {$_.Description -contains $issue.key} |
+    >>    Add-JiraIssueWorklog -Issue $issue.key -Comment $_.description -TimeSpent $_.Minutes -DateStarted $_.start
+    >> }
+
+    And eventually it will be as easy as:
+    PS> Get-TogglEntry | ? {$_Description -contains "homepage-123"} | Add-JiraIssueWorklog -Issue "homepage-123"
+
+EXAMPLES
+    Start a new timer:
+    PS> Start-TogglEntry -Description "Meeting with Paul"
+
+    Stop the running timer:
+    PS> Stop-TogglEntry
+
+    Create a new Entry for the last 80 minutes:
+    PS> New-TogglEntry -minutes 80 -stop [datetime]::Now -description "coding some cool stuff"
+
+    Create a new project:
+    PS> New-TogglProject "Cool project" -CustomerId 12345
+
+    Create a new project from a JIRA project:
+    PS> Get-JiraProject "Test" | New-TogglProject -CustomerId 12345
+
+    To be continued...
+
+KEYWORDS
+    Toggl, tracking, productivity, API, reporting
+
+SEE ALSO
+    Take a look at the modules GitHub Repository!
