@@ -57,7 +57,7 @@ function Get-TogglProject {
 
         [Parameter(Mandatory = $false, ParameterSetName = "byName")]
         [Parameter(ParameterSetName = "byObject")]
-        [string] $Workspace = $primaryWorkspace,
+        [string] $Workspace = $TogglConfiguration.Api.Workspace,
 
         # InputObject
         [Parameter(Mandatory = $false, ValueFromPipeline = $true, ParameterSetName = "byObject")]
