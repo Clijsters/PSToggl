@@ -14,8 +14,10 @@ function Get-TogglProject {
         * User (This is a special case, a user contains its projects as array. If not, will query for it and return)
 
     .PARAMETER Name
+        The name of the project to return. You will be able to use wildcards soon.
 
     .PARAMETER Workspace
+        Defaults to your primary Workspace (configured for this module). If provided, this cmdlet returns Projects for the given Workspace.
 
     .INPUTS
         PSToggl.Client
@@ -67,7 +69,7 @@ function Get-TogglProject {
     if ($InputObject) {
         #foreach Obj in InputObject
         switch ($InputObject.psobject.GetTypeName[0]) {
-            #?????????????????????????????
+            #The thins is, one can use parametersetnames to identify the provided elements soon in begin{}
             "PSToggl.Client" {  }
             "PSToggl.Workspace" {  }
             "PSToggl.User" {  }

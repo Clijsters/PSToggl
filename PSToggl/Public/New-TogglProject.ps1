@@ -6,21 +6,31 @@ function New-TogglProject {
     .DESCRIPTION
         This function creates a new Toggl Project in a Workspace.
 
-        If no workspace is given, it defaults to your default workspace configured in ~/.PSToggl or $TogglConfiguration
+        If no workspace is given, it defaults to your default workspace configured in ~/.PSToggl or $TogglConfiguration (or config.json)
 
     .EXAMPLE
-        New-TogglProject -Name "CoolStuff" -PassThru | Start-TogglEntry "Organizational stuff" -Tags ("orga", "TogglMaint", "PoSh")
+        New-TogglProject "homepage" -CustomerId 12345
 
-        Creates a new Toggl Project, passes it through
+        Creates a new Toggl Project for the customer with the id 12345
 
     .EXAMPLE
-        Get-JiraIssue -Assignee currentUser | New-TogglProject -ErrorAction String
-        Creates a Toggl Project for each Jira Issue assigned to you.
+        New-TogglProject -Name "CoolStuff" | Start-TogglEntry "Organizational stuff" -Tags ("orga", "TogglMaint", "PoSh")
 
+        Creates a new Toggl Project, passes it through the pipeline and starts an entry on it.
+
+    .EXAMPLE
         The following is currently not supported but will be the suggested way...
+
+        Get-JiraIssue -Query "assignee = currentUser()" | New-TogglProject -CustomerId 12345 -ErrorAction SilentlyContinue
+
+        Creates a Toggl Project for each Jira Issue assigned to you.
         Tip: If you want to copy the model idea behind JIRA, create a timer Template for each Issue and a Project for each Project.
+        This one is going to be implemented for PSJira (now JiraPS). You need it installed and configured for it to work.
 
     .INPUTS
+        String[]
+        PSToggl.Customer
+
     .OUTPUTS
         PSToggl.Project
     #>
