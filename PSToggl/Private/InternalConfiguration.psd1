@@ -10,26 +10,6 @@
             Fields = @(
                 @{ name = "id"; required = $false; default = $null; type = [int]; }
             );
-            <#
-            Commented out because it doesnt work in data sections. Thinking about alternatives...
-            Validators = @(
-                @{
-                    name = "";
-                    callback = {};
-                    message = "";
-                }
-            );
-            additionalMethods = @(
-                @{
-                    name = "toString";
-                    function = {return ("(" + this.id + ") " + this.name)}
-                },
-                @{
-                    name = "delete";
-                    function = {Remove-TogglObject this -Force}
-                }
-            );
-            #>
         };
 
         Client = @{
