@@ -15,7 +15,7 @@ LONG DESCRIPTION
 
     = = = =
 
-    Before we start some FAQs:
+    Before we start, some FAQs:
 
     How can I contribute?
     Go to the GitHub page of this project (https://github.com/Clijsters/PSToggl), create an issue or a pull request and feel happy.

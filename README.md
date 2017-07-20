@@ -21,13 +21,13 @@ PSToggl perfectly integrates in your existing PowerShell environment, independen
 
 ## Contents
 
- 1. Features
- 2. Contents
- 3. Getting started
+1. Features
+2. Contents
+3. Getting started
     - Installation
     - Configuration
- 2. How to use
- 3. License
+4. How to use
+5. License
 
 ## Getting started
 
@@ -49,7 +49,7 @@ Alternatively, just clone this repo and import the module:
 
 ````PowerShell
 git clone https://github.com/clijsters/PSToggl
-Import-Module PSToggl/PSToggl/PSToggl/PSToggl.psd1 # Yeah, 4 times 
+Import-Module PSToggl/PSToggl/PSToggl/PSToggl.psm1 # Yeah, 4 times 
 ````
 
 ### Configuration
@@ -94,6 +94,8 @@ PS> Measure-Command {mvn -U compile} | New-TogglEntry "Wasting time with coffee.
 ````PowerShell
 PS> Measure-Command {git commit} | New-TogglEntry "Writing well formatted, meaningful git commit messages" -Tags @("efficiency", "Drumherum")
 ````
+
+___
 
 ### Beta Features & special use cases
 

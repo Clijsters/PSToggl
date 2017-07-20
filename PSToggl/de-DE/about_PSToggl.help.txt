@@ -5,13 +5,26 @@ SHORT DESCRIPTION
     Dieses Modul integriert Toggl in Ihre PowerShell, um Ihre Effizienz (beim Tracking selbst) enorm zu steigern.
 
 LONG DESCRIPTION
-    Füer die wenigen Menschen dieswer Elt (es werden immer mehr), die eine gewise Zuneigung zu PowerShell entwickelt haben,
-    ist das Arbeiten innerhalb der Shell oft um einiges produktiver, als das ständige Wechseln zwischen vrschiedenen GUI Tools. Um dieses Problem auch beim time tracking zu umgehen,
-    wurde PSToggl entworfen. Es ermöglicht Ihnen, nahtlos Zeiten zu protokollieren, während Sie Ihren Dailz Doings nachgehen.
+    Für die wenigen Menschen dieser Welt (es werden immer mehr), die eine gewisse Zuneigung zu PowerShell entwickelt haben,
+    ist das Arbeiten innerhalb der Shell oft um einiges produktiver, als das ständige Wechseln zwischen vrschiedenen GUI Tools.
+    Um dieses Problem auch beim time tracking zu umgehen, wurde PSToggl entworfen.
+    Es ermöglicht Ihnen, nahtlos Zeiten zu protokollieren, während Sie Ihren Daily Doings nachgehen, ohne Ihre Lieblingsshell zu verlassen.
 
     #TODO: translate / weiter übersetzen
 
-    Tracking your time!
+    Zeiten protokollieren? Time tracking? Brauche ich das?
+    Die meisten user dieses Moduls werden es wohl installieren, weil sie Toggl nutzen und ihr Nutzererlebnis mit in ihre PowerShell nehmen moechten.
+
+    Fuer die anderen sei gesagt: Ja, du brauchst das!
+    Vor allem fuer die Scripting afineren Leute ist time tracking sehr wohl interessant, denn es verschaerft die Warnehmung dafuer, ab wann es sich lohnt, gewisse Vorgaenge zu automatisieren.
+
+    Nehmen wir mal an, Sie haben ein fest definniertes Schmea, nachdem sie code releasen. Sie erstellen einen BRanch Ihres Codes, aendern Abhaengigkeiten, trsanspilieren oderbereiten Dinge vor, mergen diesen Branch in den master, erhoerehn die Versionsnumber, taggen den commit, pushen ihn, triggern ein CIO tool...
+
+    Mit regelmaessigem time tracking wissen Sie ganz genau, wie langeSie im Schnitt fuer diese Aktionen brauchen und ob es sich mehr lohnt, diese Vorgaenge weiter haendisch durchzufuerehn, oder ob es Sinn macht, ein Script dafuer zu schreiben, was Inen vlt weitere andere Taetigkeiten dazu abnimmt, Natuerlich wissen Sie dann auch, wie schnell oder langsam Sie coden, denn Sie haben an dieser Stelle sicher shcon einige Scripts writing Aktionen getrackt.
+    So macht time tracking Sie sehr viel effektiver und ermoeglicht es Ihnen, die Zeiten, die Sie in ein Projekt stecken, nachzuhalten.
+
+    Wenn Sie Selbststaendig programmieren, ist es auch immer so eine Sache. Vor allem beim Schreiben von Angeboten ist es gut, auf Erfahrungswerte yurueckzugreifen,. Deise werden nun dank time tracking noch schneller generiert und koennen deutlich besser ausgewertet werden.
+
     Yeah, time tracking is a fundamental part of doing really productive work.
     Before you can optimize something, you have to measure its performance. Only if measuring of your performance is as easy as possible, it can be precise and efficient.
 
