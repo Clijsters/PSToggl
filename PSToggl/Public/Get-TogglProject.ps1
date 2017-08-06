@@ -56,15 +56,19 @@ function Get-TogglProject {
         [string] $Name = $null,
 
         [Parameter(Mandatory = $false, ParameterSetName = "byName")]
-        [Parameter(ParameterSetName = "byObject")]
-        [string] $Workspace = $TogglConfiguration.Api.Workspace,
+        [Parameter(Mandatory = $false, ParameterSetName = "byId")]
+        [Parameter(Mandatory = $false, ParameterSetName = "byObject")]
+        [string] $Workspace = $TogglConfiguration.User.Workspace,
+
+        [Parameter(ParameterSetName = "byId")]
+        [int] $Id,
 
         # InputObject
         [Parameter(Mandatory = $false, ValueFromPipeline = $true, ParameterSetName = "byObject")]
         [psobject] $InputObject
     )
 
-    $projects = Invoke-TogglMethod -UrlSuffix "workspaces/$($Workspace)/projects"
+    $projects = Invoke-TogglMethod -UrlSuffix "workspaces/$Workspace/projects"
 
     if ($InputObject) {
         #foreach Obj in InputObject
@@ -79,6 +83,8 @@ function Get-TogglProject {
     else {
         if ($Name) {
             $projects = $projects | Where-Object name -Like $Name
+        } elseif ($Id) {
+            $projects = $projects | Where-Object id -EQ $Id
         }
         return $projects | ConvertTo-TogglProject
     }

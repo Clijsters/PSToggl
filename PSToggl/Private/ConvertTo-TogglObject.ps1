@@ -18,16 +18,17 @@ function ConvertTo-TogglObject {
     ##
     process {
         foreach ($item in $InputObject) {
+            #todo if item is empty???
             $object = @{}
             if ($item.GetType().Name -eq "HashTable") {
-                $input = New-Object -TypeName psobject -Property $item
+                $element = New-Object -TypeName psobject -Property $item
             }
             else {
-                $input = $item
+                $element = $item
             }
 
-            foreach ($field in $objectConfig.Fields) {
-                $inputField = $input.PSObject.Members[$field.name].Value
+            foreach ($field in $ObjectConfig.Fields) {
+                $inputField = $element.PSObject.Members[$field.name].Value
                 if ($null -ne $inputField) {
                     $object[$field.name] = $inputField -as $field.type
                 }

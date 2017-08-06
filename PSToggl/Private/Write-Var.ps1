@@ -1,4 +1,5 @@
 # TODO: Accept pipelpie inputs (e.g. for Invoke-TogglMethod.ps1)
+# Won't work. scope problem.
 function Write-Var {
     param(
         # The name of the variable to verbose
