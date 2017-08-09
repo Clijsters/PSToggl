@@ -65,5 +65,5 @@ function Get-TogglEntry() {
     #$parameters = if ($EndDate) { CONVERTTO ISO 8601 } else {""}
     $entries = Invoke-TogglMethod -UrlSuffix ("time_entries" + $suffix) -Method "GET"
     Write-Var entries
-    return $entries | ConvertTo-TogglEntry
+    return $entries.data | ConvertTo-TogglEntry
 }

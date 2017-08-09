@@ -13,7 +13,7 @@ function ConvertTo-TogglEntry {
     }
 
     process {
-        $result = $InputObject.data | ConvertTo-TogglObject -ObjectConfig $objectConfig
+        $result = $InputObject | ConvertTo-TogglObject -ObjectConfig $objectConfig
 
         $result | Add-Member -MemberType ScriptMethod -Name "ToString" -Force -Value {
             Write-Output $this.name
