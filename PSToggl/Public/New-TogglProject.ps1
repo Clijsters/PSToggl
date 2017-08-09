@@ -39,7 +39,7 @@ function New-TogglProject {
     param (
         # Identifies the projects workspace
         [Parameter(Mandatory = $false)]
-        [int] $workspaceId = $TogglConfiguration.User.Workspace,
+        [int] $Workspace = $TogglConfiguration.User.Workspace,
 
         # The name of your new project
         [Parameter(Mandatory = $true, ValueFromPipeline = $true)]

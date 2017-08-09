@@ -58,7 +58,7 @@ function Get-TogglProject {
         [Parameter(Mandatory = $false, ParameterSetName = "byName")]
         [Parameter(Mandatory = $false, ParameterSetName = "byId")]
         [Parameter(Mandatory = $false, ParameterSetName = "byObject")]
-        [string] $Workspace = $TogglConfiguration.User.Workspace,
+        [int] $Workspace = $TogglConfiguration.User.Workspace,
 
         [Parameter(ParameterSetName = "byId")]
         [int] $Id,
