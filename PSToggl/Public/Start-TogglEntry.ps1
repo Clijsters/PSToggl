@@ -2,6 +2,7 @@ function Start-TogglEntry(){
     <#
     .Synopsis
         Starts a new Time Entry
+
     .DESCRIPTION
         This function starts a new Toggl time entry.
 
@@ -9,15 +10,21 @@ function Start-TogglEntry(){
          - Stopping the current Entry
          - Creating a new Entry with the given information.
          - Optionally add a duration to it.
+
     .EXAMPLE
-    Start-TogglEntry "Meeting"
+        Start-TogglEntry "Meeting"
 
-    Start-TogglEntry -Description "Coding" -ProjectName "MyProj"
+        Starts a new Time Entry with the Description "Meeting". This will be the most common way to use Start-TogglEntry.
+    .EXAMPLE
 
-    Start-TogglEntry -Description "Test" -Tags ("Tag1","Tag2") -ProjectName "Offsets"
+        Start-TogglEntry -Description "Coding" -ProjectName "MyProj"
 
-    ///TODO: WIP
-        Get-TogglProject *Intern* | Start-TogglEntry "Meeting"
+    .EXAMPLE
+        Start-TogglEntry -Description "Test" -Tags ("Tag1","Tag2") -ProjectName "Offsets"
+
+        ///TODO: WIP
+            Get-TogglProject *Intern* | Start-TogglEntry "Meeting"
+
     .INPUTS
         This function does not accept pipeline Input yet
 
@@ -31,15 +38,15 @@ function Start-TogglEntry(){
         [Parameter(Mandatory = $false)]
         [String] $Description = "",
 
-        # Tags to identify related entries
-        [Parameter(Mandatory = $false)]
-        [String[]] $Tags,
-
         # The name of the Project to assign this entry to.
         [Parameter(Mandatory = $false)]
         [String] $ProjectName = $null,
 
-        # Optional duration in minutes //TODO: Integration?
+        # Tags to identify related entries
+        [Parameter(Mandatory = $false)]
+        [String[]] $Tags,
+
+        # Duration in minutes
         [Parameter(Mandatory = $false)]
         [int] $Duration = 0
     )
@@ -48,14 +55,11 @@ function Start-TogglEntry(){
         time_entry = [psobject]@{
             description = $Description;
             tags = [array]$Tags;
-            duration = $Duration*60;
+            duration = ($Duration*60);
             created_with = "PoSh";
         };
     }
 
-    if ($Duration) {
-        $entry.time_entry.duration = $Duration*60
-    }
     if ($ProjectName) {
         $projId = (Get-TogglProject -Name $ProjectName)[0].id
         if ($projId -gt 0)  {
@@ -65,5 +69,6 @@ function Start-TogglEntry(){
         }
     }
 
+    #TODO: Check for errors and make a TogglEntry out of it
     return (Invoke-TogglMethod -UrlSuffix "time_entries/start" -InputObject $entry).data
 }

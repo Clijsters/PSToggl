@@ -5,17 +5,26 @@ $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path)
 
 InModuleScope PSToggl {
     Describe "Start-TogglEntry" {
-        Mock Invoke-TogglMethod {}
+        $answer = @{
+            data = @{
+                description = "asd";
+                duration    = "-123456"
+            }
+        }
+
+        Mock Invoke-TogglMethod {
+            return $answer
+        }
 
         Mock Get-TogglProject {
             return @(
                 @{
                     name = "test";
-                    id   = 123
+                    id = 123
                 },
                 @{
                     name = "test2";
-                    id   = 456
+                    id = 456
                 }
             )
         }
@@ -40,6 +49,10 @@ InModuleScope PSToggl {
                 return @("meeting", "technical")
             }
             Start-TogglEntry "cool meeting" -Tags @("meeting", "time-wasting")
+        }
+
+        It "Returns the API's answer" { #TODO: It should definitely return a TogglEntry, not the psobject
+            Start-TogglEntry | Should Be $answer.data
         }
 
     }
