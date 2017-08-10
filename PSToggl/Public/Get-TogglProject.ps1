@@ -11,6 +11,7 @@ function Get-TogglProject {
         You can pipe any PSToggl object which belongs to a project to this cmdlet, like:
         * Workspace: Queries the given Workspace id for Projects.
         * Client: Returns projects whose cid matches the id of the piped object
+        * Entry: Returns the Timers project
         * User (This is a special case, a user contains its projects as array. If not, will query for it and return)
 
     .PARAMETER Name
@@ -22,6 +23,7 @@ function Get-TogglProject {
     .INPUTS
         PSToggl.Client
         PSToggl.Workspace
+        PSToggl.Entry
         PStoggl.User
 
     .OUTPUTS
@@ -65,27 +67,65 @@ function Get-TogglProject {
 
         # InputObject
         [Parameter(Mandatory = $false, ValueFromPipeline = $true, ParameterSetName = "byObject")]
-        [psobject] $InputObject
+        [psobject[]] $InputObject
     )
 
-    $projects = Invoke-TogglMethod -UrlSuffix "workspaces/$Workspace/projects"
+    Begin {
+        [System.Collections.ArrayList]$result
+        $projects = Invoke-TogglMethod -UrlSuffix "workspaces/$($Workspace)/projects"
 
-    if ($InputObject) {
-        #foreach Obj in InputObject
-        switch ($InputObject.psobject.GetTypeName[0]) {
-            #The thins is, one can use parametersetnames to identify the provided elements soon in begin{}
-            "PSToggl.Client" {  }
-            "PSToggl.Workspace" {  }
-            "PSToggl.User" {  }
-            Default {}
+        if ($PsCmdlet.ParameterSetName -eq "byObject") {
+            switch ($InputObject.psobject.GetTypeName[0]) {
+                "PSToggl.Client" {
+                    $projectLambda = {
+                        param($obj)
+                        $projects | Where-Object {
+                            $_.cid -EQ $obj.id}
+                    }
+                }
+                "PSToggl.Workspace" {
+                    $projectLambda = {
+                        param($obj)
+                        $projects | Where-Object {$_.wid -EQ $obj.id}
+                    }
+                }
+                "PSToggl.Entry" {
+                    $projectLambda = {
+                        param($obj)
+                        if ($obj.wid -ne $Workspace) {
+                            $projects = Get-TogglProject -Workspace $obj.wid
+                        }
+                        $projects | Where-Object {$_.id -EQ $obj.pid}
+                    }
+                }
+                "PSToggl.User" {
+                    $projectLambda = {
+                        param($obj)
+                        Throw "Not implemented"
+                    }
+                }
+                #Default {}
+            }
         }
     }
-    else {
-        if ($Name) {
-            $projects = $projects | Where-Object name -Like $Name
-        } elseif ($Id) {
-            $projects = $projects | Where-Object id -EQ $Id
+
+    Process {
+
+        switch ($PsCmdlet.ParameterSetName) {
+            "byObject" {
+                foreach ($item in $InputObject) {
+                    $result.add($projectLambda.Invoke($item))
+                }
+            }
+            "byName" {
+                $result = $projects | Where-Object name -Like $Name
+            }
+            "byId" {
+                $result = $projects | Where-Object id -EQ $Id
+            }
         }
-        return $projects | ConvertTo-TogglProject
+
+        return $result | ConvertTo-TogglProject
     }
+    End {}
 }
