@@ -51,22 +51,20 @@ function Get-TogglProject {
         Creation Date:  03.04.2017
         Purpose/Change: Initial script development
     #>
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParametersetName="all")]
     [OutputType("PSToggl.Project")]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = "byName")]
+        [Parameter(ParameterSetName = "byName")]
         [string] $Name = $null,
 
-        [Parameter(Mandatory = $false, ParameterSetName = "byName")]
-        [Parameter(Mandatory = $false, ParameterSetName = "byId")]
-        [Parameter(Mandatory = $false, ParameterSetName = "byObject")]
+        [Parameter(Mandatory = $false)]
         [int] $Workspace = $TogglConfiguration.User.Workspace,
 
         [Parameter(ParameterSetName = "byId")]
         [int] $Id,
 
         # InputObject
-        [Parameter(Mandatory = $false, ValueFromPipeline = $true, ParameterSetName = "byObject")]
+        [Parameter(ValueFromPipeline = $true, ParameterSetName = "byObject")]
         [psobject[]] $InputObject
     )
 
@@ -122,6 +120,9 @@ function Get-TogglProject {
             }
             "byId" {
                 $result = $projects | Where-Object id -EQ $Id
+            }
+            "all" {
+                $result = $projects
             }
         }
 
