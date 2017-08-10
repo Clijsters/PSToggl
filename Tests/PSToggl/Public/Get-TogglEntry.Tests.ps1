@@ -20,7 +20,7 @@ InModuleScope PSToggl {
             Assert-MockCalled -CommandName "Invoke-TogglMethod"
         }
 
-        It "Calls Convertto-TogglEntry and supplies the object returned by Invoke-TogglMethod" {
+        It "Calls ConvertTo-TogglEntry and supplies the object returned by Invoke-TogglMethod" {
             Get-TogglEntry
             Assert-MockCalled -CommandName "ConvertTo-TogglEntry" -ParameterFilter {$InputObject -eq $exampleObject}
         }

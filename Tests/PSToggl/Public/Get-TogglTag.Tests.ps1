@@ -21,7 +21,7 @@ InModuleScope PSToggl {
         }
 
 
-        It "Calls Convertto-TogglTag and supplies the object returned by Invoke-TogglMethod" {
+        It "Calls ConvertTo-TogglTag and supplies the object returned by Invoke-TogglMethod" {
             Get-TogglTag
             Assert-MockCalled -CommandName "ConvertTo-TogglTag" -ParameterFilter {$InputObject -eq $exampleObject}
         }
