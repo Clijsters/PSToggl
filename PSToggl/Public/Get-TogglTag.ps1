@@ -52,6 +52,5 @@ function Get-TogglTag() {
         [string] $Workspace
     )
     $tags = Invoke-TogglMethod -UrlSuffix ("workspaces/" + $TogglConfiguration.User.Workspace + "/tags") -Method "GET"
-    #Write-Var tags
     return $tags | ConvertTo-TogglTag
 }
