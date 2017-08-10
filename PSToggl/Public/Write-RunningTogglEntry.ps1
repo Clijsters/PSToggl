@@ -6,7 +6,7 @@ function Write-RunningTogglEntry() {
     )
     $Running = Get-TogglEntry -Current
     if ($Running.id -GT 0) {
-        $minutes = (New-TimeSpan -Start ([datetime]($Running.Start)) -End ([datetime]::Now)).Minutes
+        $minutes = [System.Math]::Round((New-TimeSpan -Start ([datetime]($Running.Start)) -End ([datetime]::Now)).TotalMinutes, 0)
         if ($Running.pid) {
             $color = [System.ConsoleColor]::Cyan
             #TODO Pipeline
