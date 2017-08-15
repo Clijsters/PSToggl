@@ -69,7 +69,6 @@ function Get-TogglProject {
     )
 
     Begin {
-        [System.Collections.ArrayList]$result
         $projects = Invoke-TogglMethod -UrlSuffix "workspaces/$($Workspace)/projects"
 
         if ($PsCmdlet.ParameterSetName -eq "byObject") {
@@ -102,7 +101,9 @@ function Get-TogglProject {
                         Throw "Not implemented"
                     }
                 }
-                #Default {}
+                Default {
+                    Throw "Not implemented"
+                }
             }
         }
     }
@@ -111,22 +112,25 @@ function Get-TogglProject {
 
         switch ($PsCmdlet.ParameterSetName) {
             "byObject" {
+                $tmpList = New-Object -TypeName System.Collections.ArrayList
                 foreach ($item in $InputObject) {
-                    $result.add($projectLambda.Invoke($item))
+                    $tmpList.add($projectLambda.Invoke($item))
                 }
+                $projects = $tmpList
             }
             "byName" {
-                $result = $projects | Where-Object name -Like $Name
+                $projects = $projects | Where-Object {$_.Name -Like $Name}
             }
             "byId" {
-                $result = $projects | Where-Object id -EQ $Id
+                $projects = $projects | Where-Object {$_.Id -EQ $Id}
             }
             "all" {
-                $result = $projects
+                $projects = $projects
             }
         }
-
-        return $result | ConvertTo-TogglProject
     }
-    End {}
+
+    End {
+        return $projects | ConvertTo-TogglProject
+    }
 }

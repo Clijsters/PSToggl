@@ -5,13 +5,60 @@ $sut = Split-Path -Leaf $MyInvocation.MyCommand.Path
 
 InModuleScope PSToggl {
     Describe "Write-RunningTogglEntry" {
+        Mock Write-Host {}
+        $exampleObject = @{
+            data = @{
+                description = "Test entry";
+                wid         = 123;
+                pid         = 123;
+                tid         = 123;
+                start       = [datetime]::Now;
+                stop        = [datetime]::Now;
+                duration    = 0;
+                at          = [datetime]::Now;
+            }
+        }
+        Mock Write-Verbose {}
+        Mock Get-TogglEntry {
+            return $exampleObject.data
+        }
+        Mock Get-TogglProject {
+            return @{
+                name = "dummy"
+            }
+        }
+
         It "Uses Write-Host to write an entry if one is running" {
+            Write-RunningTogglEntry
+            Assert-MockCalled -CommandName "Write-Host"
+        }
+
+        It "Does not write a newline when -ForPrompt is set" {
+            Write-RunningTogglEntry -ForPrompt
+            Assert-MockCalled -CommandName "Write-Host" -ParameterFilter {$Object -notcontains "`n"}
+
+        }
+        <#
+        It "Writes the Project name if one is set" {
+            Write-RunningTogglEntry -ForPrompt
+            Assert-MockCalled -CommandName "Write-Host" -ParameterFilter {$Object -contains "dummy"}
+
+        }
+#>
+        It "Writes the Entry name if no project is set" {
 
         }
 
-        It "Shows a message if none is running" {
+        $exampleObject = $null
 
+        It "Shows a message if no entry is running" {
+            Write-RunningTogglEntry
+            Assert-MockCalled -CommandName "Write-Host"
         }
-        # To be continued...
+
+        It "Writes that message to Verbose stream when -ForPrompt is set" {
+            Write-RunningTogglEntry -ForPrompt
+            Assert-MockCalled -CommandName "Write-Verbose"
+        }
     }
 }

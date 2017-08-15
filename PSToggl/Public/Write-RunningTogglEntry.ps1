@@ -5,6 +5,7 @@ function Write-RunningTogglEntry() {
         $ForPrompt
     )
     $Running = Get-TogglEntry -Current
+    $noMsg = "No time entry currently running"
     if ($Running.id -GT 0) {
         $minutes = [System.Math]::Round((New-TimeSpan -Start ([datetime]($Running.Start)) -End ([datetime]::Now)).TotalMinutes, 0)
         if ($Running.pid) {
@@ -34,6 +35,8 @@ function Write-RunningTogglEntry() {
 
     }
     elseif (!$ForPrompt) {
-        Write-Verbose "No time entry currently running"
+        Write-Host $noMsg
+    } else {
+        Write-Verbose $noMsg
     }
 }
