@@ -15,4 +15,11 @@ Write-Host "Done."
 
 Write-Host "Installing PSToggl..." -ForegroundColor Yellow
 Get-Location
-Import-Module "$PSScriptRoot\..\PSToggl\PSToggl.psd1"
+
+Import-LocalizedData -BindingVariable TogglConfiguration -BaseDirectory $PSScriptRoot\Private -FileName InternalConfiguration.psd1
+$TogglConfiguration.User = @{
+    APIKey    = "12aef345c55974deb6";
+    Workspace = "1258621"
+}
+
+Import-Module "$PSScriptRoot\..\PSToggl\PSToggl.psm1"
