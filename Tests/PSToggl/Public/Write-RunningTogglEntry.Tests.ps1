@@ -7,20 +7,19 @@ InModuleScope PSToggl {
     Describe "Write-RunningTogglEntry" {
         Mock Write-Host {}
         $exampleObject = @{
-            data = @{
-                description = "Test entry";
-                wid         = 123;
-                pid         = 123;
-                tid         = 123;
-                start       = [datetime]::Now;
-                stop        = [datetime]::Now;
-                duration    = 0;
-                at          = [datetime]::Now;
-            }
+            description = "Test entry";
+            wid         = 123;
+            pid         = 123;
+            tid         = 123;
+            start       = [datetime]::Now;
+            stop        = [datetime]::Now;
+            duration    = 0;
+            at          = [datetime]::Now;
         }
+
         Mock Write-Verbose {}
         Mock Get-TogglEntry {
-            return $exampleObject.data
+            return $exampleObject
         }
         Mock Get-TogglProject {
             return @{

@@ -29,6 +29,14 @@ InModuleScope PSToggl {
             Assert-MockCalled -CommandName "Invoke-TogglMethod"
         }
 
+        It "Changes the Url when -Current is set" {
+
+        }
+
+        It "Returns response's data attribute when -Current is set" {
+
+        }
+
         It "Calls ConvertTo-TogglEntry and supplies the object returned by Invoke-TogglMethod" {
             Get-TogglEntry
             Assert-MockCalled -CommandName "ConvertTo-TogglEntry" -ParameterFilter {$InputObject -eq $exampleObject}
@@ -37,6 +45,5 @@ InModuleScope PSToggl {
         It "Returns the entries converted with ConvertTo-TogglEntry" {
             Get-TogglEntry | Should Be "dummy"
         }
-
     }
 }
