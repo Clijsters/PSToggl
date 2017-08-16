@@ -17,7 +17,19 @@ InModuleScope PSToggl {
         }
 
         Mock Invoke-TogglMethod {
-            return $exampleObject
+            param(
+                [string] $UrlSuffix,
+                [psobject] $InputObject,
+                [ValidateSet("GET", "POST", "PUT", "DELETE")]
+                [String] $Method
+            )
+            if ($UrlSuffix -like "*/current*") {
+                return @{data = $exampleObject}
+            }
+            else {
+                return $exampleObject
+
+            }
         }
 
         Mock ConvertTo-TogglEntry {
@@ -34,7 +46,7 @@ InModuleScope PSToggl {
         }
 
         It "Returns response's data attribute when -Current is set" {
-
+            Get-TogglEntry -Current | Should Be "dummy"
         }
 
         It "Calls ConvertTo-TogglEntry and supplies the object returned by Invoke-TogglMethod" {
