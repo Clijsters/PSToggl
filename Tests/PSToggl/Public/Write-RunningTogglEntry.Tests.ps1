@@ -32,18 +32,27 @@ InModuleScope PSToggl {
             Assert-MockCalled -CommandName "Write-Host"
         }
 
+        It "Writes a newline when -ForPromt is not set" {
+            <#
+            Write-RunningTogglEntry
+            Assert-MockCalled -CommandName "Write-Host" -ParameterFilter {$Object -like "*`n*"}
+            #>
+        }
+
         It "Does not write a newline when -ForPrompt is set" {
+            <#
             Write-RunningTogglEntry -ForPrompt
-            Assert-MockCalled -CommandName "Write-Host" -ParameterFilter {$Object -notcontains "`n"}
-
+            Assert-MockCalled -CommandName "Write-Host" -ParameterFilter {$Object -notlike "*`n"}
+            #>
         }
-        <#
+
         It "Writes the Project name if one is set" {
+            <#
             Write-RunningTogglEntry -ForPrompt
-            Assert-MockCalled -CommandName "Write-Host" -ParameterFilter {$Object -contains "dummy"}
-
+            Assert-MockCalled -CommandName "Write-Host" -ParameterFilter {$Object -like "*dummy*"}
+            #>
         }
-#>
+
         It "Writes the Entry name if no project is set" {
 
         }
