@@ -77,12 +77,12 @@ LONG DESCRIPTION
 
     Transfering work logs from Toggl to JIRA is as easy as:
     PS> foreach ($issue in (Get-JiraIssue -Query "assignee = currentUser()")) {
-    >>    Get-TogglEntry | ? {$_.Description -contains $issue.key} |
+    >>    Get-TogglEntry | ? {$_.Description -like "*$($issue.key)*"} |
     >>    Add-JiraIssueWorklog -Issue $issue.key -Comment $_.description -TimeSpent $_.Minutes -DateStarted $_.start
     >> }
 
     And eventually it will be as easy as:
-    PS> Get-TogglEntry | ? {$_Description -contains "homepage-123"} | Add-JiraIssueWorklog -Issue "homepage-123"
+    PS> Get-TogglEntry | ? {$_Description -like "*homepage-123*"} | Add-JiraIssueWorklog -Issue "homepage-123"
 
 EXAMPLES
     Start a new timer:
