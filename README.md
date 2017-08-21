@@ -1,11 +1,11 @@
-<h1 style="text-align:center;">
-    <img src="logo/logo.gif" style="height:70px" alt="PSToggl Logo">
+<h1 align="center">
+    <img src="logo.gif" style="height:70px" alt="PSToggl Logo">
     <br>
     PSToggl
     <br>
 </h1>
 
-<p style="text-align:center;">
+<p align="center">
 <b>
 A fully featured <a href="https://toggl.com/">Toggl</a> client for your PowerShell - based on <a href="https://github.com/toggl/toggl_api_docs/blob/master/toggl_api.md">Toggl's API v8</a>
 </b>
