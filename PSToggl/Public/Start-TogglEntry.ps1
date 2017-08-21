@@ -1,4 +1,4 @@
-function Start-TogglEntry(){
+function Start-TogglEntry() {
     <#
     .Synopsis
         Starts a new Time Entry
@@ -53,18 +53,19 @@ function Start-TogglEntry(){
 
     $entry = @{
         time_entry = [psobject]@{
-            description = $Description;
-            tags = [array]$Tags;
-            duration = ($Duration*60);
+            description  = $Description;
+            tags         = [array]$Tags;
+            duration     = ($Duration * 60);
             created_with = "PoSh";
         };
     }
 
     if ($ProjectName) {
         $projId = (Get-TogglProject -Name $ProjectName)[0].id
-        if ($projId -gt 0)  {
+        if ($projId -gt 0) {
             $entry.time_entry.pid = $projId
-        } else {
+        }
+        else {
             Throw "No project id found for `"$ProjectName`""
         }
     }

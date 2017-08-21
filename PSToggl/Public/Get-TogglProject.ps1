@@ -51,7 +51,7 @@ function Get-TogglProject {
         Creation Date:  03.04.2017
         Purpose/Change: Initial script development
     #>
-    [CmdletBinding(DefaultParametersetName="all")]
+    [CmdletBinding(DefaultParametersetName = "all")]
     [OutputType("PSToggl.Project")]
     param(
         [Parameter(ParameterSetName = "byName")]
@@ -114,7 +114,7 @@ function Get-TogglProject {
             "byObject" {
                 $tmpList = New-Object -TypeName System.Collections.ArrayList
                 foreach ($item in $InputObject) {
-                    $tmpList.add($projectLambda.Invoke($item))
+                    $projectLambda.Invoke($item) | Foreach-Object {$tmpList.Add($_) | Out-Null}
                 }
                 $projects = $tmpList
             }
