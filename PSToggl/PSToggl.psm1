@@ -2,7 +2,9 @@
 $Public = @( Get-ChildItem -Path $PSScriptRoot\Public\*.ps1 -ErrorAction SilentlyContinue )
 $Private = @( Get-ChildItem -Path $PSScriptRoot\Private\*.ps1 -ErrorAction SilentlyContinue )
 
-Import-LocalizedData -BindingVariable TogglConfiguration -BaseDirectory $PSScriptRoot\Private -FileName InternalConfiguration.psd1
+if (-not $TogglConfiguration) {
+    Import-LocalizedData -BindingVariable TogglConfiguration -BaseDirectory $PSScriptRoot\Private -FileName InternalConfiguration.psd1
+}
 
 # Add a special validator for Entry. wid is only required if pid nor tid are set
 $TogglConfiguration.ObjectTypes.Entry.Validators = @(
@@ -14,7 +16,9 @@ $TogglConfiguration.ObjectTypes.Entry.Validators = @(
 )
 
 #TODO unsecure. Introduce a global configuration system (coming soon, currently in a private project)
-$TogglConfiguration.User = Get-Content ~/.PSToggl | ConvertFrom-Json
+if (-not $TogglConfiguration.User) {
+    $TogglConfiguration.User = Get-Content ~/.PSToggl | ConvertFrom-Json
+}
 
 Foreach ($import in @($Public + $Private)) {
     Try {

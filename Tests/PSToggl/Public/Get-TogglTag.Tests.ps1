@@ -1,6 +1,6 @@
 # Credit to header goes to replicaJunction
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
-$sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path)
+$sut = Split-Path -Leaf $MyInvocation.MyCommand.Path
 . ("$here\$sut").Replace("\Tests\", "\").Replace(".Tests.", ".")
 
 InModuleScope PSToggl {
@@ -21,7 +21,7 @@ InModuleScope PSToggl {
         }
 
 
-        It "Calls Convertto-TogglTag and supplies the object returned by Invoke-TogglMethod" {
+        It "Calls ConvertTo-TogglTag and supplies the object returned by Invoke-TogglMethod" {
             Get-TogglTag
             Assert-MockCalled -CommandName "ConvertTo-TogglTag" -ParameterFilter {$InputObject -eq $exampleObject}
         }

@@ -23,12 +23,16 @@ function New-TogglEntry {
         [string[]] $Tags,
 
         #The duration of your activity in minutes
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true, ParameterSetName = "byDuration")]
         [int] $Duration,
 
-        # The start time of your entry (defaults to now()-Duration)
+        #The duration of your activity in minutes
+        [Parameter(Mandatory = $true, ParameterSetName = "byStart")]
+        [datetime] $Start,
+
+        # The end time of your entry (defaults to now()-Duration)
         [Parameter(Mandatory = $false)]
-        [datetime] $Start = [datetime]::now()
+        [datetime] $End = [datetime]::now()
     )
 
     begin {

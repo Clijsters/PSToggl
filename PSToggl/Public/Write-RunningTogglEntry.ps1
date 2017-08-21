@@ -1,21 +1,42 @@
-function Write-RunningTogglEntry(){
+function Write-RunningTogglEntry() {
     param(
         # Special case - format for prompt
         [Switch]
         $ForPrompt
     )
     $Running = Get-TogglEntry -Current
+    $noMsg = "No time entry currently running"
     if ($Running.id -GT 0) {
-        if (!$ForPrompt) {
-            Write-Host "TOGGL: " -NoNewline -ForegroundColor Yellow -BackgroundColor Black
-            if ($Running.description) {
-                Write-Host $Running.description -ForegroundColor Yellow -NoNewline -BackgroundColor Black
-            } else {
-                Write-Host "No Description" -ForegroundColor Red -NoNewline -BackgroundColor Black
-            }
-            Write-Host (" is running since " + $Running.Start + ")") -BackgroundColor Black
-        } else {
-            Write-Host (" [" + $Running.description + " since " + ([datetime]($a.at)).TimeOfDay.ToString()) -NoNewline -ForegroundColor Yellow
+        $minutes = [System.Math]::Round((New-TimeSpan -Start ([datetime]($Running.Start)) -End ([datetime]::Now)).TotalMinutes, 0)
+        if ($Running.pid) {
+            $color = [System.ConsoleColor]::Cyan
+            #TODO Pipeline
+            $description = (Get-TogglProject -Id $Running.pid -Workspace $Running.wid).Name
         }
+        else {
+            $color = [System.ConsoleColor]::Red
+            $description = if ($Running.description) {$Running.description} else {"??"}
+        }
+
+        if ($ForPrompt) {
+            $start = " ["
+            $split = " .. "
+            $end = "]"
+        }
+        else {
+            $start = "TOGGL: "
+            $split = " is running since "
+            $end = "`n"
+        }
+
+        Write-Host $start -NoNewline -ForegroundColor Yellow
+        Write-Host $description -ForegroundColor $color -NoNewline
+        Write-Host "$($split + $minutes)m$($end)" -NoNewline -ForegroundColor Yellow
+
+    }
+    elseif (!$ForPrompt) {
+        Write-Host $noMsg
+    } else {
+        Write-Verbose $noMsg
     }
 }

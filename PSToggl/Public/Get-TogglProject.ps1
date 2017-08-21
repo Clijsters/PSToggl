@@ -11,6 +11,7 @@ function Get-TogglProject {
         You can pipe any PSToggl object which belongs to a project to this cmdlet, like:
         * Workspace: Queries the given Workspace id for Projects.
         * Client: Returns projects whose cid matches the id of the piped object
+        * Entry: Returns the Timers project
         * User (This is a special case, a user contains its projects as array. If not, will query for it and return)
 
     .PARAMETER Name
@@ -22,6 +23,7 @@ function Get-TogglProject {
     .INPUTS
         PSToggl.Client
         PSToggl.Workspace
+        PSToggl.Entry
         PStoggl.User
 
     .OUTPUTS
@@ -49,37 +51,86 @@ function Get-TogglProject {
         Creation Date:  03.04.2017
         Purpose/Change: Initial script development
     #>
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParametersetName = "all")]
     [OutputType("PSToggl.Project")]
     param(
-        [Parameter(Mandatory = $false, ParameterSetName = "byName")]
+        [Parameter(ParameterSetName = "byName")]
         [string] $Name = $null,
 
-        [Parameter(Mandatory = $false, ParameterSetName = "byName")]
-        [Parameter(ParameterSetName = "byObject")]
-        [string] $Workspace = $TogglConfiguration.Api.Workspace,
+        [Parameter(Mandatory = $false)]
+        [int] $Workspace = $TogglConfiguration.User.Workspace,
+
+        [Parameter(ParameterSetName = "byId")]
+        [int] $Id,
 
         # InputObject
-        [Parameter(Mandatory = $false, ValueFromPipeline = $true, ParameterSetName = "byObject")]
-        [psobject] $InputObject
+        [Parameter(ValueFromPipeline = $true, ParameterSetName = "byObject")]
+        [psobject[]] $InputObject
     )
 
-    $projects = Invoke-TogglMethod -UrlSuffix "workspaces/$($Workspace)/projects"
+    Begin {
+        $projects = Invoke-TogglMethod -UrlSuffix "workspaces/$($Workspace)/projects"
 
-    if ($InputObject) {
-        #foreach Obj in InputObject
-        switch ($InputObject.psobject.GetTypeName[0]) {
-            #The thins is, one can use parametersetnames to identify the provided elements soon in begin{}
-            "PSToggl.Client" {  }
-            "PSToggl.Workspace" {  }
-            "PSToggl.User" {  }
-            Default {}
+        if ($PsCmdlet.ParameterSetName -eq "byObject") {
+            switch ($InputObject.psobject.GetTypeName[0]) {
+                "PSToggl.Client" {
+                    $projectLambda = {
+                        param($obj)
+                        $projects | Where-Object {
+                            $_.cid -EQ $obj.id}
+                    }
+                }
+                "PSToggl.Workspace" {
+                    $projectLambda = {
+                        param($obj)
+                        $projects | Where-Object {$_.wid -EQ $obj.id}
+                    }
+                }
+                "PSToggl.Entry" {
+                    $projectLambda = {
+                        param($obj)
+                        if ($obj.wid -ne $Workspace) {
+                            $projects = Get-TogglProject -Workspace $obj.wid
+                        }
+                        $projects | Where-Object {$_.id -EQ $obj.pid}
+                    }
+                }
+                "PSToggl.User" {
+                    $projectLambda = {
+                        param($obj)
+                        Throw "Not implemented"
+                    }
+                }
+                Default {
+                    Throw "Not implemented"
+                }
+            }
         }
     }
-    else {
-        if ($Name) {
-            $projects = $projects | Where-Object name -Like $Name
+
+    Process {
+
+        switch ($PsCmdlet.ParameterSetName) {
+            "byObject" {
+                $tmpList = New-Object -TypeName System.Collections.ArrayList
+                foreach ($item in $InputObject) {
+                    $projectLambda.Invoke($item) | Foreach-Object {$tmpList.Add($_) | Out-Null}
+                }
+                $projects = $tmpList
+            }
+            "byName" {
+                $projects = $projects | Where-Object {$_.Name -Like $Name}
+            }
+            "byId" {
+                $projects = $projects | Where-Object {$_.Id -EQ $Id}
+            }
+            "all" {
+                $projects = $projects
+            }
         }
+    }
+
+    End {
         return $projects | ConvertTo-TogglProject
     }
 }
