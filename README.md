@@ -1,5 +1,5 @@
 <h1 style="text-align:center;">
-    <img src="logo/logo.gif" style="height:70px" alt="PSToggl Logo">
+    <img src="logo.gif" style="height:70px" alt="PSToggl Logo">
     <br>
     PSToggl
     <br>
