@@ -10,29 +10,13 @@
 A fully featured <a href="https://toggl.com/">Toggl</a> client for your PowerShell - based on <a href="https://github.com/toggl/toggl_api_docs/blob/master/toggl_api.md">Toggl's API v8</a>
 </b>
 
-<table align="center">
-    <thead style="border-bottom:1px solid;font-weight:bold;">
-        <tr>
-            <td>master</td>
-            <td>develop</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <a href="https://ci.appveyor.com/project/Clijsters/pstoggl/branch/master">
-                    <img alt="Build status for master" src="https://ci.appveyor.com/api/projects/status/c6u0f4gk3ibxwa46/branch/master?svg=true">
-                </a>
-            </td>
-            <td>
-                <a href="https://ci.appveyor.com/project/Clijsters/pstoggl/branch/develop">
-                    <img alt="Build status for develop" src="https://ci.appveyor.com/api/projects/status/c6u0f4gk3ibxwa46/branch/develop?svg=true">
-                </a>
-            </td>
-        </tr>
-    </tbody>
-</table>
-</p>
+<center>
+
+| master | develop |
+| ------ | ------- |
+| [![Build status](https://ci.appveyor.com/api/projects/status/c6u0f4gk3ibxwa46/branch/master?svg=true)](https://ci.appveyor.com/project/Clijsters/pstoggl/branch/master) | [![Build status](https://ci.appveyor.com/api/projects/status/c6u0f4gk3ibxwa46/branch/develop?svg=true)](https://ci.appveyor.com/project/Clijsters/pstoggl/branch/develop) |
+
+</center>
 
 ## Under heavy development
 
