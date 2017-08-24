@@ -11,18 +11,32 @@ InModuleScope PSToggl {
         }
         $out = $sampleInput | ConvertTo-TogglTag
 
-        It "Converts a HashTable to a PSCustomObject" {
-            $out.GetType().Name | Should Be "PSCustomObject"
+        Context "Behavior" {
+            It "Converts a HashTable to a PSCustomObject" {
+                $out.GetType().Name | Should Be "PSCustomObject"
+            }
+
+            It "Sets TypeName to PSToggl.Tag" {
+                $out.PSObject.TypeNames[0] | Should Be "PSToggl.Tag"
+            }
         }
 
-        It "Sets TypeName to PSToggl.Tag" {
-            $out.PSObject.TypeNames[0] | Should Be "PSToggl.Tag"
+        Context "Fields" {
+            foreach ($k in $sampleInput.Keys) {
+                # TODO: Will convert property names in future
+                It "Sets $($k.PadRight(8)) to $($sampleInput.Item($k))" {
+                    $out.PSObject.Members[$k].Value | Should Be $sampleInput.Item($k)
+                }
+            }
         }
 
-        foreach ($k in $sampleInput.Keys) {
-            # TODO: Will convert property names in future
-            It "Sets $($k.PadRight(8)) to $($sampleInput.Item($k))" {
-                $out.PSObject.Members[$k].Value | Should Be $sampleInput.Item($k)
+        Context "Methods" {
+            It "Adds a running ToString() Method" {
+                {$out.ToString()} | Should Not Throw
+            }
+
+            It "Adds a running Delete() Method" {
+                {$out.Delete()} | Should Not Throw
             }
         }
 
