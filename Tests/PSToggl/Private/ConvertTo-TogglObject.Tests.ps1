@@ -30,6 +30,16 @@ InModuleScope PSToggl {
 
         $out = $sampleInput | ConvertTo-TogglObject -ObjectConfig $objectConfig
 
+        It "Converts a HashTable to a PSCustomObject" {
+            $out.GetType().Name | Should Be "PSCustomObject"
+        }
+
+        It "Leaves a PSCustomObject unconverted" {
+            $out2 = $out | ConvertTo-TogglObject -ObjectConfig $objectConfig
+            $out2.PSObject.TypeNames[0] | Should Be $out.PSObject.TypeNames[0]
+            $out2.name | Should Be $out.name
+        }
+
         It "Sets TypeName to '$($objectConfig.TypeName)'" {
             $out.PSObject.TypeNames[0] | Should Be $objectConfig.TypeName
         }
