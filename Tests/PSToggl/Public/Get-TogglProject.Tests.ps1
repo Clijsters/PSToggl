@@ -32,8 +32,7 @@ InModuleScope PSToggl {
         }
 
         It "Returns the entries converted with ConvertTo-TogglProject" {
-            #Get-TogglProject | Should Be "dummy"
-            #Motherofgod why the hell does this not work?!
+            Get-TogglProject | Should Be "dummy"
         }
 
     }
