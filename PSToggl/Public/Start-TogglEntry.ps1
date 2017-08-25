@@ -44,24 +44,27 @@ function Start-TogglEntry() {
 
         # Tags to identify related entries
         [Parameter(Mandatory = $false)]
-        [String[]] $Tags,
+        [String[]] $Tags
 
         # Duration in minutes
-        [Parameter(Mandatory = $false)]
-        [int] $Duration = 0
+        #[Parameter(Mandatory = $false)]
+        #[int] $Duration = 0
     )
 
     $entry = @{
         time_entry = [psobject]@{
             description  = $Description;
             tags         = [array]$Tags;
-            duration     = ($Duration * 60);
+            #duration     = ($Duration * 60);
             created_with = "PoSh";
         };
     }
 
     if ($ProjectName) {
-        $projId = (Get-TogglProject -Name $ProjectName)[0].id
+        $projects = Get-TogglProject -Name $ProjectName
+        if ($projects) {
+            $projId = $projects[0].id
+        }
         if ($projId -gt 0) {
             $entry.time_entry.pid = $projId
         }
