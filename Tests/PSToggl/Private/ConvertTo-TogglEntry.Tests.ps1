@@ -17,24 +17,36 @@ InModuleScope PSToggl {
         }
         $out = $sampleInput | ConvertTo-TogglEntry
 
-        It "Converts a HashTable to a PSCustomObject" {
-            $out.GetType().Name | Should Be "PSCustomObject"
-        }
+        Context "Behavior" {
+            It "Converts a HashTable to a PSCustomObject" {
+                $out.GetType().Name | Should Be "PSCustomObject"
+            }
 
-        It "Sets TypeName to PSToggl.Entry" {
-            $out.PSObject.TypeNames[0] | Should Be "PSToggl.Entry"
-        }
+            It "Sets TypeName to PSToggl.Entry" {
+                $out.PSObject.TypeNames[0] | Should Be "PSToggl.Entry"
+            }
 
-        It "Defaults 'created_with' to 'PSToggl'" {
-            $out.PSObject.Members["created_with"].Value | Should Be "PSToggl"
-        }
-
-        foreach ($k in $sampleInput.Keys) {
-            # TODO: Will convert property names in future
-            It "Sets $($k.PadRight(8)) to $($sampleInput.Item($k))" {
-                $out.PSObject.Members[$k].Value | Should Be $sampleInput.Item($k)
+            It "Defaults 'created_with' to 'PSToggl'" {
+                $out.PSObject.Members["created_with"].Value | Should Be "PSToggl"
             }
         }
 
+        Context "Fields" {
+            foreach ($k in $sampleInput.Keys) {
+                # TODO: Will convert property names in future
+                It "Sets $($k.PadRight(8)) to $($sampleInput.Item($k))" {
+                    $out.PSObject.Members[$k].Value | Should Be $sampleInput.Item($k)
+                }
+            }
+        }
+
+        Context "Methods" {
+            It "Adds a running ToString() Method" {
+                {$out.ToString()} | Should Not Throw
+            }
+            It "Adds a running Delete() Method" {
+                {$out.Delete()} | Should Not Throw
+            }
+        }
     }
 }

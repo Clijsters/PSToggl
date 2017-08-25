@@ -15,6 +15,9 @@
     <a href="https://ci.appveyor.com/project/Clijsters/pstoggl/branch/develop">
         <img alt="Build status for develop" src="https://ci.appveyor.com/api/projects/status/c6u0f4gk3ibxwa46/branch/develop?svg=true&passingText=develop%20-%20OK&pendingText=develop%20-%20Pending&failingText=develop%20-%20Failing">
     </a>
+    <a href="https://codecov.io/gh/Clijsters/PSToggl">
+        <img alt="codecov Code Coverage" src="https://codecov.io/gh/Clijsters/PSToggl/branch/develop/graph/badge.svg">
+    </a>
 </p>
 
 ## Under heavy development
@@ -131,3 +134,13 @@ PS> Invoke-Chrome -bookmark GitLab
 PS> Stop-TogglEntry -PassThrough | Select Minutes
 PS> #Stop-TogglEntry -PassThrough | New-JiraWorklog -Issue Proj-12
 ````
+
+## Test Coverage
+
+### Current
+
+<a href="https://codecov.io/gh/Clijsters/PSToggl"><img src="https://codecov.io/gh/Clijsters/PSToggl/branch/develop/graphs/sunburst.svg" alt="codecov test coverage sunburst"></a>
+
+### Historical
+
+<img src="https://codecov.io/gh/Clijsters/PSToggl/branch/develop/graphs/commits.svg" alt="codecov test coverage graph">

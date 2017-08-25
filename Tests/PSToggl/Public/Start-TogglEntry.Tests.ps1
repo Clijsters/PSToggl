@@ -17,16 +17,18 @@ InModuleScope PSToggl {
         }
 
         Mock Get-TogglProject {
-            return @(
-                @{
-                    name = "test";
-                    id = 123
-                },
-                @{
-                    name = "test2";
-                    id = 456
-                }
-            )
+            if ($Name -eq "Test project") {
+                return @(
+                    @{
+                        name = "test";
+                        id   = 123
+                    },
+                    @{
+                        name = "test2";
+                        id   = 456
+                    }
+                )
+            }
         }
 
         It "Calls Invoke-TogglMethod with the correct url" {
@@ -42,6 +44,10 @@ InModuleScope PSToggl {
         It "Uses the first matching projects id to start an Entry on a given project" {
             Start-TogglEntry -Description "Test" -ProjectName "Test Project"
             Assert-MockCalled -CommandName "Invoke-TogglMethod" -ParameterFilter {$InputObject.time_entry.pid -eq 123}
+        }
+
+        It "Throws an error if no matching project can be found" {
+            {Start-TogglEntry -Description "Test" -ProjectName "Test Proj2"} | Should Throw "No project id found for `"Test Proj2`""
         }
 
         It "Creates new Tags if necessary" {

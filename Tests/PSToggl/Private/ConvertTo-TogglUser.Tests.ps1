@@ -29,20 +29,33 @@ InModuleScope PSToggl {
         }
         $out = $sampleInput | ConvertTo-TogglUser
 
-        It "Converts a HashTable to a PSCustomObject" {
-            $out.GetType().Name | Should Be "PSCustomObject"
-        }
+        Context "Behavior" {
+            It "Converts a HashTable to a PSCustomObject" {
+                $out.GetType().Name | Should Be "PSCustomObject"
+            }
 
-        It "Sets TypeName to PSToggl.User" {
-            $out.PSObject.TypeNames[0] | Should Be "PSToggl.User"
-        }
-
-        foreach ($k in $sampleInput.Keys) {
-            # TODO: Will convert property names in future
-            It "Sets $($k.PadRight(8)) to $($sampleInput.Item($k))" {
-                $out.PSObject.Members[$k].Value.toString() | Should Be $sampleInput.Item($k).toString()
+            It "Sets TypeName to PSToggl.User" {
+                $out.PSObject.TypeNames[0] | Should Be "PSToggl.User"
             }
         }
 
+        Context "Fields" {
+            foreach ($k in $sampleInput.Keys) {
+                # TODO: Will convert property names in future
+                It "Sets $($k.PadRight(8)) to $($sampleInput.Item($k))" {
+                    $out.PSObject.Members[$k].Value.toString() | Should Be $sampleInput.Item($k).toString()
+                }
+            }
+        }
+
+        Context "Methods" {
+            It "Adds a running ToString() Method" {
+                {$out.ToString()} | Should Not Throw
+            }
+
+            It "Adds a running Delete() Method" {
+                {$out.Delete()} | Should Not Throw
+            }
+        }
     }
 }
