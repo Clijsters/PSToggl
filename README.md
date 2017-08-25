@@ -134,3 +134,13 @@ PS> Invoke-Chrome -bookmark GitLab
 PS> Stop-TogglEntry -PassThrough | Select Minutes
 PS> #Stop-TogglEntry -PassThrough | New-JiraWorklog -Issue Proj-12
 ````
+
+## Test Coverage
+
+### Current
+
+<a href="https://codecov.io/gh/Clijsters/PSToggl"><img src="https://codecov.io/gh/Clijsters/PSToggl/branch/develop/graphs/sunburst.svg" alt="codecov test coverage sunburst"></a>
+
+### Historical
+
+<img src="https://codecov.io/gh/Clijsters/PSToggl/branch/develop/graphs/commits.svg" alt="codecov test coverage graph">
