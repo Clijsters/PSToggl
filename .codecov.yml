@@ -6,13 +6,14 @@ comment:
   layout: "reach, diff"
   behavior: default
 
+fixes:
+  - "AppVeyor/::"
+
 coverage:
   range: 50..80
   round: down
   precision: 0
 
-fixes:
-  - "AppVeyor/::"
   status:
     project:
       default:
