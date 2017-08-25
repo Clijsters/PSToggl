@@ -11,6 +11,8 @@ coverage:
   round: down
   precision: 0
 
+fixes:
+  - "AppVeyor/::"
   status:
     project:
       default:
