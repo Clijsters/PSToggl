@@ -9,7 +9,10 @@ Write-Host ' - Pester'
 Install-Module -Name Pester -Repository PSGallery -Force
 
 Write-Host ' - PSScriptAnalyzer'
-Install-Module PSScriptAnalyzer -Repository PSGallery -force
+Install-Module PSScriptAnalyzer -Repository PSGallery -Force
+
+Write-Host ' - CodeCov (choco)'
+choco install codecov
 
 Write-Host "Done."
 
