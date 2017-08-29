@@ -43,21 +43,57 @@ function New-TogglProject {
 
         # The name of your new project
         [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
-        [string] $Name, #name binding
+        [string] $Name, #name binding, alias summary for jiraps?
 
         # The customer to create the project for
-        [Parameter(Mandatory = $true)] #Consider defaulting to a def customer and make it optional
+        [Parameter(Mandatory = $false)] #Consider defaulting to a def customer and make it optional
         [int] $CustomerId,
 
         # Color to identify your new project
         [Parameter(Mandatory = $false)]
-        [int] $Color #Enum? Class? int? String?...
+        [int] $Color = 3, #Enum? Class? int? String?...
+
+        # Color to identify your new project
+        [Parameter(Mandatory = $false)]
+        [int] $TemplateId
     )
 
     begin {
+        $project = @{
+            #name = $Name;
+            wid = $Workspace;
+            at = [datetime]::Now;
+            color = $Color;
+        }
+
+        if ($CustomerId) {
+            Write-Verbose "`$CustomerId was supplied, Setting to `"$CustomerId`""
+            $project.cid = $CustomerId
+        }
+
+        if ($TemplateId) {
+            Write-Verbose "`$TemplateId was supplied, Setting to `"$TemplateId`""
+            $project.template_id = $TemplateId
+        }
+
+        Write-Verbose "Resulting template Project:"
+        $project.Keys | ForEach-Object {Write-Verbose "`t$($_) is $($project[$_])"}
     }
 
     process {
+        Write-Verbose "Processing item: `$Name=`"$Name`""
+        $item = $project.PSObject.Copy()
+        $item.name = $Name
+        $item.Keys | ForEach-Object {Write-Verbose "`t$($_) is $($item[$_])"}
+        Write-Verbose "Validating Project..."
+        ConvertTo-TogglProject -InputObject $item | Write-Verbose
+        Write-Debug "Before committing - Fire in the Hole!"
+        $result = Invoke-TogglMethod -UrlSuffix "/projects" -InputObject $item -Method POST
+        if ($result.data) {
+            $result.data | ConvertTo-TogglProject
+        } else {
+            Throw $result
+        }
     }
 
     end {
