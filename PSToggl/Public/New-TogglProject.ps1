@@ -37,13 +37,13 @@ function New-TogglProject {
     [CmdletBinding()]
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
     param (
-        # Identifies the projects workspace
-        [Parameter(Mandatory = $false)]
-        [int] $Workspace = $TogglConfiguration.User.Workspace,
-
         # The name of your new project
         [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
         [string] $Name, #name binding, alias summary for jiraps?
+
+        # Identifies the projects workspace
+        [Parameter(Mandatory = $false)]
+        [int] $Workspace = $TogglConfiguration.User.Workspace,
 
         # The customer to create the project for
         [Parameter(Mandatory = $false)] #Consider defaulting to a def customer and make it optional
@@ -86,9 +86,9 @@ function New-TogglProject {
         $item.name = $Name
         $item.Keys | ForEach-Object {Write-Verbose "`t$($_) is $($item[$_])"}
         Write-Verbose "Validating Project..."
-        ConvertTo-TogglProject -InputObject $item | Write-Verbose
+        $item | ConvertTo-TogglProject | Write-Verbose
         Write-Debug "Before committing - Fire in the Hole!"
-        $result = Invoke-TogglMethod -UrlSuffix "/projects" -InputObject $item -Method POST
+        $result = Invoke-TogglMethod -UrlSuffix "projects" -InputObject @{project = $item} -Method POST
         if ($result.data) {
             $result.data | ConvertTo-TogglProject
         } else {
