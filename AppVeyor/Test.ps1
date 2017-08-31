@@ -10,13 +10,6 @@ if ($env:APPVEYOR_JOB_ID) {
     Remove-Item $testResultsFile -Force -ErrorAction SilentlyContinue
 }
 
-if (($result.FailedCount -gt 0) -or ($result.PassedCount -eq 0)) {
-    throw "$($result.FailedCount) tests failed."
-}
-else {
-    Write-Host 'All tests passed' -ForegroundColor Green
-}
-
 $repoRoot = if ($env:APPVEYOR_BUILD_FOLDER) {$env:APPVEYOR_BUILD_FOLDER} else {"$PSScriptRoot\.." | Resolve-Path}
 if ($result.CodeCoverage) {
     Import-Module -Name (Join-Path -Path $repoRoot -ChildPath '.codecovio\CodeCovio.psm1')
@@ -27,6 +20,13 @@ if ($result.CodeCoverage) {
     }
     else {
         Write-Host "CodeCov Results:"
-        ConvertFrom-Json $jsonPath
+        Get-Content $jsonPath | ConvertFrom-Json
     }
+}
+
+if (($result.FailedCount -gt 0) -or ($result.PassedCount -eq 0)) {
+    throw "$($result.FailedCount) tests failed."
+}
+else {
+    Write-Host 'All tests passed' -ForegroundColor Green
 }
