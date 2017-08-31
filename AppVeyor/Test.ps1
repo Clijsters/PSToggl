@@ -14,13 +14,11 @@ $repoRoot = if ($env:APPVEYOR_BUILD_FOLDER) {$env:APPVEYOR_BUILD_FOLDER} else {"
 if ($result.CodeCoverage) {
     Import-Module -Name (Join-Path -Path $repoRoot -ChildPath '.codecovio\CodeCovio.psm1')
     $jsonPath = Export-CodeCovIoJson -CodeCoverage $result.CodeCoverage -repoRoot $repoRoot
+    Write-Host "CodeCov Results:"
+    Get-Content $jsonPath | ConvertFrom-Json
     if ($env:APPVEYOR_JOB_ID) {
         Write-Host 'Uploading CodeCoverage to CodeCov.io...'
         Invoke-UploadCoveCoveIoReport -Path $jsonPath
-    }
-    else {
-        Write-Host "CodeCov Results:"
-        Get-Content $jsonPath | ConvertFrom-Json
     }
 }
 
