@@ -45,12 +45,16 @@ function Add-UniqueFileLineToTable {
         # Get the list of files as Git sees them
         $fileKeys = & git.exe ls-files
 
+        Write-Verbose "fileKeys: $fileKeys"
+
         # Populate the sub-table
         foreach ($command in $Command) {
             #Find the file as Git sees it
             $file = $command.File
             $fileKey = $file.replace($RepoRoot, '').TrimStart('\').replace('\', '/')
             $fileKey = $fileKeys.where{$_ -like $fileKey}
+
+            Write-Verbose "fileKey: $fileKey"
 
             if ($null -eq $fileKey) {
                 Write-Warning -Message "Unexpected error filekey was null"
@@ -160,6 +164,8 @@ function Export-CodeCovIoJson {
         }
     }
 
+    Write-Verbose "files: $files"
+
     # A table of the file key then a sub-tables of `misses` and `hits` lines.
     $FileLine = @{}
 
@@ -175,8 +181,11 @@ function Export-CodeCovIoJson {
     #>
     Add-UniqueFileLineToTable -Command $CodeCoverage.MissedCommands -TableName 'misses' @addUniqueFileLineParams
 
+    Write-Verbose "FileLine: $FileLine"
+
     # Populate the hits sub-table
     Add-UniqueFileLineToTable -Command $CodeCoverage.HitCommands -TableName 'hits' @addUniqueFileLineParams
+    Write-Verbose "FileLine: $FileLine"
 
     # Create the results structure
     $resultLineData = @{}
@@ -293,6 +302,7 @@ function Invoke-UploadCoveCoveIoReport {
     )
 
     $resolvedResultFile = (Resolve-Path -Path $Path).ProviderPath
+    Write-Verbose "resolvedResultFile: $resolvedResultFile"
 
     if ($env:APPVEYOR_REPO_BRANCH) {
         Push-AppVeyorArtifact $resolvedResultFile
@@ -305,10 +315,15 @@ function Invoke-UploadCoveCoveIoReport {
         $uploadResults = codecov -f $resolvedResultFile
     }
 
+    Write-Verbose "uploadResults:"
+    Write-Verbose $uploadResults
+
     if ($env:APPVEYOR_REPO_BRANCH) {
         $logPath = (Join-Path -Path $env:TEMP -ChildPath 'codeCovUpload.log')
         $uploadResults | Out-File -Encoding ascii -LiteralPath $logPath -Force
         $resolvedLogPath = (Resolve-Path -Path $logPath).ProviderPath
+        Write-Verbose "resolvedLogPath: $resolvedLogPath"
+        Get-Content $resolvedLogPath | Write-Verbose
         Push-AppVeyorArtifact $resolvedLogPath
     }
 }
