@@ -51,7 +51,10 @@ function Add-UniqueFileLineToTable {
         foreach ($command in $Command) {
             #Find the file as Git sees it
             $file = $command.File
-            $fileKey = $file.replace($RepoRoot, '').TrimStart('\').replace('\', '/')
+            Write-Verbose "cmd.file: $file"
+            $file = $file -ireplace [regex]::Escape($RepoRoot), ""
+            $fileKey = $file.TrimStart('\').replace('\', '/')
+            Write-Verbose "fileKey before: $fileKey"
             $fileKey = $fileKeys.where{$_ -like $fileKey}
 
             Write-Verbose "fileKey: $fileKey"

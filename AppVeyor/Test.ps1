@@ -11,7 +11,7 @@ if ($env:APPVEYOR_JOB_ID) {
     Remove-Item $testResultsFile -Force -ErrorAction SilentlyContinue
 }
 
-$repoRoot = if ($env:APPVEYOR_BUILD_FOLDER) {$env:APPVEYOR_BUILD_FOLDER} else {"$PSScriptRoot\.." | Resolve-Path}
+$repoRoot = "$PSScriptRoot\.." | Resolve-Path
 if ($result.CodeCoverage) {
     Import-Module -Name (Join-Path -Path $repoRoot -ChildPath '.codecovio\CodeCovio.psm1')
     $jsonPath = Export-CodeCovIoJson -CodeCoverage $result.CodeCoverage -repoRoot $repoRoot
@@ -21,6 +21,9 @@ if ($result.CodeCoverage) {
         Write-Host 'Uploading CodeCoverage to CodeCov.io...'
         Invoke-UploadCoveCoveIoReport -Path $jsonPath
     }
+    Write-Verbose "CodeCov Results:"
+    ConvertFrom-Json $jsonPath | Write-Verbose
+
 }
 
 if (($result.FailedCount -gt 0) -or ($result.PassedCount -eq 0)) {
