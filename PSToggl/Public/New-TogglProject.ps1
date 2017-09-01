@@ -59,6 +59,15 @@ function New-TogglProject {
     )
 
     begin {
+        New-Item function::local:Write-Verbose -Value (New-Module { param($verb, $fixedName, $verbose) } -verb (Get-Command Write-Verbose) -fixedName $PSCmdlet.MyInvocation.InvocationName -verbose $PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent).NewBoundScriptBlock{
+            param($Message)
+            if ($verbose) {
+                & $verb -Message "[$fixedName] $Message" -Verbose
+            } else {
+               & $verb -Message "[$fixedName] $Message"
+            }
+           } | Out-Null
+
         $project = @{
             #name = $Name;
             wid = $Workspace;
