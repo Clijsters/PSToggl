@@ -69,7 +69,7 @@ function New-TogglProject {
             } else {
                & $verb -Message "=>$fixedName $Message"
             }
-           } | Write-Verbose
+        } | Write-Verbose
 
         $project = @{
             #name = $Name;

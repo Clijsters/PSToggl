@@ -79,5 +79,5 @@ function Start-TogglEntry() {
         }
     }
 
-    (Invoke-TogglMethod -UrlSuffix "time_entries/start" -InputObject $entry).data
+    (Invoke-TogglMethod -UrlSuffix "time_entries/start" -InputObject $entry).data | ConvertTo-TogglEntry
 }

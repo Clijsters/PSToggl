@@ -1,4 +1,3 @@
-$VerbosePreference="Continue"
 Write-Host "Current working directory: $pwd"
 $testResultsFile = '.\TestsResults.xml'
 $cc = Get-ChildItem ..\PSToggl -Recurse -File -Include *.ps1 -Exclude @("*.Tests.ps1", "Test.ps1", "Install.ps1", "Deploy.ps1")
@@ -22,8 +21,7 @@ if ($result.CodeCoverage) {
         Invoke-UploadCoveCoveIoReport -Path $jsonPath
     }
     Write-Verbose "CodeCov Results:"
-    ConvertFrom-Json $jsonPath | Write-Verbose
-
+    Get-Content $jsonPath | Write-Verbose
 }
 
 if (($result.FailedCount -gt 0) -or ($result.PassedCount -eq 0)) {

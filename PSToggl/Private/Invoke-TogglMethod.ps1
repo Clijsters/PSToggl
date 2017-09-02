@@ -17,14 +17,18 @@ function Invoke-TogglMethod {
         [String]
         $Method
     )
-    New-Item function::local:Write-Verbose -Value (New-Module { param($verb, $fixedName, $verbose) } (Get-Command Write-Verbose) $PSCmdlet.MyInvocation.InvocationName $PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent).NewBoundScriptBlock{
-         param($Object)
-         if ($verbose) {
-             & $verb "[$fixedName] $Object" -Verbose
-         } else {
-            & $verb "[$fixedName] $Object"
-         }
-    } | Out-Null
+
+    New-Item function::local:Write-Verbose -Value (
+        New-Module -ScriptBlock { param($verb, $fixedName, $verbose) } -ArgumentList @((Get-Command Write-Verbose), $PSCmdlet.MyInvocation.InvocationName, $PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent)
+    ).NewBoundScriptBlock{
+        param($Message)
+        if ($verbose) {
+            & $verb -Message "=>$fixedName $Message" -Verbose
+        } else {
+           & $verb -Message "=>$fixedName $Message"
+        }
+    } | Write-Verbose
+
 
     [string]$auth = $TogglConfiguration.User.ApiKey + ":" + "api_token"
     [string]$authFull = "Basic " + [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($auth))

@@ -1,4 +1,5 @@
 function Write-RunningTogglEntry() {
+    [CmdletBinding()]
     param(
         # Special case - format for prompt
         [Switch]
@@ -32,7 +33,6 @@ function Write-RunningTogglEntry() {
         Write-Host $start -NoNewline -ForegroundColor Yellow
         Write-Host $description -ForegroundColor $color -NoNewline
         Write-Host "$($split + $minutes)m$($end)" -NoNewline -ForegroundColor Yellow
-
     }
     elseif (!$ForPrompt) {
         Write-Host $noMsg

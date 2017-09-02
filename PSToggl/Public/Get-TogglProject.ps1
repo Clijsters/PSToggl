@@ -74,7 +74,6 @@ function Get-TogglProject {
     }
 
     Process {
-
         switch ($PsCmdlet.ParameterSetName) {
             "byObject" {
                 switch ($InputObject[0].psobject.TypeNames[0]) {
