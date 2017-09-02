@@ -36,6 +36,7 @@ function New-TogglProject {
     #>
     [CmdletBinding()]
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
+
     param (
         # The name of your new project
         [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
@@ -59,14 +60,16 @@ function New-TogglProject {
     )
 
     begin {
-        New-Item function::local:Write-Verbose -Value (New-Module { param($verb, $fixedName, $verbose) } -verb (Get-Command Write-Verbose) -fixedName $PSCmdlet.MyInvocation.InvocationName -verbose $PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent).NewBoundScriptBlock{
+        New-Item function::local:Write-Verbose -Value (
+            New-Module -ScriptBlock { param($verb, $fixedName, $verbose) } -ArgumentList @((Get-Command Write-Verbose), $PSCmdlet.MyInvocation.InvocationName, $PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent)
+        ).NewBoundScriptBlock{
             param($Message)
             if ($verbose) {
-                & $verb -Message "[$fixedName] $Message" -Verbose
+                & $verb -Message "=>$fixedName $Message" -Verbose
             } else {
-               & $verb -Message "[$fixedName] $Message"
+               & $verb -Message "=>$fixedName $Message"
             }
-           } | Out-Null
+           } | Write-Verbose
 
         $project = @{
             #name = $Name;
@@ -85,18 +88,23 @@ function New-TogglProject {
             $project.template_id = $TemplateId
         }
 
+        if ($Workspace -ne $TogglConfiguration.User.Workspace) {
+            #This is more likely a kind of test coverage guarantee...
+            Write-Verbose "`$Workspace differs from standard"
+        }
+
         Write-Verbose "Resulting template Project:"
         $project.Keys | ForEach-Object {Write-Verbose "`t$($_) is $($project[$_])"}
     }
 
     process {
-        Write-Verbose "Processing item: `$Name=`"$Name`""
+        Write-Verbose "Processing item: `$Name = `"$Name`""
         $item = $project.PSObject.Copy()
         $item.name = $Name
         $item.Keys | ForEach-Object {Write-Verbose "`t$($_) is $($item[$_])"}
         Write-Verbose "Validating Project..."
         $item | ConvertTo-TogglProject | Write-Verbose
-        Write-Debug "Before committing - Fire in the Hole!"
+        Write-Debug "Fire in the Hole!"
         $result = Invoke-TogglMethod -UrlSuffix "projects" -InputObject @{project = $item} -Method POST
         if ($result.data) {
             $result.data | ConvertTo-TogglProject
@@ -106,5 +114,6 @@ function New-TogglProject {
     }
 
     end {
+        Write-Verbose "Finished."
     }
 }
