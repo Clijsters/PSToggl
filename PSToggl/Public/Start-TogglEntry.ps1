@@ -9,15 +9,18 @@ function Start-TogglEntry() {
         This includes:
          - Stopping the current Entry
          - Creating a new Entry with the given information.
-         - Optionally add a duration to it.
+         (TODO)- Optionally add a duration to it.
+
+    .INPUTS
+        This function does not accept pipeline Input yet
+
+    .OUTPUTS
+        PSToggl.Entry
 
     .EXAMPLE
         Start-TogglEntry "Meeting"
 
         Starts a new Time Entry with the Description "Meeting". This will be the most common way to use Start-TogglEntry.
-    .EXAMPLE
-
-        Start-TogglEntry -Description "Coding" -ProjectName "MyProj"
 
     .EXAMPLE
         Start-TogglEntry -Description "Test" -Tags ("Tag1","Tag2") -ProjectName "Offsets"
@@ -25,11 +28,14 @@ function Start-TogglEntry() {
         ///TODO: WIP
             Get-TogglProject *Intern* | Start-TogglEntry "Meeting"
 
-    .INPUTS
-        This function does not accept pipeline Input yet
+   .EXAMPLE
+        Start-TogglEntry -Description "Coding" -ProjectName "MyProj"
 
-    .OUTPUTS
-        PSToggl.Entry
+    .NOTES
+        Version:        1.0
+        Author:         Clijsters
+        Creation Date:  03.04.2017
+        Purpose/Change: Initial script development
      #>
     [CmdletBinding()]
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
@@ -44,24 +50,27 @@ function Start-TogglEntry() {
 
         # Tags to identify related entries
         [Parameter(Mandatory = $false)]
-        [String[]] $Tags,
+        [String[]] $Tags
 
         # Duration in minutes
-        [Parameter(Mandatory = $false)]
-        [int] $Duration = 0
+        #[Parameter(Mandatory = $false)]
+        #[int] $Duration = 0
     )
 
     $entry = @{
         time_entry = [psobject]@{
             description  = $Description;
             tags         = [array]$Tags;
-            duration     = ($Duration * 60);
+            #duration     = ($Duration * 60);
             created_with = "PoSh";
         };
     }
 
     if ($ProjectName) {
-        $projId = (Get-TogglProject -Name $ProjectName)[0].id
+        $projects = Get-TogglProject -Name $ProjectName
+        if ($projects) {
+            $projId = $projects[0].id
+        }
         if ($projId -gt 0) {
             $entry.time_entry.pid = $projId
         }
@@ -70,6 +79,5 @@ function Start-TogglEntry() {
         }
     }
 
-    #TODO: Check for errors and make a TogglEntry out of it
-    return (Invoke-TogglMethod -UrlSuffix "time_entries/start" -InputObject $entry).data
+    (Invoke-TogglMethod -UrlSuffix "time_entries/start" -InputObject $entry).data | ConvertTo-TogglEntry
 }

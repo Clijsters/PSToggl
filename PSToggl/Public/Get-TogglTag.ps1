@@ -49,9 +49,9 @@ function Get-TogglTag() {
 
         # Workspace id
         [Parameter(Mandatory = $false)]
-        [string] $Workspace
+        [string] $Workspace = $TogglConfiguration.User.Workspace
     )
-    $tags = Invoke-TogglMethod -UrlSuffix ("workspaces/" + $TogglConfiguration.User.Workspace + "/tags") -Method "GET"
+    $tags = Invoke-TogglMethod -UrlSuffix ("workspaces/" + $Workspace + "/tags") -Method "GET"
     if ($Name) {
         $tags = $tags | Where-Object {$_.Name -like $Name}
     }

@@ -1,37 +1,23 @@
-<h1 style="text-align:center;">
+<h1 align="center">
     <img src="logo.gif" style="height:70px" alt="PSToggl Logo">
     <br>
     PSToggl
     <br>
 </h1>
 
-<p style="text-align:center;">
-<b>
-A fully featured <a href="https://toggl.com/">Toggl</a> client for your PowerShell - based on <a href="https://github.com/toggl/toggl_api_docs/blob/master/toggl_api.md">Toggl's API v8</a>
-</b>
-
-<table align="center">
-    <thead style="border-bottom:1px solid;font-weight:bold;">
-        <tr>
-            <td>master</td>
-            <td>develop</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <a href="https://ci.appveyor.com/project/Clijsters/pstoggl/branch/master">
-                    <img alt="Build status for master" src="https://ci.appveyor.com/api/projects/status/c6u0f4gk3ibxwa46/branch/master?svg=true">
-                </a>
-            </td>
-            <td>
-                <a href="https://ci.appveyor.com/project/Clijsters/pstoggl/branch/develop">
-                    <img alt="Build status for develop" src="https://ci.appveyor.com/api/projects/status/c6u0f4gk3ibxwa46/branch/develop?svg=true">
-                </a>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<p align="center">
+<b>A fully featured <a href="https://toggl.com/">Toggl</a> client for your PowerShell - based on <a href="https://github.com/toggl/toggl_api_docs/blob/master/toggl_api.md">Toggl's API v8</a></b>
+</p>
+<p align="center">
+    <a href="https://ci.appveyor.com/project/Clijsters/pstoggl/branch/master">
+        <img alt="Build status for master" src="https://ci.appveyor.com/api/projects/status/c6u0f4gk3ibxwa46/branch/master?svg=true&passingText=master%20-%20OK&pendingText=master%20-%20Pending&failingText=master%20-%20Failing">
+    </a>
+    <a href="https://ci.appveyor.com/project/Clijsters/pstoggl/branch/develop">
+        <img alt="Build status for develop" src="https://ci.appveyor.com/api/projects/status/c6u0f4gk3ibxwa46/branch/develop?svg=true&passingText=develop%20-%20OK&pendingText=develop%20-%20Pending&failingText=develop%20-%20Failing">
+    </a>
+    <a href="https://codecov.io/gh/Clijsters/PSToggl">
+        <img alt="codecov Code Coverage" src="https://codecov.io/gh/Clijsters/PSToggl/branch/develop/graph/badge.svg">
+    </a>
 </p>
 
 ## Under heavy development
@@ -62,7 +48,7 @@ PSToggl perfectly integrates in your existing PowerShell environment, independen
 
 **//TODO: Attention! PSToggl is not yet published and only configurable over a json file.**
 
-I recommend you to to use `Install-Module` to install PSToggl:
+It's recommended to use `Install-Module` to install PSToggl:
 
 ````PowerShell
 #Running PowerShell as Administrator - Install globally
@@ -72,11 +58,11 @@ Install-Module PSToggl
 Install-Module PSToggl -Scope CurrentUser
 ````
 
-Alternatively, just clone this repo and import the module:
+Alternatively, just clone this repo and import PSToggl:
 
 ````PowerShell
 git clone https://github.com/clijsters/PSToggl
-Import-Module PSToggl/PSToggl/PSToggl/PSToggl.psm1 # Yeah, 4 times 
+Import-Module PSToggl/PSToggl/PSToggl/PSToggl.psm1 # Yeah, 4 times
 ````
 
 ### Configuration
@@ -148,3 +134,13 @@ PS> Invoke-Chrome -bookmark GitLab
 PS> Stop-TogglEntry -PassThrough | Select Minutes
 PS> #Stop-TogglEntry -PassThrough | New-JiraWorklog -Issue Proj-12
 ````
+
+## Test Coverage
+
+### Current
+
+<a href="https://codecov.io/gh/Clijsters/PSToggl"><img src="https://codecov.io/gh/Clijsters/PSToggl/branch/develop/graphs/sunburst.svg" alt="codecov test coverage sunburst"></a>
+
+### Historical
+
+<img src="https://codecov.io/gh/Clijsters/PSToggl/branch/develop/graphs/commits.svg" alt="codecov test coverage graph">

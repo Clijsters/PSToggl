@@ -71,47 +71,52 @@ function Get-TogglProject {
     Begin {
         $projects = Invoke-TogglMethod -UrlSuffix "workspaces/$($Workspace)/projects"
 
-        if ($PsCmdlet.ParameterSetName -eq "byObject") {
-            switch ($InputObject.psobject.GetTypeName[0]) {
-                "PSToggl.Client" {
-                    $projectLambda = {
-                        param($obj)
-                        $projects | Where-Object {
-                            $_.cid -EQ $obj.id}
-                    }
-                }
-                "PSToggl.Workspace" {
-                    $projectLambda = {
-                        param($obj)
-                        $projects | Where-Object {$_.wid -EQ $obj.id}
-                    }
-                }
-                "PSToggl.Entry" {
-                    $projectLambda = {
-                        param($obj)
-                        if ($obj.wid -ne $Workspace) {
-                            $projects = Get-TogglProject -Workspace $obj.wid
-                        }
-                        $projects | Where-Object {$_.id -EQ $obj.pid}
-                    }
-                }
-                "PSToggl.User" {
-                    $projectLambda = {
-                        param($obj)
-                        Throw "Not implemented"
-                    }
-                }
-                Default {
-                    Throw "Not implemented"
-                }
-            }
-        }
     }
 
     Process {
-
         switch ($PsCmdlet.ParameterSetName) {
             "byObject" {
+                switch ($InputObject[0].psobject.TypeNames[0]) {
+                    "PSToggl.Entry" {
+                        $projectLambda = {
+                            param($obj)
+                            if ($obj.wid -ne $Workspace) {
+                                $projects = Get-TogglProject -Workspace $obj.wid
+                            }
+                            $projects | Where-Object {$_.id -EQ $obj.pid}
+                        }
+                    }
+                    "PSToggl.Project" {
+                        $projectLambda = {
+                            param($obj)
+                            $obj
+                        }
+                    }
+                    <# As there are no getters, this code is never reached and therefore untested
+                    "PSToggl.Client" {
+                        $projectLambda = {
+                            param($obj)
+                            $projects | Where-Object {
+                                $_.cid -EQ $obj.id}
+                        }
+                    }
+                    "PSToggl.Workspace" {
+                        $projectLambda = {
+                            param($obj)
+                            $projects | Where-Object {$_.wid -EQ $obj.id}
+                        }
+                    }
+                    "PSToggl.User" {
+                        $projectLambda = {
+                            param($obj)
+                            Throw "Not implemented"
+                        }
+                    }
+                    #>
+                    Default {
+                        Throw "Not implemented"
+                    }
+                }
                 $tmpList = New-Object -TypeName System.Collections.ArrayList
                 foreach ($item in $InputObject) {
                     $projectLambda.Invoke($item) | Foreach-Object {$tmpList.Add($_) | Out-Null}
