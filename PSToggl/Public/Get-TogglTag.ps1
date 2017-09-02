@@ -51,7 +51,20 @@ function Get-TogglTag() {
         [Parameter(Mandatory = $false)]
         [string] $Workspace = $TogglConfiguration.User.Workspace
     )
+
+    New-Item function::local:Write-Verbose -Value (
+        New-Module -ScriptBlock { param($verb, $fixedName, $verbose) } -ArgumentList @((Get-Command Write-Verbose), $PSCmdlet.MyInvocation.InvocationName, $PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent)
+    ).NewBoundScriptBlock{
+        param($Message)
+        if ($verbose) {
+            & $verb -Message "=>$fixedName $Message" -Verbose
+        } else {
+           & $verb -Message "=>$fixedName $Message"
+        }
+    } | Write-Verbose
+
     $tags = Invoke-TogglMethod -UrlSuffix ("workspaces/" + $Workspace + "/tags") -Method "GET"
+    Write-Verbose "Found $($tags.Count) tags."
     if ($Name) {
         $tags = $tags | Where-Object {$_.Name -like $Name}
     }

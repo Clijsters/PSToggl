@@ -57,6 +57,17 @@ function Start-TogglEntry() {
         #[int] $Duration = 0
     )
 
+    New-Item function::local:Write-Verbose -Value (
+        New-Module -ScriptBlock { param($verb, $fixedName, $verbose) } -ArgumentList @((Get-Command Write-Verbose), $PSCmdlet.MyInvocation.InvocationName, $PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent)
+    ).NewBoundScriptBlock{
+        param($Message)
+        if ($verbose) {
+            & $verb -Message "=>$fixedName $Message" -Verbose
+        } else {
+           & $verb -Message "=>$fixedName $Message"
+        }
+    } | Write-Verbose
+
     $entry = @{
         time_entry = [psobject]@{
             description  = $Description;
@@ -67,11 +78,14 @@ function Start-TogglEntry() {
     }
 
     if ($ProjectName) {
+        Write-Verbose "ProjectName given. Searching for -Name=$ProjectName"
         $projects = Get-TogglProject -Name $ProjectName
         if ($projects) {
+            Write-Verbose "Found $($projects.count) projects. Selecting 1st one."
             $projId = $projects[0].id
         }
         if ($projId -gt 0) {
+            Write-Verbose "`$projId=$projId"
             $entry.time_entry.pid = $projId
         }
         else {

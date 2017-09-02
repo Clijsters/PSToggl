@@ -5,11 +5,25 @@ function Write-RunningTogglEntry() {
         [Switch]
         $ForPrompt
     )
+
+    New-Item function::local:Write-Verbose -Value (
+        New-Module -ScriptBlock { param($verb, $fixedName, $verbose) } -ArgumentList @((Get-Command Write-Verbose), $PSCmdlet.MyInvocation.InvocationName, $PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent)
+    ).NewBoundScriptBlock{
+        param($Message)
+        if ($verbose) {
+            & $verb -Message "=>$fixedName $Message" -Verbose
+        } else {
+           & $verb -Message "=>$fixedName $Message"
+        }
+    } | Write-Verbose
+
     $Running = Get-TogglEntry -Current
     $noMsg = "No time entry currently running"
     if ($Running.id -GT 0) {
+        Write-Verbose "`$Running.id = $($Running.id)"
         $minutes = [System.Math]::Round((New-TimeSpan -Start ([datetime]($Running.Start)) -End ([datetime]::Now)).TotalMinutes, 0)
         if ($Running.pid) {
+            Write-Verbose "`$Running.pid = $($Running.pid)"
             $color = [System.ConsoleColor]::Cyan
             #TODO Pipeline
             $description = (Get-TogglProject -Id $Running.pid -Workspace $Running.wid).Name
