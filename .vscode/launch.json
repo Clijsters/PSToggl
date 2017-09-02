@@ -1,6 +1,7 @@
 {
     "version": "0.2.0",
     "configurations": [
+
         {
             "type": "PowerShell",
             "request": "launch",
@@ -13,7 +14,7 @@
             "type": "PowerShell",
             "request": "attach",
             "name": "PowerShell Attach to Host Process",
-            "processId": "${command.PickPSHostProcess}",
+            "processId": "${command:PickPSHostProcess}",
             "runspaceId": 1
         },
         {
