@@ -24,7 +24,10 @@ function ConvertTo-TogglProject {
     }
 
     process {
+        Write-Verbose "Passing `$InputObject to ConvertTo-TogglObject"
         $result = $InputObject | ConvertTo-TogglObject -ObjectConfig $objectConfig
+
+        Write-Verbose "Adding ToString() and Delete()"
 
         $result | Add-Member -MemberType ScriptMethod -Name "ToString" -Force -Value {
             Write-Output $this.name

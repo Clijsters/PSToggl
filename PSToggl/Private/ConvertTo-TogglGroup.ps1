@@ -24,7 +24,9 @@ function ConvertTo-TogglGroup {
     }
 
     process {
-        $result = $InputObject | ConvertTo-TogglObject -ObjectConfig $objectConfig
+        Write-Verbose "Passing `$InputObject to ConvertTo-TogglObject"
+
+        Write-Verbose "Adding ToString()"
 
         $result | Add-Member -MemberType ScriptMethod -Name "ToString" -Force -Value {
             Write-Output $this.name
