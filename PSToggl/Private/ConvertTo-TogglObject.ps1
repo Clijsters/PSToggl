@@ -44,25 +44,25 @@ function ConvertTo-TogglObject {
             }
 
             foreach ($field in $ObjectConfig.Fields) {
-                Write-Verbose "`tProcessing field `"$($field.name)`""
+                Write-Verbose "Processing field `"$($field.name)`""
                 $inputField = $element.PSObject.Members[$field.name].Value
                 if ($null -ne $inputField) {
                     $object[$field.name] = $inputField -as $field.type
                 }
                 else {
                     if ($null -ne $field.default) {
-                        Write-Verbose "`tDefaulting null-valued field"
+                        Write-Verbose "Defaulting null-valued field"
                         $object[$field.name] = $field.default -as $field.type
                     }
                     elseif ($field.required) {
                         throw "Property `"$($field.name)`" is required"
                     }
                 }
-                Write-Verbose "`tValue: `"$inputField`""
+                Write-Verbose "Value: `"$inputField`""
             }
 
             $result = New-Object -TypeName psobject -Property $object
-            Write-Verbose "`tInserting TypeName `"$($ObjectConfig.TypeName)`""
+            Write-Verbose "Inserting TypeName `"$($ObjectConfig.TypeName)`""
             $result.PSObject.TypeNames.Insert(0, $ObjectConfig.TypeName)
             <#
             IMHO this is a really great idea for dynamic configs. Unfortunately code in psd1 is not allowed.
