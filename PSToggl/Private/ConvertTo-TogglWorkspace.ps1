@@ -25,7 +25,7 @@ function ConvertTo-TogglWorkspace {
 
     process {
         Write-Verbose "Passing `$InputObject to ConvertTo-TogglObject"
-
+        $result = $InputObject | ConvertTo-TogglObject -ObjectConfig $objectConfig
 
         Write-Verbose "Adding ToString()"
 
