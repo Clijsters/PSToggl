@@ -81,12 +81,14 @@ function Get-TogglProject {
             }
         } | Write-Verbose
 
+        Write-Debug "Parameterset: `"$($PsCmdlet.ParameterSetName)`""
         $projects = Invoke-TogglMethod -UrlSuffix "workspaces/$($Workspace)/projects"
     }
 
     Process {
         switch ($PsCmdlet.ParameterSetName) {
             "byObject" {
+                Write-Verbose "Processing InputObject of type `"$($InputObject[0].psobject.TypeNames[0])`""
                 switch ($InputObject[0].psobject.TypeNames[0]) {
                     "PSToggl.Entry" {
                         $projectLambda = {

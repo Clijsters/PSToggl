@@ -78,6 +78,8 @@ function Get-TogglEntry() {
     } | Write-Verbose
 
     $suffix = if ($Current) {"/current"} else {""}
+    Write-Verbose "Querying API for Toggl Entries..."
+    Write-Debug "Suffix: `"$suffix`""
     $entries = Invoke-TogglMethod -UrlSuffix ("time_entries" + $suffix) -Method "GET"
     if ($Current) {
         return $entries.data | ConvertTo-TogglEntry

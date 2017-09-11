@@ -29,16 +29,19 @@ function Write-RunningTogglEntry() {
             $description = (Get-TogglProject -Id $Running.pid -Workspace $Running.wid).Name
         }
         else {
+            Write-Verbose "No project id set"
             $color = [System.ConsoleColor]::Red
             $description = if ($Running.description) {$Running.description} else {"??"}
         }
 
         if ($ForPrompt) {
+            Write-Verbose "Preparing Strings for prompt status"
             $start = " ["
             $split = " .. "
             $end = "]"
         }
         else {
+            Write-Verbose "Preparing Strings for standard output"
             $start = "TOGGL: "
             $split = " is running since "
             $end = "`n"
