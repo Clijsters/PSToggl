@@ -1,46 +1,44 @@
 <#
-  .SYNOPSIS
-  Updates a hash table with the Unique file lines
-  Structure:
-  RootTable.[FileKey].[SubTable].[Line]
-
-  .PARAMETER FileLine
-  The table to update
-
-  .PARAMETER Command
-  The list of Command from pester to update the table based on
-
-  .PARAMETER RepoRoot
-  The path to the root of the repo.  This part of the path will not be included in the report.  Needed to normalize all the reports.
-
-  .PARAMETER TableName
-  The path of the file to write the report to.
+    .SYNOPSIS
+        Updates a hash table with the Unique file lines
+        Structure:
+        RootTable.[FileKey].[SubTable].[Line]
 #>
 function Add-UniqueFileLineToTable {
     [CmdletBinding()]
     param
     (
+        #The table to update
         [Parameter(Mandatory = $true)]
-        [System.Collections.Hashtable]
-        $FileLine,
+        [System.Collections.Hashtable] $FileLine,
 
+        #The list of Command from pester to update the table based on
         [Parameter(Mandatory = $true)]
-        [Object]
-        $Command,
+        [Object] $Command,
 
+        #The path to the root of the repo.  This part of the path will not be included in the report.  Needed to normalize all the reports.
         [Parameter(Mandatory = $true)]
-        [String]
-        $RepoRoot,
+        [String] $RepoRoot,
 
+        #The path of the file to write the report to.
         [Parameter(Mandatory = $true)]
-        [String]
-        $TableName
+        [String] $TableName
     )
+    New-Item function::local:Write-Verbose -Value (
+        New-Module -ScriptBlock { param($verb, $fixedName, $verbose) } -ArgumentList @((Get-Command Write-Verbose), $PSCmdlet.MyInvocation.InvocationName, $PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent)
+    ).NewBoundScriptBlock{
+        param($Message)
+        if ($verbose) {
+            & $verb -Message "=>CCI\$fixedName $Message" -Verbose
+        } else {
+           & $verb -Message "=>CCI\$fixedName $Message"
+        }
+    } | Write-Verbose
 
     # file paths need to be relative to repo root when querying GIT
     Push-Location -LiteralPath $RepoRoot
     try {
-        Write-Verbose -Message "running git ls-files"
+        Write-Verbose "running git ls-files"
 
         # Get the list of files as Git sees them
         $fileKeys = & git.exe ls-files
@@ -51,23 +49,23 @@ function Add-UniqueFileLineToTable {
         foreach ($command in $Command) {
             #Find the file as Git sees it
             $file = $command.File
-            Write-Verbose "cmd.file: $file"
+            Write-Verbose "Processing file `"$file`""
             $file = $file -ireplace [regex]::Escape($RepoRoot), ""
+            Write-Debug "`$file after replace: $file"
             $fileKey = $file.TrimStart('\').replace('\', '/')
-            Write-Verbose "fileKey before: $fileKey"
+            Write-Debug "`$fileKey trimmed: $fileKey"
             $fileKey = $fileKeys.where{$_ -like $fileKey}
-
-            Write-Verbose "fileKey: $fileKey"
+            Write-Debug "`$fileKey transformed: $fileKey"
 
             if ($null -eq $fileKey) {
-                Write-Warning -Message "Unexpected error filekey was null"
+                Write-Warning -Message "Unexpected error: `$fileKey was null"
                 continue
             }
             elseif ($fileKey.Count -gt 1) {
-                Write-Verbose -Message "Unexpected error, more than one git file matched file ($file): $($fileKey -join ', ')"
+                Write-Verbose -Message "More than one git file matched file ($file): $($fileKey -join ', ')"
                 continue
             } elseif ($fileKey.Count -lt 1) {
-                Write-Warning -Message "Unexpected error, no file matched $file!"
+                Write-Warning -Message "No file matched $file!"
                 continue
             }
 
@@ -109,11 +107,21 @@ function Test-CodeCoverage {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]
-        [Object]
-        $CodeCoverage
+        [Object] $CodeCoverage
     )
+    New-Item function::local:Write-Verbose -Value (
+        New-Module -ScriptBlock { param($verb, $fixedName, $verbose) } -ArgumentList @((Get-Command Write-Verbose), $PSCmdlet.MyInvocation.InvocationName, $PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent)
+    ).NewBoundScriptBlock{
+        param($Message)
+        if ($verbose) {
+            & $verb -Message "=>CCI\$fixedName $Message" -Verbose
+        } else {
+           & $verb -Message "=>CCI\$fixedName $Message"
+        }
+    } | Write-Verbose
 
     if (!($CodeCoverage | Get-Member -Name MissedCommands)) {
+        Write-Verbose "`$CodeCoverage doesn't have Member `"MissedCommands`". Throwing exception."
         throw 'Must be a Pester CodeCoverage object'
     }
 
@@ -138,18 +146,25 @@ function Export-CodeCovIoJson {
     param(
         [Parameter(Mandatory = $true)]
         [ValidateScript( {Test-CodeCoverage -CodeCoverage $_})]
-        [Object]
-        $CodeCoverage,
+        [Object] $CodeCoverage,
 
         [Parameter(Mandatory = $true)]
-        [String]
-        $RepoRoot,
+        [String] $RepoRoot,
 
         [Parameter()]
         [ValidateNotNullOrEmpty()]
-        [String]
-        $Path = (Join-Path -Path $env:TEMP -ChildPath 'codeCov.json')
+        [String] $Path = (Join-Path -Path $env:TEMP -ChildPath 'codeCov.json')
     )
+    New-Item function::local:Write-Verbose -Value (
+        New-Module -ScriptBlock { param($verb, $fixedName, $verbose) } -ArgumentList @((Get-Command Write-Verbose), $PSCmdlet.MyInvocation.InvocationName, $PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent)
+    ).NewBoundScriptBlock{
+        param($Message)
+        if ($verbose) {
+            & $verb -Message "=>CCI\$fixedName $Message" -Verbose
+        } else {
+           & $verb -Message "=>CCI\$fixedName $Message"
+        }
+    } | Write-Verbose
 
     Write-Verbose -Message "RepoRoot: $RepoRoot"
 
@@ -303,6 +318,16 @@ function Invoke-UploadCoveCoveIoReport {
         [Parameter(Mandatory = $false)]
         [String] $Token
     )
+    New-Item function::local:Write-Verbose -Value (
+        New-Module -ScriptBlock { param($verb, $fixedName, $verbose) } -ArgumentList @((Get-Command Write-Verbose), $PSCmdlet.MyInvocation.InvocationName, $PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent)
+    ).NewBoundScriptBlock{
+        param($Message)
+        if ($verbose) {
+            & $verb -Message "=>CCI\$fixedName $Message" -Verbose
+        } else {
+           & $verb -Message "=>CCI\$fixedName $Message"
+        }
+    } | Write-Verbose
 
     $resolvedResultFile = (Resolve-Path -Path $Path).ProviderPath
     Write-Verbose "resolvedResultFile: $resolvedResultFile"

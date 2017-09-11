@@ -69,13 +69,26 @@ function Get-TogglProject {
     )
 
     Begin {
-        $projects = Invoke-TogglMethod -UrlSuffix "workspaces/$($Workspace)/projects"
+        New-Item function::local:Write-Verbose -Value (
+            New-Module -ScriptBlock { param($verb, $fixedName, $verbose) } -ArgumentList @((Get-Command Write-Verbose), $PSCmdlet.MyInvocation.InvocationName, $PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent)
+        ).NewBoundScriptBlock{
+            param($Message)
+            if ($verbose) {
+                & $verb -Message "=>$fixedName $Message" -Verbose
+            }
+            else {
+                & $verb -Message "=>$fixedName $Message"
+            }
+        } | Write-Verbose
 
+        Write-Debug "Parameterset: `"$($PsCmdlet.ParameterSetName)`""
+        $projects = Invoke-TogglMethod -UrlSuffix "workspaces/$($Workspace)/projects"
     }
 
     Process {
         switch ($PsCmdlet.ParameterSetName) {
             "byObject" {
+                Write-Verbose "Processing InputObject of type `"$($InputObject[0].psobject.TypeNames[0])`""
                 switch ($InputObject[0].psobject.TypeNames[0]) {
                     "PSToggl.Entry" {
                         $projectLambda = {

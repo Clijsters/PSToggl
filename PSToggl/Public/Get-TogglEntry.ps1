@@ -65,7 +65,21 @@ function Get-TogglEntry() {
         [Parameter(Position = 3, Mandatory = $false, ParameterSetName = "byObject")]
         [DateTime] $To
     )
+
+    New-Item function::local:Write-Verbose -Value (
+        New-Module -ScriptBlock { param($verb, $fixedName, $verbose) } -ArgumentList @((Get-Command Write-Verbose), $PSCmdlet.MyInvocation.InvocationName, $PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent)
+    ).NewBoundScriptBlock{
+        param($Message)
+        if ($verbose) {
+            & $verb -Message "=>$fixedName $Message" -Verbose
+        } else {
+           & $verb -Message "=>$fixedName $Message"
+        }
+    } | Write-Verbose
+
     $suffix = if ($Current) {"/current"} else {""}
+    Write-Verbose "Querying API for Toggl Entries..."
+    Write-Debug "Suffix: `"$suffix`""
     $entries = Invoke-TogglMethod -UrlSuffix ("time_entries" + $suffix) -Method "GET"
     if ($Current) {
         return $entries.data | ConvertTo-TogglEntry
