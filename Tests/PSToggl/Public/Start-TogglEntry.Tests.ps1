@@ -6,9 +6,15 @@ $sut = Split-Path -Leaf $MyInvocation.MyCommand.Path
 InModuleScope PSToggl {
     Describe "Start-TogglEntry" {
         $answer = @{
-            data = @{
-                description = "asd";
-                duration    = "-123456"
+            data =  @{
+                description = "Test entry";
+                wid         = 123;
+                pid         = 123;
+                tid         = 123;
+                start       = [datetime]::Now;
+                stop        = [datetime]::Now;
+                duration    = 0;
+                at          = [datetime]::Now;
             }
         }
 
@@ -29,6 +35,10 @@ InModuleScope PSToggl {
                     }
                 )
             }
+        }
+
+        Mock ConvertTo-TogglEntry {
+            return $InputObject
         }
 
         It "Calls Invoke-TogglMethod with the correct url" {
@@ -59,6 +69,7 @@ InModuleScope PSToggl {
 
         It "Returns the API's answer" { #TODO: It should definitely return a TogglEntry, not the psobject
             Start-TogglEntry | Should Be $answer.data
+            Assert-MockCalled -CommandName ConvertTo-TogglEntry -Times 1 -Scope It
         }
 
     }

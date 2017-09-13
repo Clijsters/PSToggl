@@ -23,7 +23,6 @@ InModuleScope PSToggl {
             }
         }
 
-
         Context "Fields" {
             foreach ($k in $sampleInput.Keys) {
                 # TODO: Will convert property names in future

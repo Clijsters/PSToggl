@@ -37,6 +37,7 @@ function Invoke-TogglMethod {
         Authorization = $authFull
     }
 
+    #TODO: Optional parameter
     $restUri = $TogglConfiguration.Api.baseUrl + $UrlSuffix
 
     @(
@@ -47,20 +48,23 @@ function Invoke-TogglMethod {
         "authFull",
         "headers",
         "restUri"
-    ) | ForEach-Object { if (Get-Variable $_ -ErrorAction SilentlyContinue) {Write-Debug ((Get-Variable $_).Name.PadRight(12) + (Get-Variable $_).Value)}}
+    ) | ForEach-Object { if (Get-Variable $_ -ErrorAction SilentlyContinue) {Write-Verbose ((Get-Variable $_).Name.PadRight(12) + (Get-Variable $_).Value)}}
 
     if ($InputObject) {
+        Write-Verbose "`$InputObject present"
         $json = (ConvertTo-Json $InputObject -Depth 99)
-        Write-Verbose "JSON: $json"
         if (-not $Method) { $Method = "POST" }
+        Write-Verbose "`$json: $json"
+        Write-Debug "Invoking $Method request on $restUri with headers $headers"
         $answer = Invoke-RestMethod -Uri $restUri -Headers $headers -ContentType "application/json" -Method $Method -Body $json
-    }
-    else {
+    } else {
+        Write-Verbose "`$InputObject not present"
         if (-not $Method) { $Method = "GET" }
+        Write-Debug "Invoking $Method request on $restUri with headers $headers"
         $answer = Invoke-RestMethod -Uri $restUri -Headers $headers -ContentType "application/json" -Method $Method
     }
 
-    Write-Verbose $answer
+    Write-Debug "`$answer: $answer"
     #TODO: Error handling
     return $answer
 }
