@@ -1,5 +1,6 @@
 Write-Host 'Creating new module manifest'
-$ModuleManifestPath = Join-Path -path "$pwd" -ChildPath ("..\$env:ModuleName"+'.psd1') | Resolve-Path
+$moduleName = "PSToggl"
+$ModuleManifestPath = "$PSScriptRoot\..\PSToggl\PSToggl.psd1" | Resolve-Path
 $ModuleManifest     = Get-Content $ModuleManifestPath -Raw
 [regex]::replace($ModuleManifest,'(ModuleVersion = )(.*)',"`$1'$env:APPVEYOR_BUILD_VERSION'") | Out-File -LiteralPath $ModuleManifestPath
 
@@ -14,4 +15,4 @@ Write-Host "Adding $ModulePath to 'psmodulepath' PATH variable"
 $env:psmodulepath += ';' + $ModulePath
 
 Write-Host 'Publishing module to Powershell Gallery'
-Publish-Module -Name $env:ModuleName -NuGetApiKey $env:NuGetApiKey
+Publish-Module -Name $moduleName -NuGetApiKey $env:NuGetApiKey

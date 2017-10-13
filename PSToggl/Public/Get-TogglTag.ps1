@@ -26,7 +26,7 @@ function Get-TogglTag() {
         PSToggl.Entry
 
     .OUTPUTS
-        PSToggl.Tag[]
+        PSToggl.Tag
 
     .EXAMPLE
         Get-TogglTag -Name "meeting"
