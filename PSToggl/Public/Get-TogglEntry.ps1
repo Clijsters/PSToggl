@@ -50,8 +50,8 @@ function Get-TogglEntry() {
         [string] $Description,
 
         # Entry name
-        [Parameter(Position = 1, Mandatory = $true, ParameterSetName = "byObject")]
-        [string] $InputObject,
+        [Parameter(Position = 1, Mandatory = $true, ParameterSetName = "byObject", ValueFromPipeline = $true)]
+        [psobject[]] $InputObject,
 
         # Start Date (convert to ISO 8601)
         [Parameter(Position = 1, Mandatory = $false, ParameterSetName = "all")]
