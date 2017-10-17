@@ -19,7 +19,7 @@ InModuleScope PSToggl {
         }
 
         Mock ConvertTo-TogglClient {
-            $InputObject | ConvertTo-TogglObject -ObjectConfig $TogglConfiguration.ObjectTypes.Entry
+            #
         }
 
         It "Calls Invoke-TogglMethod" {

@@ -64,7 +64,7 @@ function Get-TogglClient {
 
         # Optional Notes field
         [Parameter(Mandatory = $false)]
-        [ParameterType] $Notes
+        [string] $Notes
     )
 
     begin {
@@ -103,6 +103,6 @@ function Get-TogglClient {
     }
 
     end {
-        return $clients | ConvertTo-TogglProject
+        return $clients | ConvertTo-TogglClient
     }
 }
