@@ -23,12 +23,11 @@ InModuleScope PSToggl {
                 [ValidateSet("GET", "POST", "PUT", "DELETE")]
                 [String] $Method
             )
-            if ($UrlSuffix -like "*/current*") {
-                return @{data = $exampleObject}
+            if ($UrlSuffix -like "*current*") {
+                return @{"data" = $exampleObject}
             }
             else {
                 return $exampleObject
-
             }
         }
 
@@ -44,7 +43,6 @@ InModuleScope PSToggl {
         It "Changes the Url when -Current is set" {
             {Get-TogglEntry -Current} | Should Not Throw
             Assert-MockCalled -CommandName Invoke-TogglMethod -ParameterFilter {$UrlSuffix -like "time_entries/current"}
-
         }
 
         It "Returns response's data attribute when -Current is set" {

@@ -43,7 +43,7 @@ function Get-TogglEntry() {
     param(
         # Get currently running Entry
         [Parameter(Position = 1, Mandatory = $false, ParameterSetName = "current")]
-        [Switch] $Current,
+        [switch] $Current,
 
         # Entry name
         [Parameter(Position = 1, Mandatory = $true, ParameterSetName = "byDescription")]
@@ -63,28 +63,86 @@ function Get-TogglEntry() {
         [Parameter(Position = 2, Mandatory = $false, ParameterSetName = "all")]
         [Parameter(Position = 3, Mandatory = $false, ParameterSetName = "byDescription")]
         [Parameter(Position = 3, Mandatory = $false, ParameterSetName = "byObject")]
-        [DateTime] $To
+        [datetime] $To
     )
 
-    New-Item function::local:Write-Verbose -Value (
-        New-Module -ScriptBlock { param($verb, $fixedName, $verbose) } -ArgumentList @((Get-Command Write-Verbose), $PSCmdlet.MyInvocation.InvocationName, $PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent)
-    ).NewBoundScriptBlock{
-        param($Message)
-        if ($verbose) {
-            & $verb -Message "=>$fixedName $Message" -Verbose
-        } else {
-           & $verb -Message "=>$fixedName $Message"
-        }
-    } | Write-Verbose
+    Begin {
+        New-Item function::local:Write-Verbose -Value (
+            New-Module -ScriptBlock { param($verb, $fixedName, $verbose) } -ArgumentList @((Get-Command Write-Verbose), $PSCmdlet.MyInvocation.InvocationName, $PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent)
+        ).NewBoundScriptBlock{
+            param($Message)
+            if ($verbose) {
+                & $verb -Message "=>$fixedName $Message" -Verbose
+            }
+            else {
+                & $verb -Message "=>$fixedName $Message"
+            }
+        } | Write-Verbose
 
-    $suffix = if ($Current) {"/current"} else {""}
-    Write-Verbose "Querying API for Toggl Entries..."
-    Write-Debug "Suffix: `"$suffix`""
-    $entries = Invoke-TogglMethod -UrlSuffix ("time_entries" + $suffix) -Method "GET"
-    if ($Current) {
-        return $entries.data | ConvertTo-TogglEntry
+        Write-Debug "Parameterset: `"$($PsCmdlet.ParameterSetName)`""
+        $suffix = if ($Current) {"/current"} else {""}
+        Write-Verbose "Querying API for Toggl Entries..."
+        Write-Verbose "Suffix: `"$suffix`""
+        $allEntries = Invoke-TogglMethod -UrlSuffix ("time_entries" + $suffix) -Method "GET"
+        if ($From -or $To) {
+            Write-Warning "`$From and `$To are not yet supported"
+        }
     }
-    else {
+
+    Process {
+        switch ($PsCmdlet.ParameterSetName) {
+            "byObject" {
+                Write-Verbose "Processing InputObject of type `"$($InputObject[0].psobject.TypeNames[0])`""
+                switch ($InputObject[0].psobject.TypeNames[0]) {
+                    "PSToggl.Entry" {
+                        $entriesLambda = {
+                            param($obj)
+                            $obj
+                        }
+                    }
+                    "PSToggl.Project" {
+                        $entriesLambda = {
+                            param($obj)
+                            $allEntries | Where-Object {$_.pid -eq $obj.id}
+                        }
+                    }
+                    "PSToggl.Tag" {
+                        $entriesLambda = {
+                            param($obj)
+                            $allEntries | Where-Object {$_.tags -contains $obj.name} #or id??
+                        }
+                    }
+                    <# As there are no getters, this code is never reached and therefore untested
+                    "PSToggl.Client" {
+                        $entriesLambda = {
+                            param($obj)
+                            $allEntries | Where-Object {$_.cid -eq $obj.id}
+                        }
+                    }
+                    #>
+                }
+                $tmpList = New-Object -TypeName System.Collections.ArrayList
+                foreach ($item in $InputObject) {
+                    $entriesLambda.Invoke($item) | Foreach-Object {$tmpList.Add($_) | Out-Null}
+                }
+                $entries = $tmpList
+            }
+
+            "byDescription" {
+                $entries = $allEntries | Where-Object {$_.Description -like $Description}
+            }
+
+            "all" {
+                $entries = $allEntries
+            }
+            "current" {
+                $entries = $allEntries.data
+            }
+        }
+    }
+
+
+    End {
         return $entries | ConvertTo-TogglEntry
     }
 }
