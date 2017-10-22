@@ -4,13 +4,13 @@ function Get-TogglClient {
         Gets Toggl Clients
 
     .DESCRIPTION
-        This cmdlet queries the Toggl API for clients. It returns all Entries (for your default workspace), if no parameter is given.
-        You can search Entries by its name, workspace, notes or by compatible objects...
+        This cmdlet queries the Toggl API for Clients. It returns all Clients (for your default workspace), if no parameter is given.
+        You can search thwm by its name, workspace, notes or by compatible objects...
 
-        You can pipe any PSToggl object which belongs to a client to this cmdlet, like:
+        You can pipe any PSToggl object which - in any way - belongs to a client, to this cmdlet:
         * Workspace: Returns Clients for the given Workspace.
-        * Project: Not supported yet.
-        * Time Entry: Not supported yet.
+        * Project: Returns clients matching the Project's cid
+        * Time Entry: Gets the client by retrieving its project and filtering by the projects cid.
         * (WIP) User: Not supported yet.
 
     .PARAMETER Name
@@ -87,8 +87,33 @@ function Get-TogglClient {
     process {
         switch ($PSCmdlet.ParameterSetName) {
             "byObject" {
-                # TODO
-                Throw "Not yet implemented"
+                Write-Verbose "Processing InputObject of type `"$($InputObject[0].psobject.TypeNames[0])`""
+                switch ($InputObject[0].psobject.TypeNames[0]) {
+                    # TODO
+                    "PSToggl.Entry" {
+                        $clientsLambda = {
+                            param($obj)
+                            Write-Verbose "Obtaining Project for PSToggl.Entry"
+                            $proj = $obj | Get-TogglProject
+                            Write-Verbose "Filter for Project's cid"
+                            $allClients | Where-Object {$_.id -eq $proj.cid}
+                        }
+                    }
+                    "PSToggl.Project" {
+                        $clientsLambda = {
+                            param($obj)
+                            $allClients | Where-Object {$_.id -eq $obj.cid}
+                        }
+                    }
+                    Default {
+                        Throw "This InputObject type is not (yet) implemented"
+                    }
+                }
+                $tmpList = New-Object -TypeName System.Collections.ArrayList
+                foreach ($item in $InputObject) {
+                    $clientsLambda.Invoke($item) | Foreach-Object {$tmpList.Add($_) | Out-Null}
+                }
+                $clients = $tmpList
             }
             "byName" {
                 $clients = $allClients | Where-Object {$_.Name -Like $Name}
