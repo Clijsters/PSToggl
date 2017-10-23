@@ -15,7 +15,7 @@ InModuleScope PSToggl {
                 [ValidateSet("GET", "POST", "PUT", "DELETE")]
                 [String] $Method
             )
-                return $exampleObject
+            return $exampleObject
         }
 
         Mock ConvertTo-TogglClient {

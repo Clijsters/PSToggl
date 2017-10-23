@@ -21,7 +21,7 @@ InModuleScope PSToggl {
                 $out.GetType().Name | Should Be "PSCustomObject"
             }
 
-            It "Sets TypeName to PSToggl.Task" {
+            It "Sets TypeName tos PSToggl.Task" {
                 $out.PSObject.TypeNames[0] | Should Be "PSToggl.Task"
             }
         }

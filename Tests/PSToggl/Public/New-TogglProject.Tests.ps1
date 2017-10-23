@@ -54,7 +54,7 @@ InModuleScope PSToggl {
             Assert-MockCalled -CommandName Invoke-TogglMethod -Times 1 -Scope It -ParameterFilter {$InputObject.project.Name -eq "Project1"}
             Assert-MockCalled -CommandName Invoke-TogglMethod -Times 1 -Scope It -ParameterFilter {$InputObject.project.Name -eq "Project2"}
         }
-<#
+        <#
         It "Accepts PSToggl.Customer as InputObject and sets the corresponding pid" {
             {New-TogglProject -Name "Test Project"} | Should Not Throw
         }
