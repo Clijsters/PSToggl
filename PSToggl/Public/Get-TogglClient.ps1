@@ -4,17 +4,17 @@ function Get-TogglClient {
         Gets Toggl Clients
 
     .DESCRIPTION
-        This cmdlet queries the Toggl API for Clients. It returns all Clients (for your default workspace), if no parameter is given.
+        This Cmdlet queries the Toggl API for Clients. It returns all Clients (for your default workspace), if no parameter is given.
         You can search thwm by its name, workspace, notes or by compatible objects...
 
-        You can pipe any PSToggl object which - in any way - belongs to a client, to this cmdlet:
+        You can pipe any PSToggl object which - in any way - belongs to a client, to this Cmdlet:
         * Workspace: Returns Clients for the given Workspace.
         * Project: Returns clients matching the Project's cid
         * Time Entry: Gets the client by retrieving its project and filtering by the projects cid.
         * (WIP) User: Not supported yet.
 
     .PARAMETER Name
-        If given, this cmdlet returns all clients matching the given name. Wildcards allowed.
+        If given, this Cmdlet returns all clients matching the given name. Wildcards allowed.
 
     .PARAMETER Workspace
         Workspace to search clients in. If not provided, Get-TogglClient will use your default workspace.

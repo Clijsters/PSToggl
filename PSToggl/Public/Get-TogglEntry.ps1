@@ -4,13 +4,13 @@ function Get-TogglEntry() {
         Gets Toggl Time Entries
 
     .DESCRIPTION
-        This cmdlet queries the Toggl API for Time Entries (time_entries). It returns all Entries, if no parameter is given.
-        You can search Entries by its name, id, project, tags..
+        This Cmdlet queries the Toggl API for Time Entries (time_entries). It returns all Entries, if no parameter is given.
+        You can search Entries by its Description, specify a Workspace, and a time span.
 
-        You can pipe any PSToggl object which belongs to a time entry to this cmdlet, like:
+        You can pipe any PSToggl object which belongs to a time entry to this Cmdlet, like:
         * Workspace: Returns Time Entries for the given Workspace.
         * Project: Returns Time Entries whose pid matches the given project.
-        * Client: Returns Time Entries for the given client.
+        * Client: Returns Time Entries for the given client. (performance hint: Need to obtain all projects to match pid to customer)
         *(WIP) User (This is a special case, a user contains its time entries as array. If not, will query for it and return))
 
     .PARAMETER Current

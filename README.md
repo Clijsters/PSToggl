@@ -67,7 +67,7 @@ Import-Module PSToggl/PSToggl/PSToggl/PSToggl.psm1 # Yeah, 4 times
 
 ### Configuration
 
-**//TODO A configuration cmdlet is not implemented yet. Will be improved soon**
+**//TODO A configuration Cmdlet is not implemented yet. Will be improved soon**
 
 
 To set your Personal Access Token and your default workspace (yeah I know), create a `~/.PSToggl` JSON File with the following content:
@@ -119,7 +119,7 @@ Theses templates - once configured - give you the ability to quickly start a tim
 
 There are two types of templates. Full templates and configuration templates. The latter is without a title.
 
-**Tab completion** based on previous entered information will also be supported to mimic the behavior of Toggl Desktop. (And because it makes it much much faster to use cmdlets)
+**Tab completion** based on previous entered information will also be supported to mimic the behavior of Toggl Desktop. (And because it makes it much much faster to use Cmdlets)
 
 ````PowerShell
 PS> Start-TogglEntry -Template vcs
