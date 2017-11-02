@@ -47,7 +47,7 @@ function Get-TogglEntry() {
         Version:        1.0
         Author:         Clijsters
         Creation Date:  03.04.2017
-        Purpose/Change: Initial script development
+        Purpose/Change: Add -Workspace parameter, supplement comment based help
     #>
     [CmdletBinding(DefaultParameterSetName = "all")]
     [OutputType("PSToggl.Entry")]
@@ -74,7 +74,11 @@ function Get-TogglEntry() {
         [Parameter(Position = 2, Mandatory = $false, ParameterSetName = "all")]
         [Parameter(Position = 3, Mandatory = $false, ParameterSetName = "byDescription")]
         [Parameter(Position = 3, Mandatory = $false, ParameterSetName = "byObject")]
-        [datetime] $To
+        [datetime] $To,
+
+        # Workspace id
+        [Parameter(Mandatory = $false)]
+        [string] $Workspace = $TogglConfiguration.User.Workspace
     )
 
     Begin {
@@ -94,6 +98,7 @@ function Get-TogglEntry() {
         $suffix = if ($Current) {"/current"} else {""}
         Write-Verbose "Querying API for Toggl Entries..."
         Write-Verbose "Suffix: `"$suffix`""
+        #TODO Workspaces - not for current?
         $allEntries = Invoke-TogglMethod -UrlSuffix ("time_entries" + $suffix) -Method "GET"
         if ($From -or $To) {
             Write-Warning "`$From and `$To are not yet supported"
@@ -123,14 +128,13 @@ function Get-TogglEntry() {
                             $allEntries | Where-Object {$_.tags -contains $obj.name} #or id??
                         }
                     }
-                    <# As there are no getters, this code is never reached and therefore untested
                     "PSToggl.Client" {
                         $entriesLambda = {
                             param($obj)
-                            $allEntries | Where-Object {$_.cid -eq $obj.id}
+                            $allProjects = $obj | Get-TogglProject -Workspace $Workspace | Select-Object id
+                            $allEntries | Where-Object {$_.pid -in $allProjects}
                         }
                     }
-                    #>
                 }
                 $tmpList = New-Object -TypeName System.Collections.ArrayList
                 foreach ($item in $InputObject) {
