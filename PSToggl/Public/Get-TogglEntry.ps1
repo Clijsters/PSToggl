@@ -16,6 +16,18 @@ function Get-TogglEntry() {
     .PARAMETER Current
         If set, only the currently running timer is returned. If no time entry is running, it returns nothing.
 
+    .PARAMETER Description
+        Specifies the Description of the items to return.
+
+    .PARAMETER From
+        Will only return Entries created after the specified datetime.
+
+    .PARAMETER To
+        Will only return Entries created before the specified datetime.
+
+    .PARAMETER Workspace
+        Specifies the Workspace Id. Defaults to your primary Workspace.
+
     .INPUTS
         PSToggl.Workspace
         PSToggl.Project
@@ -27,10 +39,9 @@ function Get-TogglEntry() {
 
     .EXAMPLE
         Get-TogglEntry -Name
-        Get-TogglProjcet -Name "Antons Website" | Get-TogglEntry
 
     .EXAMPLE
-
+        Get-TogglProjcet -Name "Antons Website" | Get-TogglEntry
 
     .NOTES
         Version:        1.0

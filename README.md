@@ -35,18 +35,16 @@ PSToggl perfectly integrates in your existing PowerShell environment, independen
 ## Contents
 
 1. Features
-2. Contents
-3. Getting started
+1. Contents
+1. Getting started
     - Installation
     - Configuration
-4. How to use
-5. License
+1. How to use
+1. License
 
 ## Getting started
 
 ### Installation
-
-**//TODO: Attention! PSToggl is not yet published and only configurable over a json file.**
 
 It's recommended to use `Install-Module` to install PSToggl:
 
@@ -67,9 +65,6 @@ Import-Module PSToggl/PSToggl/PSToggl/PSToggl.psm1 # Yeah, 4 times
 
 ### Configuration
 
-**//TODO A configuration Cmdlet is not implemented yet. Will be improved soon**
-
-
 To set your Personal Access Token and your default workspace (yeah I know), create a `~/.PSToggl` JSON File with the following content:
 ````json
 {
@@ -77,34 +72,41 @@ To set your Personal Access Token and your default workspace (yeah I know), crea
     "Workspace": 1234567
 }
 ````
-Unencrypted?!?! Yeah, this is why it's called a beta thing...
+In future releases, this cmdlet will use its own config store and securestrings.
 
 ## How to use
 
 The best way to become familiar with PSToggl is to use Get-Help
+
 ````PowerShell
-PS> Get-Help about_PSJira
+PS> Get-Help about_PSToggl
 PS> Get-Help Start-TogglEntry
 PS> # And so on
 ````
+
+### Start a new Timer
 
 ````PowerShell
 PS> Start-TogglEntry "Getting started with PSToggl"
 ````
 
+### Change the currently running Timer
+
 ````PowerShell
 PS> Get-TogglEntry -Current | Add-TogglTag "educational"
 ````
+
+### Get all Time Entries for a specified Project, which are not billed and tag them
 
 ````PowerShell
 PS> Get-TogglProject "homepage" | Get-TogglEntry | Where-Object {-not $_.billed} | Add-TogglTag "overdue"
 ````
 
-````PowerShell
-PS> Measure-Command {mvn -U compile} | New-TogglEntry "Wasting time with coffee..."
-````
+### Use the output of `Measure-Command` to create a new Entry
 
 ````PowerShell
+PS> Measure-Command {mvn -U compile} | New-TogglEntry "Wasting time with coffee..."
+
 PS> Measure-Command {git commit} | New-TogglEntry "Writing well formatted, meaningful git commit messages" -Tags @("efficiency", "Drumherum")
 ````
 
