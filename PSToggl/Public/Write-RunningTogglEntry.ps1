@@ -37,7 +37,7 @@ function Write-RunningTogglEntry() {
         if ($ForPrompt) {
             Write-Verbose "Preparing Strings for prompt status"
             $start = " ["
-            $split = " .. "
+            $split = " - "
             $end = "]"
         }
         else {
@@ -45,6 +45,10 @@ function Write-RunningTogglEntry() {
             $start = "TOGGL: "
             $split = " is running since "
             $end = "`n"
+        }
+
+        if ($description.Length -gt 35) {
+            $description = $description.Remove(30) + "..."
         }
 
         Write-Host $start -NoNewline -ForegroundColor Yellow
