@@ -74,11 +74,7 @@ function Get-TogglEntry() {
         [Parameter(Position = 2, Mandatory = $false, ParameterSetName = "all")]
         [Parameter(Position = 3, Mandatory = $false, ParameterSetName = "byDescription")]
         [Parameter(Position = 3, Mandatory = $false, ParameterSetName = "byObject")]
-        [datetime] $To,
-
-        # Workspace id
-        [Parameter(Mandatory = $false)]
-        [string] $Workspace = $TogglConfiguration.User.Workspace
+        [datetime] $To
     )
 
     Begin {
