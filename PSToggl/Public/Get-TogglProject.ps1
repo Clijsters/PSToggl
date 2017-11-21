@@ -46,10 +46,10 @@ function Get-TogglProject {
         Returns all active projects for Client "Pete"
 
     .NOTES
-        Version:        1.0
+        Version:        1.1
         Author:         Clijsters
         Creation Date:  03.04.2017
-        Purpose/Change: Initial script development
+        Purpose/Change: Accept PSToggl.Workspace
     #>
     [CmdletBinding(DefaultParametersetName = "all")]
     [OutputType("PSToggl.Project")]
@@ -105,15 +105,15 @@ function Get-TogglProject {
                             $obj
                         }
                     }
-                    <# As there are no getters, this code is never reached and therefore untested
                     "PSToggl.Client" {
                         $projectLambda = {
                             param($obj)
                             $projects | Where-Object {
                                 $_.cid -EQ $obj.id}
+                            }
                         }
-                    }
-                    "PSToggl.Workspace" {
+                    <# As there are no getters, this code is never reached and therefore untested
+                        "PSToggl.Workspace" {
                         $projectLambda = {
                             param($obj)
                             $projects | Where-Object {$_.wid -EQ $obj.id}
