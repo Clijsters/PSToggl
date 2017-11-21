@@ -58,6 +58,13 @@ InModuleScope PSToggl {
             Assert-MockCalled -CommandName Write-Host -Scope It -ParameterFilter {$Object -like "*Test entry*"}
         }
 
+        $exampleObject.description = "fjlghtoqwpopernjsdfasdmnfaasdfddddasdghgks"
+
+        It "Shortens the description if exceeds length of 35" {
+            {Write-RunningTogglEntry -ForPrompt} | Should Not Throw
+            Assert-MockCalled -CommandName Write-Host -Scope It -ParameterFilter {$object -like "*..."}
+        }
+
         It "Uses red, if no project is set" {
             {Write-RunningTogglEntry -ForPrompt} | Should Not Throw
             Assert-MockCalled -CommandName Write-Host -Scope It -ParameterFilter {$ForegroundColor -eq [System.ConsoleColor]::Red}

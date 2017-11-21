@@ -4,11 +4,11 @@ function Get-TogglProject {
         Gets Toggl Projects
 
     .DESCRIPTION
-        This cmdlet queries the Toggl API against projects. If no parameter is given, it returns all projects in the current Workspace.
+        This Cmdlet queries the Toggl API against projects. If no parameter is given, it returns all projects in the current Workspace.
         You can search projects by its name (with wildcards) or by its id.
         To filter for other properties (e.g. "billable", "at"), pipe the result to Where-Object.
 
-        You can pipe any PSToggl object which belongs to a project to this cmdlet, like:
+        You can pipe any PSToggl object which belongs to a project to this Cmdlet, like:
         * Workspace: Queries the given Workspace id for Projects.
         * Client: Returns projects whose cid matches the id of the piped object
         * Entry: Returns the Timers project
@@ -18,7 +18,7 @@ function Get-TogglProject {
         The name of the project to return. You will be able to use wildcards soon.
 
     .PARAMETER Workspace
-        Defaults to your primary Workspace (configured for this module). If provided, this cmdlet returns Projects for the given Workspace.
+        Defaults to your primary Workspace (configured for this module). If provided, this Cmdlet returns Projects for the given Workspace.
 
     .INPUTS
         PSToggl.Client
@@ -46,10 +46,10 @@ function Get-TogglProject {
         Returns all active projects for Client "Pete"
 
     .NOTES
-        Version:        1.0
+        Version:        1.1
         Author:         Clijsters
         Creation Date:  03.04.2017
-        Purpose/Change: Initial script development
+        Purpose/Change: Accept PSToggl.Workspace
     #>
     [CmdletBinding(DefaultParametersetName = "all")]
     [OutputType("PSToggl.Project")]
@@ -105,15 +105,15 @@ function Get-TogglProject {
                             $obj
                         }
                     }
-                    <# As there are no getters, this code is never reached and therefore untested
                     "PSToggl.Client" {
                         $projectLambda = {
                             param($obj)
                             $projects | Where-Object {
                                 $_.cid -EQ $obj.id}
+                            }
                         }
-                    }
-                    "PSToggl.Workspace" {
+                    <# As there are no getters, this code is never reached and therefore untested
+                        "PSToggl.Workspace" {
                         $projectLambda = {
                             param($obj)
                             $projects | Where-Object {$_.wid -EQ $obj.id}

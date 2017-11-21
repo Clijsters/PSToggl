@@ -1,10 +1,10 @@
-$moduleName   = "PSToggl" #$env:ModuleName
-$PSVersion    = $PSVersionTable.PSVersion.Major
-$repository   = Resolve-Path "$PSScriptRoot\.."
-$moduleRoot   = "$repository\$moduleName"
-$scripts      = Get-ChildItem $repository -Filter "*.ps1" -Recurse | Where-Object {$_.name -NotMatch "Tests.ps1"}
-$modules      = Get-ChildItem $repository -Filter "*.psm1" -Recurse
-$rules        = Get-ScriptAnalyzerRule
+$moduleName = "PSToggl" #$env:ModuleName
+$PSVersion = $PSVersionTable.PSVersion.Major
+$repository = Resolve-Path "$PSScriptRoot\.."
+$moduleRoot = "$repository\$moduleName"
+$scripts = Get-ChildItem $repository -Filter "*.ps1" -Recurse | Where-Object {$_.name -NotMatch "Tests.ps1"}
+$modules = Get-ChildItem $repository -Filter "*.psm1" -Recurse
+$rules = Get-ScriptAnalyzerRule
 $appveyorFile = "$repository\appveyor.yml"
 
 Describe "General code style compliance" {
@@ -60,12 +60,12 @@ Describe "$moduleName on PowerShell $PSVersion" {
             $appveyorFile | Should Exist
         }
 
-            foreach ($line in (Get-Content $appveyorFile)) {
-                if ($line -match "^\D*(?<Version>(\d+\.){1,3}\d+).\{build\}") {
-                    $appveyorVersion = $matches.Version
-                    break
-                }
+        foreach ($line in (Get-Content $appveyorFile)) {
+            if ($line -match "^\D*(?<Version>(\d+\.){1,3}\d+).\{build\}") {
+                $appveyorVersion = $matches.Version
+                break
             }
+        }
         It "Includes the module version" {
             $appveyorVersion               | Should Not BeNullOrEmpty
             $appveyorVersion -as [Version] | Should Not BeNullOrEmpty
@@ -80,13 +80,13 @@ Describe "$moduleName on PowerShell $PSVersion" {
         # Public tests
         Get-ChildItem -Path "$moduleRoot\Public" -Filter "*.ps1" -Recurse | Where-Object -FilterScript {$_.Name -notlike "*.Tests.ps1"} | ForEach-Object {
             It "Includes a test for $($_.Name)" {
-                $_.FullName -replace ".ps1",".Tests.ps1" -replace "PSToggl\\Public", "Tests\PSToggl\Public" | Should Exist
+                $_.FullName -replace ".ps1", ".Tests.ps1" -replace "PSToggl\\Public", "Tests\PSToggl\Public" | Should Exist
             }
         }
         # Private tests
         Get-ChildItem -Path "$moduleRoot\Private" -Filter "*.ps1" -Recurse | Where-Object -FilterScript {$_.Name -notlike "*.Tests.ps1"} | ForEach-Object {
             It "Includes a test for $($_.Name)" {
-                $_.FullName -replace ".ps1",".Tests.ps1" -replace "PSToggl\\Private", "Tests\PSToggl\Private" | Should Exist
+                $_.FullName -replace ".ps1", ".Tests.ps1" -replace "PSToggl\\Private", "Tests\PSToggl\Private" | Should Exist
             }
         }
     }

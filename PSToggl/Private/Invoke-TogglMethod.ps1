@@ -24,8 +24,9 @@ function Invoke-TogglMethod {
         param($Message)
         if ($verbose) {
             & $verb -Message "=>$fixedName $Message" -Verbose
-        } else {
-           & $verb -Message "=>$fixedName $Message"
+        }
+        else {
+            & $verb -Message "=>$fixedName $Message"
         }
     } | Write-Verbose
 
@@ -57,7 +58,8 @@ function Invoke-TogglMethod {
         Write-Verbose "`$json: $json"
         Write-Debug "Invoking $Method request on $restUri with headers $headers"
         $answer = Invoke-RestMethod -Uri $restUri -Headers $headers -ContentType "application/json" -Method $Method -Body $json
-    } else {
+    }
+    else {
         Write-Verbose "`$InputObject not present"
         if (-not $Method) { $Method = "GET" }
         Write-Debug "Invoking $Method request on $restUri with headers $headers"

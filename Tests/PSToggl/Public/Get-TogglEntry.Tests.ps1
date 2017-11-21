@@ -16,6 +16,18 @@ InModuleScope PSToggl {
             at          = [datetime]::Now;
         }
 
+        $exampleClient = @{
+            id    = 1;
+            name  = "Test Client";
+            wid   = 123;
+            at    = [datetime]::Now;
+            notes = "Some note";
+        }
+
+        Mock Get-TogglProject {
+
+        }
+
         Mock Invoke-TogglMethod {
             param(
                 [string] $UrlSuffix,
@@ -23,12 +35,11 @@ InModuleScope PSToggl {
                 [ValidateSet("GET", "POST", "PUT", "DELETE")]
                 [String] $Method
             )
-            if ($UrlSuffix -like "*/current*") {
-                return @{data = $exampleObject}
+            if ($UrlSuffix -like "*current*") {
+                return @{"data" = $exampleObject}
             }
             else {
                 return $exampleObject
-
             }
         }
 
@@ -43,8 +54,15 @@ InModuleScope PSToggl {
 
         It "Changes the Url when -Current is set" {
             {Get-TogglEntry -Current} | Should Not Throw
-            Assert-MockCalled -CommandName Invoke-TogglMethod -ParameterFilter {$UrlSuffix -like "time_entries/current"}
+            Assert-MockCalled -CommandName Invoke-TogglMethod -ParameterFilter {$UrlSuffix -like "*/current"}
+        }
 
+        It "Accepts PSToggl.Client as pipeline input and obtains Projects to filter" {
+            $element = New-Object -TypeName psobject -Property $exampleClient
+            $element.PSObject.TypeNames.Insert(0, "PSToggl.Client")
+            {$element | Get-TogglEntry} | Should Not Throw
+            Assert-MockCalled -CommandName Get-TogglProject -Scope It -ParameterFilter {$InputObject -eq $element}
+            #TODO
         }
 
         It "Returns response's data attribute when -Current is set" {

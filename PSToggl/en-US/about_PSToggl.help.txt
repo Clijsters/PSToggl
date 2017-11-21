@@ -6,12 +6,7 @@ SHORT DESCRIPTION
 
 LONG DESCRIPTION
     This module is a fully featured Toggl Client for your PowerShell.
-    If you are addicted to or in love with PowerShell, you use it all day for your most tasks and find it the fastest and most effective way to do things.
-    It's even harder for you every time you have to switch to a GUI tool to find and relocate your mouse, point to a button and do a thing, which could actually be scripted, like...
 
-    Tracking your time!
-    Yeah, time tracking is a fundamental part of doing really productive work.
-    Before you can optimize something, you have to measure its performance. Only if measuring of your performance is as easy as possible, it can be precise and efficient.
 
 CONTRIBUTE
     How can I contribute?
@@ -76,6 +71,6 @@ SEE ALSO
     go to toggl.com
     PowerShell Gallery
 
-    Nearly every cmdlet in this module has its own help like:
+    Nearly every Cmdlet in this module has its own help like:
 
     PS> Get-Help Get-TogglEntry

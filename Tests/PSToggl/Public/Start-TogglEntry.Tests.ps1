@@ -6,7 +6,7 @@ $sut = Split-Path -Leaf $MyInvocation.MyCommand.Path
 InModuleScope PSToggl {
     Describe "Start-TogglEntry" {
         $answer = @{
-            data =  @{
+            data = @{
                 description = "Test entry";
                 wid         = 123;
                 pid         = 123;

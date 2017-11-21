@@ -15,8 +15,9 @@ function ConvertTo-TogglEntry {
             param($Message)
             if ($verbose) {
                 & $verb -Message "=>$fixedName $Message" -Verbose
-            } else {
-               & $verb -Message "=>$fixedName $Message"
+            }
+            else {
+                & $verb -Message "=>$fixedName $Message"
             }
         } | Write-Verbose
 

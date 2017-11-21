@@ -75,6 +75,6 @@ SEE ALSO
     go to toggl.com
     PowerShell Gallery
 
-    Nearly every cmdlet in this module has its own help like:
+    Nearly every Cmdlet in this module has its own help like:
 
     PS> Get-Help Get-TogglEntry
