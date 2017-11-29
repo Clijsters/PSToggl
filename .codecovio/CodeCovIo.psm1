@@ -26,7 +26,7 @@ function Add-UniqueFileLineToTable {
     )
     New-Item function::local:Write-Verbose -Value (
         New-Module -ScriptBlock { param($verb, $fixedName, $verbose) } -ArgumentList @((Get-Command Write-Verbose), $PSCmdlet.MyInvocation.InvocationName, $PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent)
-    ).NewBoundScriptBlock{
+    ).NewBoundScriptBlock {
         param($Message)
         if ($verbose) {
             & $verb -Message "=>CCI\$fixedName $Message" -Verbose
@@ -111,7 +111,7 @@ function Test-CodeCoverage {
     )
     New-Item function::local:Write-Verbose -Value (
         New-Module -ScriptBlock { param($verb, $fixedName, $verbose) } -ArgumentList @((Get-Command Write-Verbose), $PSCmdlet.MyInvocation.InvocationName, $PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent)
-    ).NewBoundScriptBlock{
+    ).NewBoundScriptBlock {
         param($Message)
         if ($verbose) {
             & $verb -Message "=>CCI\$fixedName $Message" -Verbose
@@ -157,7 +157,7 @@ function Export-CodeCovIoJson {
     )
     New-Item function::local:Write-Verbose -Value (
         New-Module -ScriptBlock { param($verb, $fixedName, $verbose) } -ArgumentList @((Get-Command Write-Verbose), $PSCmdlet.MyInvocation.InvocationName, $PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent)
-    ).NewBoundScriptBlock{
+    ).NewBoundScriptBlock {
         param($Message)
         if ($verbose) {
             & $verb -Message "=>CCI\$fixedName $Message" -Verbose
@@ -320,7 +320,7 @@ function Invoke-UploadCoveCoveIoReport {
     )
     New-Item function::local:Write-Verbose -Value (
         New-Module -ScriptBlock { param($verb, $fixedName, $verbose) } -ArgumentList @((Get-Command Write-Verbose), $PSCmdlet.MyInvocation.InvocationName, $PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent)
-    ).NewBoundScriptBlock{
+    ).NewBoundScriptBlock {
         param($Message)
         if ($verbose) {
             & $verb -Message "=>CCI\$fixedName $Message" -Verbose
