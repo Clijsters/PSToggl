@@ -80,11 +80,11 @@ InModuleScope PSToggl {
         }
 
         It "Returns only entries in the given Time Span" {
-            #ToDo
             $from = (Get-Date).AddDays(-5)
             $to = (Get-Date).AddDays(-4)
             $diff = @{start_date = Get-Date -Date $from -Format o; end_date = Get-Date -Date $to -Format o}
-            {Get-TogglEntry -From $from -To $to} | Should Not Throw #BeNullOrEmpty
+            #Get-TogglEntry -From $from -To $to | Should BeNullOrEmpty
+            {Get-TogglEntry -From $from -To $to} | Should Not Throw
             Assert-MockCalled -CommandName "Invoke-TogglMethod" -Scope It -ParameterFilter {($InputObject.start_date -eq $diff.start_date) -and ($InputObject.end_date -eq $diff.end_date)}
         }
     }
