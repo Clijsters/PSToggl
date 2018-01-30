@@ -74,7 +74,7 @@ function Get-TogglEntry() {
         [Parameter(Position = 2, Mandatory = $false, ParameterSetName = "all")]
         [Parameter(Position = 3, Mandatory = $false, ParameterSetName = "byDescription")]
         [Parameter(Position = 3, Mandatory = $false, ParameterSetName = "byObject")]
-        [datetime] $To
+        [datetime] $To = [datetime]::Now
     )
 
     Begin {
@@ -95,9 +95,12 @@ function Get-TogglEntry() {
         Write-Verbose "Querying API for Toggl Entries..."
         Write-Verbose "Suffix: `"$suffix`""
         #TODO Workspaces - not for current?
-        $allEntries = Invoke-TogglMethod -UrlSuffix ("time_entries" + $suffix) -Method "GET"
-        if ($From -or $To) {
-            Write-Warning "`$From and `$To are not yet supported"
+        if ($From) {
+            $timeSpan = @{start_date = Get-Date -Date $From -Format o; end_date = Get-Date -Date $To -Format o}
+            $allEntries = Invoke-TogglMethod -UrlSuffix ("time_entries") -Method "GET" -InputObject $timeSpan
+        }
+        else {
+            $allEntries = Invoke-TogglMethod -UrlSuffix ("time_entries" + $suffix) -Method "GET"
         }
     }
 
