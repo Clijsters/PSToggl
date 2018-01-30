@@ -38,16 +38,24 @@ function Get-TogglEntry() {
         PSToggl.Entry
 
     .EXAMPLE
-        Get-TogglEntry -Name
+        Get-TogglEntry -Description "*meet*"
 
     .EXAMPLE
-        Get-TogglProjcet -Name "Antons Website" | Get-TogglEntry
+        Get-TogglEntry -From (Get-Date).AddDays(-4) -To (Get-Date).AddDays(-3)
+
+        Get-TogglEntry -From 01.01.2018 -To 02.01.2018
+
+    .EXAMPLE
+        Get-TogglProjcet -Description "Antons Website" | Get-TogglEntry
+
+    .EXAMPLE
+        Get-TogglEntry -From 2018/01/01 | Where-Object {$_.tags -contains "mobile"}
 
     .NOTES
-        Version:        1.0
+        Version:        1.2
         Author:         Clijsters
         Creation Date:  03.04.2017
-        Purpose/Change: Add -Workspace parameter, supplement comment based help
+        Purpose/Change: Add Support for -From and -To
     #>
     [CmdletBinding(DefaultParameterSetName = "all")]
     [OutputType("PSToggl.Entry")]
@@ -56,7 +64,7 @@ function Get-TogglEntry() {
         [Parameter(Position = 1, Mandatory = $false, ParameterSetName = "current")]
         [switch] $Current,
 
-        # Entry name
+        # Entry Description
         [Parameter(Position = 1, Mandatory = $true, ParameterSetName = "byDescription")]
         [string] $Description,
 

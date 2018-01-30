@@ -46,7 +46,7 @@ function Get-TogglProject {
         Returns all active projects for Client "Pete"
 
     .NOTES
-        Version:        1.1
+        Version:        1.2
         Author:         Clijsters
         Creation Date:  03.04.2017
         Purpose/Change: Accept PSToggl.Workspace
