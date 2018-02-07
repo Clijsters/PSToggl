@@ -49,7 +49,7 @@ InModuleScope PSToggl {
 
             It "Uses provided -Workspace" {
                 {Get-TogglProject -Workspace 654 -Name "asdf"} | Should Not Throw
-                Assert-MockCalled -CommandName Invoke-TogglMethod -ParameterFilter {$UrlSuffix -eq "workspaces/654/projects"}
+                Assert-MockCalled -CommandName "Invoke-TogglMethod" -ParameterFilter {$UrlSuffix -eq "workspaces/654/projects"}
             }
         }
 

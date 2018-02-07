@@ -68,7 +68,7 @@ function Start-TogglEntry() {
         if ($verbose) {
             & $verb -Message "=>$fixedName $Message" -Verbose
         } else {
-           & $verb -Message "=>$fixedName $Message"
+            & $verb -Message "=>$fixedName $Message"
         }
     } | Write-Verbose
 

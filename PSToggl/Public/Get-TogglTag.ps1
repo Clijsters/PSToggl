@@ -32,7 +32,7 @@ function Get-TogglTag() {
         Get-TogglTag -Name "meeting"
 
     .EXAMPLE
-        Get-TogglProjcet -Name "Website" | Get-TogglTag
+        Get-TogglProject -Name "Website" | Get-TogglTag
 
     .NOTES
         Version:        1.0
@@ -64,7 +64,7 @@ function Get-TogglTag() {
         }
     } | Write-Verbose
 
-    $tags = Invoke-TogglMethod -UrlSuffix ("workspaces/" + $Workspace + "/tags") -Method "GET"
+    $tags = Invoke-TogglMethod -UrlSuffix ("workspaces/$($Workspace)/tags")
     Write-Verbose "Found $($tags.Count) tags."
     if ($Name) {
         $tags = $tags | Where-Object {$_.Name -like $Name}

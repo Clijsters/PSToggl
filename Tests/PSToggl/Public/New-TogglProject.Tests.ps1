@@ -31,18 +31,18 @@ InModuleScope PSToggl {
         $dummyWid = 4567
         It "Sets wid to `$Workspace ($dummyWid)" {
             {New-TogglProject -Name "Test Project" -Workspace $dummyWid} | Should Not Throw
-            Assert-MockCalled -CommandName Invoke-TogglMethod -Scope It -ParameterFilter {$InputObject.project.wid -eq $dummyWid}
+            Assert-MockCalled -CommandName "Invoke-TogglMethod" -Scope It -ParameterFilter {$InputObject.project.wid -eq $dummyWid}
         }
 
         It "Calls Invoke-TogglMethod with a project object" {
             {New-TogglProject -Name "Test Project"} | Should Not Throw
-            Assert-MockCalled -CommandName Invoke-TogglMethod -Scope It -ParameterFilter {$InputObject.project}
+            Assert-MockCalled -CommandName "Invoke-TogglMethod" -Scope It -ParameterFilter {$InputObject.project}
         }
 
         $dummyCid = 12345
         It "Sets cid to `$CustomerId ($dummyCid)" {
             {New-TogglProject -Name "Test Project" -CustomerId $dummyCid} | Should Not Throw
-            Assert-MockCalled -CommandName Invoke-TogglMethod -Scope It -ParameterFilter {$InputObject.project.cid -eq $dummyCid}
+            Assert-MockCalled -CommandName "Invoke-TogglMethod" -Scope It -ParameterFilter {$InputObject.project.cid -eq $dummyCid}
         }
 
         It "Returns the newly created TogglProject" {
@@ -51,8 +51,8 @@ InModuleScope PSToggl {
 
         It "Accepts `$Name's as Pipeline input and creates a project for each name" {
             {@("Project1", "Project2") | New-TogglProject} | Should Not Throw
-            Assert-MockCalled -CommandName Invoke-TogglMethod -Times 1 -Scope It -ParameterFilter {$InputObject.project.Name -eq "Project1"}
-            Assert-MockCalled -CommandName Invoke-TogglMethod -Times 1 -Scope It -ParameterFilter {$InputObject.project.Name -eq "Project2"}
+            Assert-MockCalled -CommandName "Invoke-TogglMethod" -Times 1 -Scope It -ParameterFilter {$InputObject.project.Name -eq "Project1"}
+            Assert-MockCalled -CommandName "Invoke-TogglMethod" -Times 1 -Scope It -ParameterFilter {$InputObject.project.Name -eq "Project2"}
         }
         <#
         It "Accepts PSToggl.Customer as InputObject and sets the corresponding pid" {

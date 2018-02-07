@@ -43,17 +43,17 @@ InModuleScope PSToggl {
 
         It "Calls Invoke-TogglMethod with the correct url" {
             Start-TogglEntry
-            Assert-MockCalled -CommandName "Invoke-TogglMethod" -ParameterFilter {$UrlSuffix -eq "time_entries/start"}
+            Assert-MockCalled -CommandName "Invoke-TogglMethod" -Scope It -ParameterFilter {$UrlSuffix -eq "time_entries/start"}
         }
 
         It "Uses Get-TogglProject if a Project Name is given" {
             Start-TogglEntry -Description "Test" -ProjectName "Test Project"
-            Assert-MockCalled -CommandName "Get-TogglProject" -ParameterFilter {$Name -eq "Test Project"}
+            Assert-MockCalled -CommandName "Get-TogglProject" -Scope It -ParameterFilter {$Name -eq "Test Project"}
         }
 
-        It "Uses the first matching projects id to start an Entry on a given project" {
+        It "Uses the first matching project's id to start an Entry on a given project" {
             Start-TogglEntry -Description "Test" -ProjectName "Test Project"
-            Assert-MockCalled -CommandName "Invoke-TogglMethod" -ParameterFilter {$InputObject.time_entry.pid -eq 123}
+            Assert-MockCalled -CommandName "Invoke-TogglMethod" -Scope It -ParameterFilter {$InputObject.time_entry.pid -eq 123}
         }
 
         It "Throws an error if no matching project can be found" {
@@ -69,7 +69,7 @@ InModuleScope PSToggl {
 
         It "Returns the API's answer" { #TODO: It should definitely return a TogglEntry, not the psobject
             Start-TogglEntry | Should Be $answer.data
-            Assert-MockCalled -CommandName ConvertTo-TogglEntry -Times 1 -Scope It
+            Assert-MockCalled -CommandName "ConvertTo-TogglEntry" -Times 1 -Scope It
         }
 
         It "Uses the given Workspace if -Workspace is set" {

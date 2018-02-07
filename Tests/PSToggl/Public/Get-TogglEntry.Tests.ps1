@@ -54,15 +54,14 @@ InModuleScope PSToggl {
 
         It "Changes the Url when -Current is set" {
             {Get-TogglEntry -Current} | Should Not Throw
-            Assert-MockCalled -CommandName Invoke-TogglMethod -ParameterFilter {$UrlSuffix -like "*/current"}
+            Assert-MockCalled -CommandName "Invoke-TogglMethod" -Scope It -ParameterFilter {$UrlSuffix -like "*/current"}
         }
 
         It "Accepts PSToggl.Client as pipeline input and obtains Projects to filter" {
             $element = New-Object -TypeName psobject -Property $exampleClient
             $element.PSObject.TypeNames.Insert(0, "PSToggl.Client")
             {$element | Get-TogglEntry} | Should Not Throw
-            Assert-MockCalled -CommandName Get-TogglProject -Scope It -ParameterFilter {$InputObject -eq $element}
-            #TODO
+            Assert-MockCalled -CommandName "Get-TogglProject" -Scope It -ParameterFilter {$InputObject -eq $element}
         }
 
         It "Returns response's data attribute when -Current is set" {
@@ -72,14 +71,14 @@ InModuleScope PSToggl {
 
         It "Calls ConvertTo-TogglEntry and supplies the object returned by Invoke-TogglMethod" {
             {Get-TogglEntry} | Should Not Throw
-            Assert-MockCalled -CommandName "ConvertTo-TogglEntry" -ParameterFilter {$InputObject -eq $exampleObject}
+            Assert-MockCalled -CommandName "ConvertTo-TogglEntry" -Scope It -ParameterFilter {$InputObject -eq $exampleObject}
         }
 
         It "Returns the entries converted with ConvertTo-TogglEntry" {
             (Get-TogglEntry).description | Should Be $exampleObject.description
         }
 
-        It "Returns only entries in the given Time Span" {
+        It "Returns entries in the given Time Span only, if -From is set" {
             $from = (Get-Date).AddDays(-5)
             $to = (Get-Date).AddDays(-4)
             $diff = @{start_date = Get-Date -Date $from -Format o; end_date = Get-Date -Date $to -Format o}
