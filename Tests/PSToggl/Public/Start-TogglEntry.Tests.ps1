@@ -72,5 +72,15 @@ InModuleScope PSToggl {
             Assert-MockCalled -CommandName ConvertTo-TogglEntry -Times 1 -Scope It
         }
 
+        It "Uses the given Workspace if -Workspace is set" {
+            {Start-TogglEntry -Description "Test" -Workspace 5648} | Should Not Throw
+            Assert-MockCalled -CommandName "Invoke-TogglMethod" -Scope It -ParameterFilter {$InputObject.time_entry.wid -eq 5648}
+        }
+
+        It "Even passes the given Workspace id to Get-TogglProject" {
+            {Start-TogglEntry -Description "Test" -ProjectName "Test Project" -Workspace 5648} | Should Not Throw
+            Assert-MockCalled -CommandName "Get-TogglProject" -Scope It -ParameterFilter {$Workspace -eq 5648}
+        }
+
     }
 }

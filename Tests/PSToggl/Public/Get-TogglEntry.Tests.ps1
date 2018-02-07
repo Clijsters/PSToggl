@@ -87,5 +87,12 @@ InModuleScope PSToggl {
             {Get-TogglEntry -From $from -To $to} | Should Not Throw
             Assert-MockCalled -CommandName "Invoke-TogglMethod" -Scope It -ParameterFilter {($InputObject.start_date -eq $diff.start_date) -and ($InputObject.end_date -eq $diff.end_date)}
         }
+
+        It "Returns entries for the given `$Workspace only, if -Workspace is set" {
+            {Get-TogglEntry -Workspace 123} | Should Not Throw
+            Assert-MockCalled -CommandName "ConvertTo-TogglEntry" -Scope It -Times 1 -ParameterFilter {$InputObject -eq $exampleObject}
+            {Get-TogglEntry -Workspace 123456} | Should Not Throw
+            Assert-MockCalled -CommandName "ConvertTo-TogglEntry" -Scope It -Times 1 -Exactly
+        }
     }
 }
