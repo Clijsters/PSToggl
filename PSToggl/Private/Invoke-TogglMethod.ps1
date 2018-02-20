@@ -53,9 +53,11 @@ function Invoke-TogglMethod {
 
     if ($InputObject) {
         Write-Verbose "`$InputObject present"
-        #$body = (ConvertTo-Json $InputObject -Depth 99)
         $body = $InputObject
-        if (-not $Method) { $Method = "POST" }
+        if (-not $Method) {
+            $Method = "POST"
+            $body = ConvertTo-Json $InputObject -Depth 99
+        }
         Write-Verbose "`$body: $body"
         Write-Debug "Invoking $Method request on $restUri with headers $headers"
         $answer = Invoke-RestMethod -Uri $restUri -Headers $headers -ContentType "application/json" -Method $Method -Body $body
