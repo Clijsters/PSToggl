@@ -22,7 +22,7 @@
 
 ## Under heavy development
 
-**This module is in an early beta stadium and not ready for production use**
+**This module is in ~early~ beta stadium and not (really) ready for production use**
 
 It is intended to become a fully featured Toggl Client purely written in PowerShell downwards compatible to PowerShell v3 (and soon also v2)
 
