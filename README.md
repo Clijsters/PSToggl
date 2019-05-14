@@ -30,7 +30,13 @@ ____
 
 ## Features
 
-PSToggl perfectly integrates in your existing PowerShell environment, independent of the operating system you want to work with. It makes heavy use of PowerShells pipeline abilities and ~~is able~~ will be able to integrate with other modules like ~~PSJira~~JiraPS, PSExcel, PSHipchat and so on. It helps you to increase your productivity by providing extended reporting features, migration&sync features (Toggl -> JIRA) and a robust interactive PowerShell client.
+PSToggl perfectly integrates in your existing PowerShell environment, independent of the operating system you want to work with. It makes heavy use of PowerShells pipeline abilities and integrates with other modules like ~~PSJira~~JiraPS, PSExcel, PSHipchat and so on. It helps you to increase your productivity by providing extended reporting features, migration&sync features (e.g. Toggl -> JIRA work logs) and a robust interactive PowerShell client.
+
+As you might already know from git (posh-git) PSToggl shows information like the current timer / project at your PowerShell prompt,
+extends auto completion, provides aliases and templates, and much more.
+
+![PSToggl prompt showcase](doc/screenshot-1.png "Logo Title Text 1")
+
 
 ## Contents
 
