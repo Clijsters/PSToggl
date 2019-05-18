@@ -36,7 +36,7 @@ function Write-RunningTogglEntry() {
 
         if ($ForPrompt) {
             Write-Verbose "Preparing Strings for prompt status"
-            $start = " ["
+            $start = "["
             $split = " - "
             $end = "]"
         }
