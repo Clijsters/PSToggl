@@ -50,11 +50,15 @@ function Start-TogglEntry() {
 
         # Tags to identify related entries
         [Parameter(Mandatory = $false)]
-        [String[]] $Tags
+        [String[]] $Tags,
 
         # Duration in minutes
         #[Parameter(Mandatory = $false)]
-        #[int] $Duration = 0
+        #[int] $Duration = 0,
+
+        # Workspace id
+        [Parameter(Mandatory = $false)]
+        [string] $Workspace = $TogglConfiguration.User.Workspace
     )
 
     New-Item function::local:Write-Verbose -Value (
@@ -64,7 +68,7 @@ function Start-TogglEntry() {
         if ($verbose) {
             & $verb -Message "=>$fixedName $Message" -Verbose
         } else {
-           & $verb -Message "=>$fixedName $Message"
+            & $verb -Message "=>$fixedName $Message"
         }
     } | Write-Verbose
 
@@ -74,12 +78,13 @@ function Start-TogglEntry() {
             tags         = [array]$Tags;
             #duration     = ($Duration * 60);
             created_with = "PoSh";
+            wid          = $Workspace;
         };
     }
 
     if ($ProjectName) {
         Write-Verbose "ProjectName given. Searching for -Name=$ProjectName"
-        $projects = Get-TogglProject -Name $ProjectName
+        $projects = Get-TogglProject -Name $ProjectName -Workspace $Workspace
         if ($projects) {
             Write-Verbose "Found $($projects.count) projects. Selecting 1st one."
             $projId = $projects[0].id

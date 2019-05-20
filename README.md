@@ -9,6 +9,12 @@
 <b>A fully featured <a href="https://toggl.com/">Toggl</a> client for your PowerShell - based on <a href="https://github.com/toggl/toggl_api_docs/blob/master/toggl_api.md">Toggl's API v8</a></b>
 </p>
 <p align="center">
+    <a href="https://www.powershellgallery.com/packages/PSToggl">
+        <img alt="PowerShell Gallery Downloads" src="https://img.shields.io/powershellgallery/v/pstoggl.svg?label=PowerShell%20Gallery">
+    </a>
+    <a href="https://www.powershellgallery.com/packages/PSToggl">
+        <img alt="PowerShell Gallery Downloads" src="https://camo.githubusercontent.com/49319315b68cdf4408dc7d1b1a901b6b6b99f6cb/68747470733a2f2f696d672e736869656c64732e696f2f63686f636f6c617465792f64742f706f73686769742e737667">
+    </a>
     <a href="https://ci.appveyor.com/project/Clijsters/pstoggl/branch/master">
         <img alt="Build status for master" src="https://ci.appveyor.com/api/projects/status/c6u0f4gk3ibxwa46/branch/master?svg=true&passingText=master%20-%20OK&pendingText=master%20-%20Pending&failingText=master%20-%20Failing">
     </a>
@@ -22,7 +28,7 @@
 
 ## Under heavy development
 
-**This module is in an early beta stadium and not ready for production use**
+**This module is in ~early~ beta stadium and not (really) ready for production use**
 
 It is intended to become a fully featured Toggl Client purely written in PowerShell downwards compatible to PowerShell v3 (and soon also v2)
 
@@ -30,7 +36,13 @@ ____
 
 ## Features
 
-PSToggl perfectly integrates in your existing PowerShell environment, independent of the operating system you want to work with. It makes heavy use of PowerShells pipeline abilities and ~~is able~~ will be able to integrate with other modules like ~~PSJira~~JiraPS, PSExcel, PSHipchat and so on. It helps you to increase your productivity by providing extended reporting features, migration&sync features (Toggl -> JIRA) and a robust interactive PowerShell client.
+PSToggl perfectly integrates in your existing PowerShell environment, independent of the operating system you want to work with. It makes heavy use of PowerShells pipeline abilities and integrates with other modules like ~~PSJira~~JiraPS, PSExcel, PSHipchat and so on. It helps you to increase your productivity by providing extended reporting features, migration&sync features (e.g. Toggl -> JIRA work logs) and a robust interactive PowerShell client.
+
+As you might already know from git (posh-git) PSToggl shows information like the current timer / project at your PowerShell prompt,
+extends auto completion, provides aliases and templates, and much more.
+
+![PSToggl prompt showcase](doc/screenshot-1.png "Logo Title Text 1")
+
 
 ## Contents
 

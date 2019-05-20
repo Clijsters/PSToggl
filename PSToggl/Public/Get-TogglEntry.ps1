@@ -82,7 +82,11 @@ function Get-TogglEntry() {
         [Parameter(Position = 2, Mandatory = $false, ParameterSetName = "all")]
         [Parameter(Position = 3, Mandatory = $false, ParameterSetName = "byDescription")]
         [Parameter(Position = 3, Mandatory = $false, ParameterSetName = "byObject")]
-        [datetime] $To = [datetime]::Now
+        [datetime] $To = [datetime]::Now,
+
+        # Workspace id
+        [Parameter(Mandatory = $false)]
+        [string] $Workspace
     )
 
     Begin {
@@ -109,6 +113,10 @@ function Get-TogglEntry() {
         }
         else {
             $allEntries = Invoke-TogglMethod -UrlSuffix ("time_entries" + $suffix) -Method "GET"
+        }
+        if ($Workspace) {
+            #The Toggl API doesn't support obtaining time_entries per workspace (does it?)
+            $allEntries = $allEntries | Where-Object {$_.wid -eq $Workspace}
         }
     }
 
