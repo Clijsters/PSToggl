@@ -52,7 +52,7 @@ function Get-TogglEntry() {
         Get-TogglEntry -From 2018/01/01 | Where-Object {$_.tags -contains "mobile"}
 
     .NOTES
-        Version:        1.2
+        Version:        1.3
         Author:         Clijsters
         Creation Date:  03.04.2017
         Purpose/Change: Add Support for -From and -To

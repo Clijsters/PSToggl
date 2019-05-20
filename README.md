@@ -26,12 +26,6 @@
     </a>
 </p>
 
-## Under heavy development
-
-**This module is in ~early~ beta stadium and not (really) ready for production use**
-
-It is intended to become a fully featured Toggl Client purely written in PowerShell downwards compatible to PowerShell v3 (and soon also v2)
-
 ____
 
 ## Features
@@ -40,9 +34,6 @@ PSToggl perfectly integrates in your existing PowerShell environment, independen
 
 As you might already know from git (posh-git) PSToggl shows information like the current timer / project at your PowerShell prompt,
 extends auto completion, provides aliases and templates, and much more.
-
-![PSToggl prompt showcase](doc/screenshot-1.png "Logo Title Text 1")
-
 
 ## Contents
 
