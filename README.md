@@ -9,6 +9,12 @@
 <b>A fully featured <a href="https://toggl.com/">Toggl</a> client for your PowerShell - based on <a href="https://github.com/toggl/toggl_api_docs/blob/master/toggl_api.md">Toggl's API v8</a></b>
 </p>
 <p align="center">
+    <a href="https://www.powershellgallery.com/packages/PSToggl">
+        <img alt="PowerShell Gallery Downloads" src="https://img.shields.io/powershellgallery/v/pstoggl.svg?label=PowerShell%20Gallery">
+    </a>
+    <a href="https://www.powershellgallery.com/packages/PSToggl">
+        <img alt="PowerShell Gallery Downloads" src="https://camo.githubusercontent.com/49319315b68cdf4408dc7d1b1a901b6b6b99f6cb/68747470733a2f2f696d672e736869656c64732e696f2f63686f636f6c617465792f64742f706f73686769742e737667">
+    </a>
     <a href="https://ci.appveyor.com/project/Clijsters/pstoggl/branch/master">
         <img alt="Build status for master" src="https://ci.appveyor.com/api/projects/status/c6u0f4gk3ibxwa46/branch/master?svg=true&passingText=master%20-%20OK&pendingText=master%20-%20Pending&failingText=master%20-%20Failing">
     </a>
