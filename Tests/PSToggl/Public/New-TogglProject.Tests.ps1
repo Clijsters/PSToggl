@@ -18,7 +18,7 @@ InModuleScope PSToggl {
             }
         }
 
-        #Mock Write-Verbose {}
+        Mock Write-Verbose {}
 
         Mock ConvertTo-TogglProject {
             $InputObject.name
@@ -26,6 +26,7 @@ InModuleScope PSToggl {
 
         It "Properly handles -Verbose" {
             {New-TogglProject -Name "Test Project" -Verbose} | Should Not Throw
+            Assert-MockCalled -CommandName "Write-Verbose" -Times 12
         }
 
         $dummyWid = 4567
