@@ -23,19 +23,11 @@ function Stop-TogglEntry() {
         If an Entry is currently running, it will be stopped and returned to the pipeline. If not, a warning is provided.
 
     .EXAMPLE
+        The following features are not supported yet:
+
         Stop-TogglEntry -Workspace 12345
-
-   .EXAMPLE
         Get-TogglEntry -Current | Stop-TogglEntry
-
-        This example is quite useless but illustrates how Stop-TogglEntry deals with InputObjects.
-        The API is called only once.
-
-    .EXAMPLE
         Add-TogglTag "testing" -Current | Stop-TogglEntry
-
-        This example illustrates how you can change the currently running entry, then stop it, without calling the API multiple times.
-        Note: Add-Toggltag is not available yet.
 
     .NOTES
         Version:        1.0
@@ -46,13 +38,15 @@ function Stop-TogglEntry() {
     [CmdletBinding()]
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
     param(
+        <#
         # Workspace id
         [Parameter(Mandatory = $false)]
-        [string] $Workspace = $TogglConfiguration.User.Workspace<#,
+        [string] $Workspace = $TogglConfiguration.User.Workspace,
 
         # Entry id
         [Parameter(Mandatory = $false)]
-        [string] $Entry#>
+        [string] $Entry
+        #>
     )
 
     New-Item function::local:Write-Verbose -Value (
