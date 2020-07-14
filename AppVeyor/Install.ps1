@@ -6,7 +6,8 @@ $packageProvider = Install-PackageProvider -Name NuGet -Force
 Write-Host " - NuGet version '$($packageProvider.version)'"
 
 Write-Host ' - Pester'
-Install-Module -Name Pester -Repository PSGallery -Force
+#TODO: Migrate to Pester 5, it's cool!
+Install-Module -Name Pester -MaximumVersion 4.9.9 -Repository PSGallery -Force
 
 Write-Host ' - PSScriptAnalyzer'
 Install-Module PSScriptAnalyzer -Repository PSGallery -Force
