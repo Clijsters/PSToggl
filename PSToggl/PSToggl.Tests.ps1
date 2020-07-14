@@ -12,7 +12,9 @@ Describe "General code style compliance" {
         Context "Module '$($module.FullName)'" {
             foreach ($rule in $rules) {
                 It "passes the PSScriptAnalyzer Rule $rule" {
-                    (Invoke-ScriptAnalyzer -Path $module.FullName -IncludeRule $rule.RuleName ).Count | Should Be 0
+                    if (-not ($module.BaseName -match "AppVeyor") -and -not ($rule.Rulename -in @("PSReviewUnusedParameter")) ) {
+                        (Invoke-ScriptAnalyzer -Path $module.FullName -IncludeRule $rule.RuleName ).Count | Should Be 0
+                    }
                 }
             }
         }
@@ -22,7 +24,7 @@ Describe "General code style compliance" {
         Context "Script '$($script.FullName)'" {
             foreach ($rule in $rules) {
                 It "passes the PSScriptAnalyzer Rule $rule" {
-                    if (-not ($module.BaseName -match "AppVeyor") -and -not ($rule.Rulename -eq "PSAvoidUsingWriteHost") ) {
+                    if (-not ($module.BaseName -match "AppVeyor") -and -not ($rule.Rulename -in @("PSAvoidUsingWriteHost", "PSReviewUnusedParameter")) ) {
                         $result = Invoke-ScriptAnalyzer -Path $script.FullName -IncludeRule $rule.RuleName
                         $result.Message | ? {$_} | % { Write-Host $_ }
                         $result.Count | Should Be 0
