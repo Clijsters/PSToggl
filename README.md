@@ -10,9 +10,6 @@
 </p>
 <p align="center">
     <a href="https://www.powershellgallery.com/packages/PSToggl">
-        <img alt="PowerShell Gallery Downloads" src="https://img.shields.io/powershellgallery/v/pstoggl.svg?label=PowerShell%20Gallery">
-    </a>
-    <a href="https://www.powershellgallery.com/packages/PSToggl">
         <img alt="PowerShell Gallery Downloads" src="https://camo.githubusercontent.com/49319315b68cdf4408dc7d1b1a901b6b6b99f6cb/68747470733a2f2f696d672e736869656c64732e696f2f63686f636f6c617465792f64742f706f73686769742e737667">
     </a>
     <a href="https://ci.appveyor.com/project/Clijsters/pstoggl/branch/master">
@@ -20,6 +17,9 @@
     </a>
     <a href="https://ci.appveyor.com/project/Clijsters/pstoggl/branch/develop">
         <img alt="Build status for develop" src="https://ci.appveyor.com/api/projects/status/c6u0f4gk3ibxwa46/branch/develop?svg=true&passingText=develop%20-%20OK&pendingText=develop%20-%20Pending&failingText=develop%20-%20Failing">
+    </a>
+    <a href="https://www.codetriage.com/clijsters/pstoggl">
+        <img alt="Open Source Helpers" src="https://www.codetriage.com/clijsters/pstoggl/badges/users.svg">
     </a>
     <a href="https://codecov.io/gh/Clijsters/PSToggl">
         <img alt="codecov Code Coverage" src="https://codecov.io/gh/Clijsters/PSToggl/branch/develop/graph/badge.svg">
