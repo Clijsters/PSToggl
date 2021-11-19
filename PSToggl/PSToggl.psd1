@@ -76,6 +76,7 @@ FunctionsToExport = @(
     'Get-TogglTag',
     'New-TogglProject',
     'Start-TogglEntry',
+    'Stop-TogglEntry',
     'Write-RunningTogglEntry'
 )
 
