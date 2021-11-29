@@ -8,7 +8,7 @@
         BareExample = @{
             DocUrl = "";
             Fields = @(
-                @{ name = "id"; required = $false; default = $null; type = [int]; }
+                @{ name = "id"; required = $false; default = $null; type = [long]; }
             );
         };
 
@@ -16,7 +16,7 @@
             TypeName = "PSToggl.Client";
             DocUrl = "";
             Fields = @(
-                @{ name = "id"; required = $false; default = $null; type = [int]; },
+                @{ name = "id"; required = $false; default = $null; type = [long]; },
                 @{ name = "name"; required = $true; default = $null; type = [string]; },
                 @{ name = "wid"; required = $true; default = $null; type = [int]; },
                 @{ name = "notes"; required = $false; default = $null; type = [string]; },
@@ -28,7 +28,7 @@
             TypeName = "PSToggl.Group";
             DocUrl = "";
             Fields = @(
-                @{ name = "id"; required = $false; default = $null; type = [int]; },
+                @{ name = "id"; required = $false; default = $null; type = [long]; },
                 @{ name = "name"; required = $true; default = $null; type = [string]; },
                 @{ name = "wid"; required = $true; default = $null; type = [int]; },
                 @{ name = "at"; required = $true; default = $null; type = [datetime]; }
@@ -39,10 +39,10 @@
             TypeName = "PSToggl.Project";
             DocUrl = "";
             Fields = @(
-                @{ name = "id"; required = $false; default = $null; type = [int]; },
+                @{ name = "id"; required = $false; default = $null; type = [long]; },
                 @{ name = "name"; required = $true; default = $null; type = [string]; },
-                @{ name = "wid"; required = $true; default = $null; type = [int]; },
-                @{ name = "cid"; required = $false; default = $null; type = [int]; },
+                @{ name = "wid"; required = $true; default = $null; type = [long]; },
+                @{ name = "cid"; required = $false; default = $null; type = [long]; },
                 @{ name = "active"; required = $true; default = $true; type = [bool]; },
                 @{ name = "is_private"; required = $true; default = $true; type = [bool]; },
                 @{ name = "template"; required = $false; default = $null; type = [bool]; },
@@ -60,10 +60,10 @@
             TypeName = "PSToggl.ProjectUser";
             DocUrl = "";
             Fields = @(
-                @{ name = "id"; required = $false; default = $null; type = [int]; },
-                @{ name = "pid"; required = $true; default = $null; type = [int]; },
-                @{ name = "uid"; required = $true; default = $null; type = [int]; },
-                @{ name = "wid"; required = $false; default = $null; type = [int]; },
+                @{ name = "id"; required = $false; default = $null; type = [long]; },
+                @{ name = "pid"; required = $true; default = $null; type = [long]; },
+                @{ name = "uid"; required = $true; default = $null; type = [long]; },
+                @{ name = "wid"; required = $false; default = $null; type = [long]; },
                 @{ name = "manager"; required = $true; default = $false; type = [bool]; },
                 @{ name = "rate"; required = $false; default = $null; type = [float]; }, # Pro
                 @{ name = "at"; required = $false; default = $null; type = [datetime]; }
@@ -74,8 +74,8 @@
             TypeName = "PSToggl.Tag";
             DocUrl = "";
             Fields = @(
-                @{ name = "id"; required = $false; default = $null; type = [int]; },
-                @{ name = "wid"; required = $true; default = $null; type = [int]; },
+                @{ name = "id"; required = $false; default = $null; type = [long]; },
+                @{ name = "wid"; required = $true; default = $null; type = [long]; },
                 @{ name = "name"; required = $true; default = $null; type = [string]; }
             );
         };
@@ -84,14 +84,14 @@
             TypeName = "PSToggl.Task";
             DocUrl = "";
             Fields = @(
-                @{ name = "id"; required = $false; default = $null; type = [int]; },
+                @{ name = "id"; required = $false; default = $null; type = [long]; },
                 @{ name = "name"; required = $true; default = $null; type = [string]; },
-                @{ name = "pid"; required = $true; default = $null; type = [int]; },
-                @{ name = "wid"; required = $true; default = $null; type = [int]; },
-                @{ name = "uid"; required = $true; default = $null; type = [int]; },
-                @{ name = "estimated_seconds"; required = $true; default = $null; type = [int]; },
+                @{ name = "pid"; required = $true; default = $null; type = [long]; },
+                @{ name = "wid"; required = $true; default = $null; type = [long]; },
+                @{ name = "uid"; required = $true; default = $null; type = [long]; },
+                @{ name = "estimated_seconds"; required = $true; default = $null; type = [long]; },
                 @{ name = "active"; required = $true; default = $true; type = [bool]; },
-                @{ name = "tracked_seconds"; required = $false; default = $null; type = [int]; },
+                @{ name = "tracked_seconds"; required = $false; default = $null; type = [long]; },
                 @{ name = "at"; required = $true; default = $null; type = [datetime]; }
             );
         };
@@ -100,15 +100,15 @@
             TypeName = "PSToggl.Entry";
             DocUrl = "";
             Fields = @(
-                @{ name = "id"; required = $false; default = $null; type = [int]; },
+                @{ name = "id"; required = $false; default = $null; type = [long]; },
                 @{ name = "description"; required = $false; default = $null; type = [string]; },
-                @{ name = "wid"; required = $true; default = $null; type = [int]; }, # special case, req if pid and tid null
-                @{ name = "pid"; required = $false; default = $null; type = [int]; },
-                @{ name = "tid"; required = $false; default = $null; type = [int]; },
+                @{ name = "wid"; required = $true; default = $null; type = [long]; }, # special case, req if pid and tid null
+                @{ name = "pid"; required = $false; default = $null; type = [long]; },
+                @{ name = "tid"; required = $false; default = $null; type = [long]; },
                 @{ name = "billable"; required = $false; default = $null; type = [bool]; },
                 @{ name = "start"; required = $true; default = $null; type = [datetime]; },
                 @{ name = "stop"; required = $false; default = $null; type = [datetime]; },
-                @{ name = "duration"; required = $true; default = $null; type = [int]; }, # If currently running, its negative.
+                @{ name = "duration"; required = $true; default = $null; type = [long]; }, # If currently running, its negative.
                 @{ name = "created_with"; required = $true; default = "PSToggl"; type = [string]; },
                 @{ name = "tags"; required = $false; default = $null; type = [string[]]; },
                 @{ name = "duronly"; required = $false; default = $false; type = [bool]; },
@@ -120,9 +120,9 @@
             TypeName = "PSToggl.User";
             DocUrl = "";
             Fields = @(
-                @{ name = "id"; required = $false; default = $null; type = [int]; },
+                @{ name = "id"; required = $false; default = $null; type = [long]; },
                 @{ name = "api_token"; required = $true; default = $null; type = [string]; },
-                @{ name = "default_wid"; required = $true; default = $null; type = [int]; },
+                @{ name = "default_wid"; required = $true; default = $null; type = [long]; },
                 @{ name = "email"; required = $false; default = $null; type = [string]; },
                 @{ name = "fullname"; required = $true; default = $null; type = [string]; },
                 @{ name = "jquery_timeofday_format"; required = $false; default = $null; type = [string]; },
@@ -155,7 +155,7 @@
             TypeName = "PSToggl.Workspace";
             DocUrl = "";
             Fields = @(
-                @{ name = "id"; required = $false; default = $null; type = [int]; },
+                @{ name = "id"; required = $false; default = $null; type = [long]; },
                 @{ name = "name"; required = $true; default = $null; type = [string]; },
                 @{ name = "premium"; required = $true; default = $null; type = [bool]; },
                 @{ name = "admin"; required = $true; default = $null; type = [bool]; },
