@@ -1,6 +1,6 @@
 @{
     Api = @{
-        baseUrl = "https://www.toggl.com/api/v8/";
+        baseUrl = "https://api.track.toggl.com/api/v8/";
 
     };
     ObjectTypes = @{
